@@ -1,3 +1,5 @@
+const API_URL = "https://ai-student-companion-njmj.onrender.com";
+
 /* =========================
    CURRENT USER
 ========================= */
@@ -5,13 +7,11 @@
 let currentUser =
     JSON.parse(localStorage.getItem("currentUser"));
 
-
 /* =========================
    CURRENT QUIZ
 ========================= */
 
 let currentQuiz = [];
-
 
 /* =========================
    AI RESPONSE STYLE
@@ -23,161 +23,96 @@ function addAIResponseStyles() {
         return;
     }
 
-    const style =
-        document.createElement("style");
+    const style = document.createElement("style");
 
-    style.id =
-        "aiResponseStyles";
+    style.id = "aiResponseStyles";
 
     style.innerHTML = `
 
         .ai-response-box {
-
             background: #111827;
-
             border: 1px solid #273248;
-
             border-radius: 14px;
-
             padding: 18px;
-
             margin-top: 15px;
-
             line-height: 1.7;
-
             color: #e5e7eb;
-
         }
-
 
         .ai-response-section {
-
             margin-bottom: 18px;
-
         }
-
 
         .ai-response-section:last-child {
-
             margin-bottom: 0;
-
         }
-
 
         .ai-response-title {
-
             font-size: 16px;
-
             font-weight: 700;
-
             color: #f8fafc;
-
             margin-bottom: 8px;
-
         }
-
 
         .ai-response-content {
-
             color: #cbd5e1;
-
             font-size: 14px;
-
             white-space: pre-line;
-
         }
-
 
         .ai-response-content ul {
-
             margin: 8px 0 0 20px;
-
             padding: 0;
-
         }
-
 
         .ai-response-content li {
-
             margin-bottom: 5px;
-
         }
-
 
         .ai-loading {
-
             display: flex;
-
             align-items: center;
-
             gap: 10px;
-
             color: #cbd5e1;
-
             padding: 15px 0;
-
         }
-
 
         .ai-loading-dot {
-
             width: 8px;
-
             height: 8px;
-
             border-radius: 50%;
-
             background: #94a3b8;
-
             animation: aiPulse 1.2s infinite;
-
         }
-
 
         @keyframes aiPulse {
 
             0%, 100% {
-
                 opacity: 0.3;
-
                 transform: scale(0.8);
-
             }
 
             50% {
-
                 opacity: 1;
-
                 transform: scale(1);
-
             }
 
         }
 
-
         .ai-error {
-
             color: #fca5a5;
-
             background: #2a1515;
-
             border: 1px solid #5f2929;
-
             padding: 12px;
-
             border-radius: 10px;
-
         }
 
     `;
 
     document.head.appendChild(style);
-
 }
 
-
 addAIResponseStyles();
-
 
 /* =========================
    LOGIN CHECK
@@ -204,7 +139,6 @@ function checkLogin() {
 
 }
 
-
 /* =========================
    SHOW APP
 ========================= */
@@ -220,7 +154,6 @@ function showApp() {
     const logoutButton =
         document.getElementById("logoutButton");
 
-
     if (dashboard) {
         dashboard.style.display = "grid";
     }
@@ -234,7 +167,6 @@ function showApp() {
     }
 
 }
-
 
 /* =========================
    HIDE APP
@@ -251,7 +183,6 @@ function hideApp() {
     const logoutButton =
         document.getElementById("logoutButton");
 
-
     if (dashboard) {
         dashboard.style.display = "none";
     }
@@ -265,7 +196,6 @@ function hideApp() {
     }
 
 }
-
 
 /* =========================
    ENTER APP
@@ -284,7 +214,6 @@ function enterApp() {
 
 }
 
-
 /* =========================
    REGISTER
 ========================= */
@@ -300,7 +229,6 @@ async function registerUser() {
     const password =
         document.getElementById("registerPassword").value;
 
-
     if (!name || !email || !password) {
 
         alert("Please fill all registration fields.");
@@ -308,12 +236,11 @@ async function registerUser() {
         return;
     }
 
-
     try {
 
         const response =
             await fetch(
-                "http://localhost:3000/api/register",
+                `${API_URL}/api/register`,
                 {
                     method: "POST",
 
@@ -329,10 +256,8 @@ async function registerUser() {
                 }
             );
 
-
         const data =
             await response.json();
-
 
         if (!response.ok) {
 
@@ -341,16 +266,13 @@ async function registerUser() {
             return;
         }
 
-
         alert(
             "Registration successful! 🎉 Please login."
         );
 
-
         document.getElementById("registerName").value = "";
         document.getElementById("registerEmail").value = "";
         document.getElementById("registerPassword").value = "";
-
 
     } catch (error) {
 
@@ -365,7 +287,6 @@ async function registerUser() {
 
 }
 
-
 /* =========================
    LOGIN
 ========================= */
@@ -378,7 +299,6 @@ async function loginUser() {
     const password =
         document.getElementById("loginPassword").value;
 
-
     if (!email || !password) {
 
         alert("Please enter email and password.");
@@ -386,12 +306,11 @@ async function loginUser() {
         return;
     }
 
-
     try {
 
         const response =
             await fetch(
-                "http://localhost:3000/api/login",
+                `${API_URL}/api/login`,
                 {
                     method: "POST",
 
@@ -406,10 +325,8 @@ async function loginUser() {
                 }
             );
 
-
         const data =
             await response.json();
-
 
         if (!response.ok) {
 
@@ -418,37 +335,29 @@ async function loginUser() {
             return;
         }
 
-
         currentUser =
             data.user;
-
 
         localStorage.setItem(
             "currentUser",
             JSON.stringify(currentUser)
         );
 
-
         document.getElementById("loginEmail").value = "";
         document.getElementById("loginPassword").value = "";
-
 
         document.getElementById("welcomeMessage").innerText =
             `Welcome, ${currentUser.name}! 👋`;
 
-
         showApp();
-
 
         loadTasks();
         loadStudyPlans();
         loadNotes();
 
-
         alert(
             `Welcome ${currentUser.name}! 🎉`
         );
-
 
     } catch (error) {
 
@@ -463,7 +372,6 @@ async function loginUser() {
 
 }
 
-
 /* =========================
    LOGOUT
 ========================= */
@@ -474,28 +382,22 @@ function logoutUser() {
 
     localStorage.removeItem("currentUser");
 
-
     document.getElementById("welcomeMessage").innerText =
         "Welcome to AI Student Companion!";
-
 
     document.getElementById("taskList").innerHTML = "";
     document.getElementById("studyList").innerHTML = "";
     document.getElementById("noteList").innerHTML = "";
 
-
     updateDashboard([], [], []);
 
-
     hideApp();
-
 
     alert(
         "You have been logged out successfully. 👋"
     );
 
 }
-
 
 /* =========================
    ADD TASK
@@ -510,13 +412,11 @@ async function addTask() {
         return;
     }
 
-
     const taskInput =
         document.getElementById("taskInput");
 
     const task =
         taskInput.value.trim();
-
 
     if (!task) {
 
@@ -525,12 +425,11 @@ async function addTask() {
         return;
     }
 
-
     try {
 
         const response =
             await fetch(
-                "http://localhost:3000/api/tasks",
+                `${API_URL}/api/tasks`,
                 {
                     method: "POST",
 
@@ -545,10 +444,8 @@ async function addTask() {
                 }
             );
 
-
         const data =
             await response.json();
-
 
         if (!response.ok) {
 
@@ -557,11 +454,9 @@ async function addTask() {
             return;
         }
 
-
         taskInput.value = "";
 
         loadTasks();
-
 
     } catch (error) {
 
@@ -576,7 +471,6 @@ async function addTask() {
 
 }
 
-
 /* =========================
    LOAD TASKS
 ========================= */
@@ -585,25 +479,20 @@ async function loadTasks() {
 
     if (!currentUser) return;
 
-
     try {
 
         const response =
             await fetch(
-                `http://localhost:3000/api/tasks/${currentUser.id}`
+                `${API_URL}/api/tasks/${currentUser.id}`
             );
-
 
         const data =
             await response.json();
 
-
         const taskList =
             document.getElementById("taskList");
 
-
         taskList.innerHTML = "";
-
 
         if (
             !data.tasks ||
@@ -622,18 +511,15 @@ async function loadTasks() {
             return;
         }
 
-
         data.tasks.forEach(
             createTaskElement
         );
-
 
         updateDashboard(
             data.tasks,
             null,
             null
         );
-
 
     } catch (error) {
 
@@ -647,7 +533,6 @@ async function loadTasks() {
 
 }
 
-
 /* =========================
    CREATE TASK ELEMENT
 ========================= */
@@ -657,18 +542,14 @@ function createTaskElement(task) {
     const taskList =
         document.getElementById("taskList");
 
-
     const li =
         document.createElement("li");
-
 
     const taskText =
         document.createElement("span");
 
-
     taskText.innerText =
         task.task;
-
 
     if (task.completed) {
 
@@ -678,30 +559,24 @@ function createTaskElement(task) {
 
     }
 
-
     const buttonContainer =
         document.createElement("div");
 
-
     const completeButton =
         document.createElement("button");
-
 
     completeButton.innerText =
         task.completed
             ? "↩️"
             : "✅";
 
-
     completeButton.title =
         task.completed
             ? "Mark as incomplete"
             : "Complete task";
 
-
     completeButton.style.marginRight =
         "6px";
-
 
     completeButton.onclick =
         function () {
@@ -713,22 +588,17 @@ function createTaskElement(task) {
 
         };
 
-
     const deleteButton =
         document.createElement("button");
-
 
     deleteButton.innerText =
         "🗑️";
 
-
     deleteButton.title =
         "Delete task";
 
-
     deleteButton.style.background =
         "#ef4444";
-
 
     deleteButton.onclick =
         function () {
@@ -736,7 +606,6 @@ function createTaskElement(task) {
             deleteTask(task.id);
 
         };
-
 
     buttonContainer.appendChild(
         completeButton
@@ -746,7 +615,6 @@ function createTaskElement(task) {
         deleteButton
     );
 
-
     li.appendChild(
         taskText
     );
@@ -755,13 +623,11 @@ function createTaskElement(task) {
         buttonContainer
     );
 
-
     taskList.appendChild(
         li
     );
 
 }
-
 
 /* =========================
    UPDATE TASK
@@ -776,7 +642,7 @@ async function updateTask(
 
         const response =
             await fetch(
-                `http://localhost:3000/api/tasks/${taskId}`,
+                `${API_URL}/api/tasks/${taskId}`,
                 {
                     method: "PUT",
 
@@ -790,7 +656,6 @@ async function updateTask(
                 }
             );
 
-
         if (!response.ok) {
 
             alert(
@@ -800,9 +665,7 @@ async function updateTask(
             return;
         }
 
-
         loadTasks();
-
 
     } catch (error) {
 
@@ -816,7 +679,6 @@ async function updateTask(
 
 }
 
-
 /* =========================
    DELETE TASK
 ========================= */
@@ -827,12 +689,11 @@ async function deleteTask(taskId) {
 
         const response =
             await fetch(
-                `http://localhost:3000/api/tasks/${taskId}`,
+                `${API_URL}/api/tasks/${taskId}`,
                 {
                     method: "DELETE"
                 }
             );
-
 
         if (!response.ok) {
 
@@ -843,9 +704,7 @@ async function deleteTask(taskId) {
             return;
         }
 
-
         loadTasks();
-
 
     } catch (error) {
 
@@ -858,7 +717,6 @@ async function deleteTask(taskId) {
     }
 
 }
-
 
 /* =========================
    ADD STUDY PLAN
@@ -873,13 +731,11 @@ async function addStudyPlan() {
         return;
     }
 
-
     const subject =
         document
             .getElementById("subjectInput")
             .value
             .trim();
-
 
     const topic =
         document
@@ -887,13 +743,11 @@ async function addStudyPlan() {
             .value
             .trim();
 
-
     const studyTime =
         document
             .getElementById("timeInput")
             .value
             .trim();
-
 
     if (
         !subject ||
@@ -908,12 +762,11 @@ async function addStudyPlan() {
         return;
     }
 
-
     try {
 
         const response =
             await fetch(
-                "http://localhost:3000/api/study-plans",
+                `${API_URL}/api/study-plans`,
                 {
                     method: "POST",
 
@@ -930,10 +783,8 @@ async function addStudyPlan() {
                 }
             );
 
-
         const data =
             await response.json();
-
 
         if (!response.ok) {
 
@@ -942,24 +793,19 @@ async function addStudyPlan() {
             return;
         }
 
-
         document.getElementById(
             "subjectInput"
         ).value = "";
-
 
         document.getElementById(
             "topicInput"
         ).value = "";
 
-
         document.getElementById(
             "timeInput"
         ).value = "";
 
-
         loadStudyPlans();
-
 
     } catch (error) {
 
@@ -977,7 +823,6 @@ async function addStudyPlan() {
 
 }
 
-
 /* =========================
    LOAD STUDY PLANS
 ========================= */
@@ -986,27 +831,22 @@ async function loadStudyPlans() {
 
     if (!currentUser) return;
 
-
     try {
 
         const response =
             await fetch(
-                `http://localhost:3000/api/study-plans/${currentUser.id}`
+                `${API_URL}/api/study-plans/${currentUser.id}`
             );
-
 
         const data =
             await response.json();
-
 
         const studyList =
             document.getElementById(
                 "studyList"
             );
 
-
         studyList.innerHTML = "";
-
 
         if (
             !data.studyPlans ||
@@ -1025,18 +865,15 @@ async function loadStudyPlans() {
             return;
         }
 
-
         data.studyPlans.forEach(
             createStudyPlanElement
         );
-
 
         updateDashboard(
             null,
             data.studyPlans,
             null
         );
-
 
     } catch (error) {
 
@@ -1049,7 +886,6 @@ async function loadStudyPlans() {
     }
 
 }
-
 
 /* =========================
    CREATE STUDY PLAN
@@ -1064,30 +900,23 @@ function createStudyPlanElement(
             "studyList"
         );
 
-
     const li =
         document.createElement("li");
-
 
     const text =
         document.createElement("span");
 
-
     text.innerText =
         `${studyPlan.subject} — ${studyPlan.topic} (${studyPlan.study_time})`;
-
 
     const deleteButton =
         document.createElement("button");
 
-
     deleteButton.innerText =
         "🗑️";
 
-
     deleteButton.style.background =
         "#ef4444";
-
 
     deleteButton.onclick =
         function () {
@@ -1098,18 +927,15 @@ function createStudyPlanElement(
 
         };
 
-
     li.appendChild(text);
 
     li.appendChild(
         deleteButton
     );
 
-
     studyList.appendChild(li);
 
 }
-
 
 /* =========================
    DELETE STUDY PLAN
@@ -1123,12 +949,11 @@ async function deleteStudyPlan(
 
         const response =
             await fetch(
-                `http://localhost:3000/api/study-plans/${studyPlanId}`,
+                `${API_URL}/api/study-plans/${studyPlanId}`,
                 {
                     method: "DELETE"
                 }
             );
-
 
         if (!response.ok) {
 
@@ -1139,9 +964,7 @@ async function deleteStudyPlan(
             return;
         }
 
-
         loadStudyPlans();
-
 
     } catch (error) {
 
@@ -1154,7 +977,6 @@ async function deleteStudyPlan(
     }
 
 }
-
 
 /* =========================
    ADD NOTE
@@ -1169,16 +991,13 @@ async function addNote() {
         return;
     }
 
-
     const noteInput =
         document.getElementById(
             "noteInput"
         );
 
-
     const note =
         noteInput.value.trim();
-
 
     if (!note) {
 
@@ -1189,12 +1008,11 @@ async function addNote() {
         return;
     }
 
-
     try {
 
         const response =
             await fetch(
-                "http://localhost:3000/api/notes",
+                `${API_URL}/api/notes`,
                 {
                     method: "POST",
 
@@ -1209,10 +1027,8 @@ async function addNote() {
                 }
             );
 
-
         const data =
             await response.json();
-
 
         if (!response.ok) {
 
@@ -1221,11 +1037,9 @@ async function addNote() {
             return;
         }
 
-
         noteInput.value = "";
 
         loadNotes();
-
 
     } catch (error) {
 
@@ -1243,7 +1057,6 @@ async function addNote() {
 
 }
 
-
 /* =========================
    LOAD NOTES
 ========================= */
@@ -1252,27 +1065,22 @@ async function loadNotes() {
 
     if (!currentUser) return;
 
-
     try {
 
         const response =
             await fetch(
-                `http://localhost:3000/api/notes/${currentUser.id}`
+                `${API_URL}/api/notes/${currentUser.id}`
             );
-
 
         const data =
             await response.json();
-
 
         const noteList =
             document.getElementById(
                 "noteList"
             );
 
-
         noteList.innerHTML = "";
-
 
         if (
             !data.notes ||
@@ -1291,18 +1099,15 @@ async function loadNotes() {
             return;
         }
 
-
         data.notes.forEach(
             createNoteElement
         );
-
 
         updateDashboard(
             null,
             null,
             data.notes
         );
-
 
     } catch (error) {
 
@@ -1315,7 +1120,6 @@ async function loadNotes() {
     }
 
 }
-
 
 /* =========================
    CREATE NOTE
@@ -1330,30 +1134,23 @@ function createNoteElement(
             "noteList"
         );
 
-
     const li =
         document.createElement("li");
-
 
     const text =
         document.createElement("span");
 
-
     text.innerText =
         note.note;
-
 
     const deleteButton =
         document.createElement("button");
 
-
     deleteButton.innerText =
         "🗑️";
 
-
     deleteButton.style.background =
         "#ef4444";
-
 
     deleteButton.onclick =
         function () {
@@ -1364,18 +1161,15 @@ function createNoteElement(
 
         };
 
-
     li.appendChild(text);
 
     li.appendChild(
         deleteButton
     );
 
-
     noteList.appendChild(li);
 
 }
-
 
 /* =========================
    DELETE NOTE
@@ -1389,12 +1183,11 @@ async function deleteNote(
 
         const response =
             await fetch(
-                `http://localhost:3000/api/notes/${noteId}`,
+                `${API_URL}/api/notes/${noteId}`,
                 {
                     method: "DELETE"
                 }
             );
-
 
         if (!response.ok) {
 
@@ -1405,9 +1198,7 @@ async function deleteNote(
             return;
         }
 
-
         loadNotes();
-
 
     } catch (error) {
 
@@ -1420,7 +1211,6 @@ async function deleteNote(
     }
 
 }
-
 
 /* =========================
    DASHBOARD
@@ -1437,54 +1227,45 @@ function updateDashboard(
             "totalTasks"
         );
 
-
     const completedTasksElement =
         document.getElementById(
             "completedTasks"
         );
-
 
     const totalStudiesElement =
         document.getElementById(
             "totalStudies"
         );
 
-
     const totalNotesElement =
         document.getElementById(
             "totalNotes"
         );
-
 
     const progressElement =
         document.getElementById(
             "progress"
         );
 
-
     const progressBar =
         document.getElementById(
             "progressBar"
         );
-
 
     const progressStatus =
         document.getElementById(
             "progressStatus"
         );
 
-
     const productivityStatus =
         document.getElementById(
             "productivityStatus"
         );
 
-
     const productivityMessage =
         document.getElementById(
             "productivityMessage"
         );
-
 
     /* =========================
        TASK PROGRESS
@@ -1495,7 +1276,6 @@ function updateDashboard(
         const totalTasks =
             tasks.length;
 
-
         const completedTasks =
             tasks.filter(
                 task =>
@@ -1503,9 +1283,7 @@ function updateDashboard(
                     task.completed === true
             ).length;
 
-
         let percentage = 0;
-
 
         if (totalTasks > 0) {
 
@@ -1516,14 +1294,12 @@ function updateDashboard(
 
         }
 
-
         if (totalTasksElement) {
 
             totalTasksElement.innerText =
                 totalTasks;
 
         }
-
 
         if (completedTasksElement) {
 
@@ -1532,7 +1308,6 @@ function updateDashboard(
 
         }
 
-
         if (progressElement) {
 
             progressElement.innerText =
@@ -1540,14 +1315,12 @@ function updateDashboard(
 
         }
 
-
         if (progressBar) {
 
             progressBar.style.width =
                 `${percentage}%`;
 
         }
-
 
         let status =
             "Ready to start";
@@ -1557,7 +1330,6 @@ function updateDashboard(
 
         let progressText =
             "Let's get started! 🚀";
-
 
         if (percentage === 0) {
 
@@ -1637,7 +1409,6 @@ function updateDashboard(
 
         }
 
-
         if (productivityStatus) {
 
             productivityStatus.innerText =
@@ -1645,14 +1416,12 @@ function updateDashboard(
 
         }
 
-
         if (productivityMessage) {
 
             productivityMessage.innerText =
                 message;
 
         }
-
 
         if (progressStatus) {
 
@@ -1662,7 +1431,6 @@ function updateDashboard(
         }
 
     }
-
 
     /* =========================
        STUDY PLANS
@@ -1678,7 +1446,6 @@ function updateDashboard(
         }
 
     }
-
 
     /* =========================
        NOTES
@@ -1697,7 +1464,6 @@ function updateDashboard(
 
 }
 
-
 /* =========================
    AI QUICK BUTTONS
 ========================= */
@@ -1709,15 +1475,12 @@ function quickAI(prompt) {
             "aiInput"
         );
 
-
     aiInput.value =
         prompt;
-
 
     aiInput.focus();
 
 }
-
 
 /* =========================
    AI QUIZ
@@ -1730,16 +1493,13 @@ async function generateQuiz() {
             "quizTopic"
         );
 
-
     const topic =
         topicInput.value.trim();
-
 
     const quizContainer =
         document.getElementById(
             "quizContainer"
         );
-
 
     if (!topic) {
 
@@ -1750,7 +1510,6 @@ async function generateQuiz() {
         return;
     }
 
-
     quizContainer.innerHTML = `
         <div class="quiz-loading">
             <h3>🤖 AI is creating your quiz...</h3>
@@ -1758,12 +1517,11 @@ async function generateQuiz() {
         </div>
     `;
 
-
     try {
 
         const response =
             await fetch(
-                "http://localhost:3000/api/quiz",
+                `${API_URL}/api/quiz`,
                 {
                     method: "POST",
 
@@ -1777,10 +1535,8 @@ async function generateQuiz() {
                 }
             );
 
-
         const data =
             await response.json();
-
 
         if (!response.ok) {
 
@@ -1789,7 +1545,6 @@ async function generateQuiz() {
 
             return;
         }
-
 
         if (
             !data.quiz ||
@@ -1803,13 +1558,10 @@ async function generateQuiz() {
             return;
         }
 
-
         currentQuiz =
             data.quiz.questions;
 
-
         displayQuiz();
-
 
     } catch (error) {
 
@@ -1818,7 +1570,6 @@ async function generateQuiz() {
         );
 
         console.log(error);
-
 
         quizContainer.innerHTML = `
             <div class="quiz-error">
@@ -1831,7 +1582,6 @@ async function generateQuiz() {
 
 }
 
-
 /* =========================
    DISPLAY QUIZ
 ========================= */
@@ -1843,9 +1593,7 @@ function displayQuiz() {
             "quizContainer"
         );
 
-
     quizContainer.innerHTML = "";
-
 
     const header =
         document.createElement("div");
@@ -1853,20 +1601,17 @@ function displayQuiz() {
     header.className =
         "quiz-header";
 
-
     const heading =
         document.createElement("h3");
 
     heading.innerText =
         "🧠 Your AI Quiz";
 
-
     const description =
         document.createElement("p");
 
     description.innerText =
         `${currentQuiz.length} questions • Choose one answer for each question.`;
-
 
     header.appendChild(
         heading
@@ -1876,11 +1621,9 @@ function displayQuiz() {
         description
     );
 
-
     quizContainer.appendChild(
         header
     );
-
 
     currentQuiz.forEach(
         (question, index) => {
@@ -1891,25 +1634,21 @@ function displayQuiz() {
             questionCard.className =
                 "quiz-question-card";
 
-
             const questionTitle =
                 document.createElement("h3");
 
             questionTitle.innerText =
                 `${index + 1}. ${question.question}`;
 
-
             questionCard.appendChild(
                 questionTitle
             );
-
 
             const optionsContainer =
                 document.createElement("div");
 
             optionsContainer.className =
                 "quiz-options";
-
 
             question.options.forEach(
                 option => {
@@ -1919,7 +1658,6 @@ function displayQuiz() {
 
                     optionLabel.className =
                         "quiz-option";
-
 
                     const radio =
                         document.createElement("input");
@@ -1933,13 +1671,11 @@ function displayQuiz() {
                     radio.value =
                         option;
 
-
                     const optionText =
                         document.createElement("span");
 
                     optionText.innerText =
                         option;
-
 
                     optionLabel.appendChild(
                         radio
@@ -1949,7 +1685,6 @@ function displayQuiz() {
                         optionText
                     );
 
-
                     radio.addEventListener(
                         "change",
                         function () {
@@ -1958,7 +1693,6 @@ function displayQuiz() {
                                 optionsContainer.querySelectorAll(
                                     ".quiz-option"
                                 );
-
 
                             allOptions.forEach(
                                 item => {
@@ -1970,14 +1704,12 @@ function displayQuiz() {
                                 }
                             );
 
-
                             optionLabel.classList.add(
                                 "selected"
                             );
 
                         }
                     );
-
 
                     optionsContainer.appendChild(
                         optionLabel
@@ -1986,11 +1718,9 @@ function displayQuiz() {
                 }
             );
 
-
             questionCard.appendChild(
                 optionsContainer
             );
-
 
             quizContainer.appendChild(
                 questionCard
@@ -1999,29 +1729,23 @@ function displayQuiz() {
         }
     );
 
-
     const submitButton =
         document.createElement("button");
-
 
     submitButton.className =
         "quiz-submit-button";
 
-
     submitButton.innerText =
         "🏆 Submit Quiz";
 
-
     submitButton.onclick =
         checkQuiz;
-
 
     quizContainer.appendChild(
         submitButton
     );
 
 }
-
 
 /* =========================
    CHECK QUIZ
@@ -2037,11 +1761,9 @@ function checkQuiz() {
         return;
     }
 
-
     let score = 0;
 
     let unanswered = 0;
-
 
     currentQuiz.forEach(
         (question, index) => {
@@ -2051,14 +1773,12 @@ function checkQuiz() {
                     `input[name="question-${index}"]:checked`
                 );
 
-
             if (!selected) {
 
                 unanswered++;
 
                 return;
             }
-
 
             if (
                 selected.value ===
@@ -2072,7 +1792,6 @@ function checkQuiz() {
         }
     );
 
-
     if (unanswered > 0) {
 
         alert(
@@ -2082,11 +1801,9 @@ function checkQuiz() {
         return;
     }
 
-
     showQuizResult(score);
 
 }
-
 
 /* =========================
    QUIZ RESULT
@@ -2099,19 +1816,15 @@ function showQuizResult(score) {
             "quizContainer"
         );
 
-
     const total =
         currentQuiz.length;
-
 
     const percentage =
         Math.round(
             (score / total) * 100
         );
 
-
     let message = "";
-
 
     if (percentage === 100) {
 
@@ -2140,7 +1853,6 @@ function showQuizResult(score) {
             "Keep learning and try the quiz again! 📚";
 
     }
-
 
     quizContainer.innerHTML = `
 
@@ -2181,7 +1893,6 @@ function showQuizResult(score) {
 
 }
 
-
 /* =========================
    RESTART QUIZ
 ========================= */
@@ -2193,10 +1904,8 @@ function restartQuiz() {
             "quizTopic"
         );
 
-
     const topic =
         quizTopic.value.trim();
-
 
     if (!topic) {
 
@@ -2207,11 +1916,9 @@ function restartQuiz() {
         return;
     }
 
-
     generateQuiz();
 
 }
-
 
 /* =========================
    OLD CHECK ANSWER
@@ -2237,7 +1944,6 @@ function checkAnswer() {
 
 }
 
-
 /* =========================
    FORMAT AI RESPONSE
 ========================= */
@@ -2256,31 +1962,25 @@ function formatAIResponse(answer) {
 
     }
 
-
     const sections = [];
 
     let currentSection = null;
-
 
     const lines =
         answer
             .replace(/\r/g, "")
             .split("\n");
 
-
     lines.forEach(line => {
 
         const trimmed =
             line.trim();
 
-
         if (!trimmed) {
             return;
         }
 
-
         let title = null;
-
 
         if (
             trimmed.includes("📌") &&
@@ -2322,7 +2022,6 @@ function formatAIResponse(answer) {
 
         }
 
-
         if (title) {
 
             currentSection = {
@@ -2333,18 +2032,15 @@ function formatAIResponse(answer) {
 
             };
 
-
             sections.push(
                 currentSection
             );
-
 
         } else if (currentSection) {
 
             currentSection.content.push(
                 trimmed
             );
-
 
         } else {
 
@@ -2370,7 +2066,6 @@ function formatAIResponse(answer) {
 
     });
 
-
     if (sections.length === 0) {
 
         sections.push({
@@ -2385,10 +2080,8 @@ function formatAIResponse(answer) {
 
     }
 
-
     let html =
         `<div class="ai-response-box">`;
-
 
     sections.forEach(section => {
 
@@ -2401,7 +2094,6 @@ function formatAIResponse(answer) {
 
                 <div class="ai-response-content">
         `;
-
 
         section.content.forEach(line => {
 
@@ -2424,7 +2116,6 @@ function formatAIResponse(answer) {
 
         });
 
-
         html += `
                 </div>
 
@@ -2433,15 +2124,12 @@ function formatAIResponse(answer) {
 
     });
 
-
     html +=
         `</div>`;
-
 
     return html;
 
 }
-
 
 /* =========================
    AI ASSISTANT
@@ -2458,22 +2146,18 @@ async function askAI() {
         return;
     }
 
-
     const aiInput =
         document.getElementById(
             "aiInput"
         );
-
 
     const aiResult =
         document.getElementById(
             "aiResult"
         );
 
-
     const question =
         aiInput.value.trim();
-
 
     if (!question) {
 
@@ -2483,7 +2167,6 @@ async function askAI() {
 
         return;
     }
-
 
     /* =========================
        LOADING UI
@@ -2507,12 +2190,11 @@ async function askAI() {
 
     `;
 
-
     try {
 
         const response =
             await fetch(
-                "http://localhost:3000/api/ask",
+                `${API_URL}/api/ask`,
                 {
                     method: "POST",
 
@@ -2526,10 +2208,8 @@ async function askAI() {
                 }
             );
 
-
         const data =
             await response.json();
-
 
         if (!response.ok) {
 
@@ -2549,7 +2229,6 @@ async function askAI() {
             return;
         }
 
-
         /* =========================
            DISPLAY FORMATTED ANSWER
         ========================= */
@@ -2559,7 +2238,6 @@ async function askAI() {
                 data.answer
             );
 
-
     } catch (error) {
 
         console.log(
@@ -2567,7 +2245,6 @@ async function askAI() {
         );
 
         console.log(error);
-
 
         aiResult.innerHTML = `
 
@@ -2587,9 +2264,9 @@ async function askAI() {
 
 }
 
-
 /* =========================
    START APP
 ========================= */
 
 checkLogin();
+
