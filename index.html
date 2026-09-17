@@ -3,25 +3,15 @@
 
 <head>
     <meta charset="UTF-8">
-
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>AI Student Companion</title>
 
-    <link
-        rel="icon"
-        type="image/svg+xml"
-        href="./favicon.svg"
-    >
+    <!-- FAVICON -->
+    <link rel="icon" type="image/svg+xml" href="./favicon.svg">
 
-    <!-- Google Analytics -->
-    <script
-        async
-        src="https://www.googletagmanager.com/gtag/js?id=G-M674BX29YF"
-    ></script>
+    <!-- GOOGLE ANALYTICS -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-M674BX29YF"></script>
 
     <script>
         window.dataLayer = window.dataLayer || [];
@@ -30,213 +20,166 @@
             dataLayer.push(arguments);
         }
 
-        gtag("js", new Date());
-
-        gtag(
-            "config",
-            "G-M674BX29YF"
-        );
+        gtag('js', new Date());
+        gtag('config', 'G-M674BX29YF');
     </script>
 
-    <!-- Google Font -->
-    <link
-        rel="preconnect"
-        href="https://fonts.googleapis.com"
-    >
-
-    <link
-        rel="preconnect"
-        href="https://fonts.gstatic.com"
-        crossorigin
-    >
+    <!-- GOOGLE FONT -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
     <link
         href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
         rel="stylesheet"
     >
 
-    <link
-        rel="stylesheet"
-        href="./style.css"
-    >
+    <!-- MAIN CSS -->
+    <link rel="stylesheet" href="./style.css">
 </head>
 
 
 <body>
 
+    <!-- =====================================================
+         NAVBAR
+    ====================================================== -->
 
-<!-- ================================================= -->
-<!-- NAVBAR -->
-<!-- ================================================= -->
+    <nav class="navbar">
 
-<nav class="navbar">
+        <div class="nav-container">
 
-    <div class="nav-container">
+            <a href="#home" class="logo">
+                <span class="logo-icon">🎓</span>
+                <span>AI Student Companion</span>
+            </a>
 
-        <a
-            href="#home"
-            class="brand"
-        >
+            <div class="nav-links">
 
-            <div class="brand-icon">
-                🎓
+                <a href="#home">Home</a>
+
+                <a href="#tasks">Tasks</a>
+
+                <a href="#ai">AI Assistant</a>
+
+                <button
+                    id="logoutButton"
+                    type="button"
+                    onclick="logoutUser()"
+                    style="display: none;"
+                >
+                    Logout
+                </button>
+
             </div>
-
-            <div class="brand-text">
-                <strong>
-                    AI Student
-                </strong>
-
-                <span>
-                    Companion
-                </span>
-            </div>
-
-        </a>
-
-
-        <div class="nav-links">
-
-            <a href="#home">
-                Home
-            </a>
-
-            <a href="#tasks">
-                Tasks
-            </a>
-
-            <a href="#ai">
-                AI Assistant
-            </a>
-
-            <button
-                id="logoutButton"
-                type="button"
-                onclick="logoutUser()"
-            >
-                Logout
-            </button>
 
         </div>
 
-    </div>
-
-</nav>
+    </nav>
 
 
+    <!-- =====================================================
+         HERO
+    ====================================================== -->
 
-<!-- ================================================= -->
-<!-- HERO -->
-<!-- ================================================= -->
+    <section id="home" class="hero">
 
-<section
-    id="home"
-    class="hero"
->
+        <div class="hero-background"></div>
 
-    <div class="hero-glow"></div>
+        <div class="hero-content">
 
-    <div class="hero-content">
+            <div class="hero-badge">
+                <span>✦</span>
+                AI POWERED STUDENT PLATFORM
+            </div>
 
-        <div class="hero-badge">
-            <span>✦</span>
-            SMART STUDENT PRODUCTIVITY
+            <h1>
+                AI Student
+                <span>Companion</span>
+            </h1>
+
+            <p>
+                Your personal study assistant for tasks,
+                study planning, notes, quizzes and AI assistance.
+            </p>
+
         </div>
 
-        <h1>
-            AI Student
-            <span>Companion</span>
-        </h1>
-
-        <p>
-            Organize your tasks, plan your studies,
-            save notes and learn smarter with AI.
-        </p>
-
-    </div>
-
-</section>
+    </section>
 
 
+    <!-- =====================================================
+         AUTHENTICATION
+    ====================================================== -->
 
-<!-- ================================================= -->
-<!-- AUTH SECTION -->
-<!-- ================================================= -->
+    <section id="authSection" class="auth-section">
 
-<section
-    id="authSection"
-    class="auth-section"
->
+        <div class="auth-container">
 
-    <div class="auth-wrapper">
+            <!-- REGISTER -->
 
-
-        <!-- REGISTER -->
-
-        <div
-            id="registerCard"
-            class="auth-card"
-        >
-
-            <div class="auth-top">
+            <div class="auth-card" id="registerCard">
 
                 <div class="auth-icon">
-                    ✦
+                    📝
                 </div>
 
-                <div>
-                    <span class="small-label">
-                        GET STARTED
-                    </span>
-
-                    <h2>
-                        Create your account
-                    </h2>
-
-                    <p>
-                        Start organizing your student life.
-                    </p>
+                <div class="auth-label">
+                    GET STARTED
                 </div>
 
-            </div>
+                <h2>Create Account</h2>
+
+                <p class="auth-description">
+                    Create your account and start organizing
+                    your study life.
+                </p>
+
+                <div class="form-group">
+
+                    <label for="registerName">
+                        Full Name
+                    </label>
+
+                    <input
+                        type="text"
+                        id="registerName"
+                        placeholder="Enter your name"
+                        autocomplete="name"
+                    >
+
+                </div>
 
 
-            <div class="auth-form">
+                <div class="form-group">
 
-                <label>
-                    Full Name
-                </label>
+                    <label for="registerEmail">
+                        Email
+                    </label>
 
-                <input
-                    type="text"
-                    id="registerName"
-                    placeholder="Enter your name"
-                    autocomplete="name"
-                >
+                    <input
+                        type="email"
+                        id="registerEmail"
+                        placeholder="Enter your email"
+                        autocomplete="email"
+                    >
 
-
-                <label>
-                    Email
-                </label>
-
-                <input
-                    type="email"
-                    id="registerEmail"
-                    placeholder="Enter your email"
-                    autocomplete="email"
-                >
+                </div>
 
 
-                <label>
-                    Password
-                </label>
+                <div class="form-group">
 
-                <input
-                    type="password"
-                    id="registerPassword"
-                    placeholder="Create a password"
-                    autocomplete="new-password"
-                >
+                    <label for="registerPassword">
+                        Password
+                    </label>
+
+                    <input
+                        type="password"
+                        id="registerPassword"
+                        placeholder="Create a password"
+                        autocomplete="new-password"
+                    >
+
+                </div>
 
 
                 <button
@@ -248,86 +191,77 @@
                     <span>→</span>
                 </button>
 
-            </div>
 
+                <p class="auth-switch">
 
-            <div class="auth-bottom">
-
-                <span>
                     Already have an account?
-                </span>
 
-                <button
-                    id="loginSwitchButton"
-                    type="button"
-                    onclick="showLoginForm(); return false;"
-                >
-                    Login
-                </button>
+                    <button
+                        type="button"
+                        id="loginSwitchButton"
+                        onclick="showLoginForm(); return false;"
+                    >
+                        Login
+                    </button>
+
+                </p>
 
             </div>
 
-        </div>
 
+            <!-- LOGIN -->
 
-
-        <!-- LOGIN -->
-
-        <div
-            id="loginCard"
-            class="auth-card"
-            style="display:none;"
-        >
-
-            <div class="auth-top">
+            <div
+                class="auth-card"
+                id="loginCard"
+                style="display: none;"
+            >
 
                 <div class="auth-icon">
-                    ↗
+                    🔐
                 </div>
 
-                <div>
+                <div class="auth-label">
+                    WELCOME BACK
+                </div>
 
-                    <span class="small-label">
-                        WELCOME BACK
-                    </span>
+                <h2>Login</h2>
 
-                    <h2>
-                        Login to continue
-                    </h2>
+                <p class="auth-description">
+                    Login to continue your study journey.
+                </p>
 
-                    <p>
-                        Continue your study journey.
-                    </p>
+
+                <div class="form-group">
+
+                    <label for="loginEmail">
+                        Email
+                    </label>
+
+                    <input
+                        type="email"
+                        id="loginEmail"
+                        placeholder="Enter your email"
+                        autocomplete="email"
+                    >
 
                 </div>
 
-            </div>
 
+                <div class="form-group">
 
-            <div class="auth-form">
+                    <label for="loginPassword">
+                        Password
+                    </label>
 
-                <label>
-                    Email
-                </label>
+                    <input
+                        type="password"
+                        id="loginPassword"
+                        placeholder="Enter your password"
+                        autocomplete="current-password"
+                    >
 
-                <input
-                    type="email"
-                    id="loginEmail"
-                    placeholder="Enter your email"
-                    autocomplete="email"
-                >
-
-
-                <label>
-                    Password
-                </label>
-
-                <input
-                    type="password"
-                    id="loginPassword"
-                    placeholder="Enter your password"
-                    autocomplete="current-password"
-                >
+                </div>
 
 
                 <button
@@ -339,803 +273,698 @@
                     <span>→</span>
                 </button>
 
-            </div>
 
+                <p class="auth-switch">
 
-            <div class="auth-bottom">
-
-                <span>
                     Don't have an account?
-                </span>
 
-                <button
-                    id="registerSwitchButton"
-                    type="button"
-                    onclick="showRegisterForm(); return false;"
-                >
-                    Register
-                </button>
+                    <button
+                        type="button"
+                        id="registerSwitchButton"
+                        onclick="showRegisterForm(); return false;"
+                    >
+                        Register
+                    </button>
 
-            </div>
-
-        </div>
-
-    </div>
-
-</section>
-
-
-
-<!-- ================================================= -->
-<!-- APP -->
-<!-- ================================================= -->
-
-<div
-    id="appSection"
-    style="display:none;"
->
-
-
-<!-- ================================================= -->
-<!-- DASHBOARD -->
-<!-- ================================================= -->
-
-<section
-    id="dashboard"
-    class="dashboard-section"
->
-
-    <div class="dashboard-container">
-
-
-        <!-- DASHBOARD HEADER -->
-
-        <div class="dashboard-header">
-
-            <div>
-
-                <span class="dashboard-label">
-                    STUDENT DASHBOARD
-                </span>
-
-                <h2 id="welcomeMessage">
-                    Welcome!
-                </h2>
-
-                <p>
-                    Here's your study overview for today.
                 </p>
 
             </div>
 
-
-            <div class="dashboard-status">
-
-                <span class="status-dot"></span>
-
-                <span>
-                    System Ready
-                </span>
-
-            </div>
-
         </div>
 
+    </section>
 
 
-        <!-- STAT CARDS -->
+    <!-- =====================================================
+         APPLICATION
+    ====================================================== -->
 
-        <div class="overview-grid">
-
-
-            <div class="overview-card">
-
-                <div class="overview-icon blue">
-                    ✓
-                </div>
-
-                <div class="overview-info">
-
-                    <span>
-                        TOTAL TASKS
-                    </span>
-
-                    <strong id="totalTasks">
-                        0
-                    </strong>
-
-                    <small>
-                        Tasks created
-                    </small>
-
-                </div>
-
-            </div>
+    <div id="appSection" style="display: none;">
 
 
+        <!-- =================================================
+             DASHBOARD
+        ================================================== -->
 
-            <div class="overview-card">
+        <section id="dashboard" class="dashboard-section">
 
-                <div class="overview-icon green">
-                    ✓
-                </div>
-
-                <div class="overview-info">
-
-                    <span>
-                        COMPLETED
-                    </span>
-
-                    <strong id="completedTasks">
-                        0
-                    </strong>
-
-                    <small>
-                        Tasks completed
-                    </small>
-
-                </div>
-
-            </div>
+            <div class="dashboard-container">
 
 
+                <!-- DASHBOARD HEADER -->
 
-            <div class="overview-card">
-
-                <div class="overview-icon purple">
-                    ◈
-                </div>
-
-                <div class="overview-info">
-
-                    <span>
-                        STUDY PLANS
-                    </span>
-
-                    <strong id="totalStudyPlans">
-                        0
-                    </strong>
-
-                    <small>
-                        Plans created
-                    </small>
-
-                </div>
-
-            </div>
-
-
-
-            <div class="overview-card">
-
-                <div class="overview-icon orange">
-                    ✎
-                </div>
-
-                <div class="overview-info">
-
-                    <span>
-                        NOTES
-                    </span>
-
-                    <strong id="totalNotes">
-                        0
-                    </strong>
-
-                    <small>
-                        Notes saved
-                    </small>
-
-                </div>
-
-            </div>
-
-        </div>
-
-
-
-        <!-- PROGRESS + PRODUCTIVITY -->
-
-        <div class="dashboard-bottom-grid">
-
-
-            <div class="progress-card">
-
-                <div class="card-title-row">
+                <div class="dashboard-header">
 
                     <div>
 
-                        <span class="card-eyebrow">
-                            PERFORMANCE
+                        <span class="dashboard-label">
+                            STUDENT DASHBOARD
                         </span>
 
-                        <h3>
-                            Study Progress
-                        </h3>
+                        <h2 id="welcomeMessage">
+                            Welcome!
+                        </h2>
+
+                        <p>
+                            Here's your study overview.
+                            Stay consistent and keep progressing.
+                        </p>
 
                     </div>
 
-                    <strong id="progressText">
-                        0%
-                    </strong>
+
+                    <div class="ai-powered-badge">
+                        <span>✦</span>
+                        AI POWERED
+                    </div>
 
                 </div>
 
 
-                <div class="progress-track">
+                <!-- STAT CARDS -->
+
+                <div class="overview-grid">
+
+
+                    <div class="overview-card">
+
+                        <div class="overview-icon blue">
+                            📋
+                        </div>
+
+                        <div class="overview-content">
+
+                            <span class="overview-title">
+                                TOTAL TASKS
+                            </span>
+
+                            <h3 id="totalTasks">
+                                0
+                            </h3>
+
+                            <p>
+                                Your current tasks
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="overview-card">
+
+                        <div class="overview-icon green">
+                            ✓
+                        </div>
+
+                        <div class="overview-content">
+
+                            <span class="overview-title">
+                                COMPLETED
+                            </span>
+
+                            <h3 id="completedTasks">
+                                0
+                            </h3>
+
+                            <p>
+                                Tasks completed
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="overview-card">
+
+                        <div class="overview-icon purple">
+                            📚
+                        </div>
+
+                        <div class="overview-content">
+
+                            <span class="overview-title">
+                                STUDY PLANS
+                            </span>
+
+                            <h3 id="totalStudyPlans">
+                                0
+                            </h3>
+
+                            <p>
+                                Active study plans
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="overview-card">
+
+                        <div class="overview-icon orange">
+                            📝
+                        </div>
+
+                        <div class="overview-content">
+
+                            <span class="overview-title">
+                                NOTES
+                            </span>
+
+                            <h3 id="totalNotes">
+                                0
+                            </h3>
+
+                            <p>
+                                Saved notes
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- PROGRESS + PRODUCTIVITY -->
+
+                <div class="dashboard-bottom">
+
+
+                    <!-- PROGRESS -->
+
+                    <div class="progress-card">
+
+                        <div class="card-top">
+
+                            <div>
+
+                                <span class="small-label">
+                                    YOUR PROGRESS
+                                </span>
+
+                                <h3>
+                                    Study Progress
+                                </h3>
+
+                            </div>
+
+                            <span
+                                id="progressText"
+                                class="progress-percentage"
+                            >
+                                0%
+                            </span>
+
+                        </div>
+
+
+                        <div class="progress-track">
+
+                            <div
+                                id="progressFill"
+                                class="progress-fill"
+                                style="width: 0%;"
+                            ></div>
+
+                        </div>
+
+
+                        <p>
+                            Complete your tasks to increase your progress.
+                        </p>
+
+                    </div>
+
+
+                    <!-- PRODUCTIVITY -->
+
+                    <div class="productivity-card">
+
+                        <div class="productivity-icon">
+                            ⚡
+                        </div>
+
+                        <div>
+
+                            <span class="small-label">
+                                PRODUCTIVITY
+                            </span>
+
+                            <h3>
+                                Productivity Status
+                            </h3>
+
+                            <p id="productivityStatus">
+                                Start completing your tasks
+                                to see your productivity.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =================================================
+             WORKSPACE
+        ================================================== -->
+
+        <main class="workspace">
+
+
+            <!-- =================================================
+                 TASK MANAGER
+            ================================================== -->
+
+            <section
+                id="tasks"
+                class="feature-section"
+            >
+
+                <div class="feature-card">
+
+                    <div class="section-heading">
+
+                        <div class="section-icon">
+                            📋
+                        </div>
+
+                        <div>
+
+                            <span class="section-label">
+                                PRODUCTIVITY
+                            </span>
+
+                            <h2>
+                                Task Manager
+                            </h2>
+
+                            <p>
+                                Organize and complete your daily tasks.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="input-row">
+
+                        <input
+                            type="text"
+                            id="taskInput"
+                            placeholder="What do you need to accomplish?"
+                        >
+
+                        <button
+                            class="action-button"
+                            type="button"
+                            onclick="addTask()"
+                        >
+                            Add Task
+                            <span>+</span>
+                        </button>
+
+                    </div>
+
 
                     <div
-                        id="progressFill"
-                        class="progress-fill"
-                        style="width:0%;"
+                        id="taskList"
+                        class="task-list"
                     ></div>
 
                 </div>
 
+            </section>
 
-                <p>
-                    Complete tasks to increase your progress.
-                </p>
 
-            </div>
 
+            <!-- =================================================
+                 STUDY PLANNER
+            ================================================== -->
 
-
-            <div class="productivity-card">
-
-                <div class="productivity-icon">
-                    ⚡
-                </div>
-
-                <div>
-
-                    <span class="card-eyebrow">
-                        PRODUCTIVITY
-                    </span>
-
-                    <h3>
-                        Your Status
-                    </h3>
-
-                    <p id="productivityStatus">
-                        Start completing your tasks to see your productivity.
-                    </p>
-
-                </div>
-
-            </div>
-
-        </div>
-
-    </div>
-
-</section>
-
-
-
-<!-- ================================================= -->
-<!-- WORKSPACE -->
-<!-- ================================================= -->
-
-<main class="workspace">
-
-
-<!-- ================================================= -->
-<!-- TASK MANAGER -->
-<!-- ================================================= -->
-
-<section
-    id="tasks"
-    class="workspace-section"
->
-
-    <div class="section-container">
-
-        <div class="section-header">
-
-            <div class="section-number">
-                01
-            </div>
-
-            <div>
-
-                <span class="section-label">
-                    ORGANIZE
-                </span>
-
-                <h2>
-                    Task Manager
-                </h2>
-
-                <p>
-                    Keep track of everything you need to complete.
-                </p>
-
-            </div>
-
-        </div>
-
-
-        <div class="feature-card">
-
-
-            <div class="input-action-row">
-
-                <input
-                    type="text"
-                    id="taskInput"
-                    placeholder="What do you need to accomplish?"
-                >
-
-                <button
-                    type="button"
-                    onclick="addTask()"
-                >
-                    Add Task
-                    <span>+</span>
-                </button>
-
-            </div>
-
-
-            <div
-                id="taskList"
-                class="task-list"
-            ></div>
-
-        </div>
-
-    </div>
-
-</section>
-
-
-
-<!-- ================================================= -->
-<!-- STUDY PLANNER -->
-<!-- ================================================= -->
-
-<section
-    id="studyPlanner"
-    class="workspace-section"
->
-
-    <div class="section-container">
-
-        <div class="section-header">
-
-            <div class="section-number">
-                02
-            </div>
-
-            <div>
-
-                <span class="section-label">
-                    PLAN
-                </span>
-
-                <h2>
-                    Study Planner
-                </h2>
-
-                <p>
-                    Build a simple and focused study schedule.
-                </p>
-
-            </div>
-
-        </div>
-
-
-        <div class="feature-card">
-
-
-            <div class="planner-form">
-
-                <div class="form-field">
-
-                    <label>
-                        Subject
-                    </label>
-
-                    <input
-                        type="text"
-                        id="subjectInput"
-                        placeholder="e.g. Machine Learning"
-                    >
-
-                </div>
-
-
-                <div class="form-field">
-
-                    <label>
-                        Topic
-                    </label>
-
-                    <input
-                        type="text"
-                        id="topicInput"
-                        placeholder="e.g. Regression"
-                    >
-
-                </div>
-
-
-                <div class="form-field">
-
-                    <label>
-                        Study Time
-                    </label>
-
-                    <input
-                        type="text"
-                        id="timeInput"
-                        placeholder="e.g. 2 hours"
-                    >
-
-                </div>
-
-
-                <button
-                    class="primary-button"
-                    type="button"
-                    onclick="addStudyPlan()"
-                >
-                    Add Study
-                    <span>+</span>
-                </button>
-
-            </div>
-
-
-            <div
-                id="studyPlanList"
-                class="study-list"
-            ></div>
-
-        </div>
-
-    </div>
-
-</section>
-
-
-
-<!-- ================================================= -->
-<!-- NOTES -->
-<!-- ================================================= -->
-
-<section
-    id="notes"
-    class="workspace-section"
->
-
-    <div class="section-container">
-
-        <div class="section-header">
-
-            <div class="section-number">
-                03
-            </div>
-
-            <div>
-
-                <span class="section-label">
-                    CAPTURE
-                </span>
-
-                <h2>
-                    Smart Notes
-                </h2>
-
-                <p>
-                    Save important ideas, concepts and reminders.
-                </p>
-
-            </div>
-
-        </div>
-
-
-        <div class="feature-card">
-
-            <textarea
-                id="noteInput"
-                class="note-input"
-                placeholder="Write your study note here..."
-            ></textarea>
-
-
-            <div class="note-action">
-
-                <button
-                    class="primary-button"
-                    type="button"
-                    onclick="addNote()"
-                >
-                    Save Note
-                    <span>→</span>
-                </button>
-
-            </div>
-
-
-            <div
-                id="notesList"
-                class="notes-list"
-            ></div>
-
-        </div>
-
-    </div>
-
-</section>
-
-
-
-<!-- ================================================= -->
-<!-- QUIZ -->
-<!-- ================================================= -->
-
-<section
-    id="quiz"
-    class="workspace-section"
->
-
-    <div class="section-container">
-
-        <div class="section-header">
-
-            <div class="section-number">
-                04
-            </div>
-
-            <div>
-
-                <span class="section-label">
-                    PRACTICE
-                </span>
-
-                <h2>
-                    AI Quiz
-                </h2>
-
-                <p>
-                    Generate AI-powered questions for your revision.
-                </p>
-
-            </div>
-
-        </div>
-
-
-        <div class="feature-card ai-feature-card">
-
-            <div class="quiz-input-row">
-
-                <input
-                    type="text"
-                    id="quizTopic"
-                    placeholder="Enter a topic, e.g. Python loops"
-                >
-
-                <button
-                    class="primary-button"
-                    type="button"
-                    onclick="generateQuiz()"
-                >
-                    Generate Quiz
-                    <span>✦</span>
-                </button>
-
-            </div>
-
-
-            <div
-                id="quizContainer"
-                class="quiz-container"
-            ></div>
-
-        </div>
-
-    </div>
-
-</section>
-
-
-
-<!-- ================================================= -->
-<!-- AI ASSISTANT -->
-<!-- ================================================= -->
-
-<section
-    id="ai"
-    class="workspace-section ai-section"
->
-
-    <div class="section-container">
-
-        <div class="section-header">
-
-            <div class="section-number">
-                05
-            </div>
-
-            <div>
-
-                <span class="section-label">
-                    INTELLIGENCE
-                </span>
-
-                <h2>
-                    AI Study Assistant
-                </h2>
-
-                <p>
-                    Ask questions and get help with your studies.
-                </p>
-
-            </div>
-
-        </div>
-
-
-        <div class="ai-card">
-
-
-            <div class="ai-card-header">
-
-                <div class="ai-orb">
-                    ✦
-                </div>
-
-                <div>
-
-                    <span>
-                        AI ASSISTANT
-                    </span>
-
-                    <h3>
-                        What would you like to learn?
-                    </h3>
-
-                </div>
-
-            </div>
-
-
-            <textarea
-                id="aiInput"
-                class="ai-input"
-                placeholder="Ask anything about your studies..."
-            ></textarea>
-
-
-            <div class="ai-actions">
-
-                <button
-                    class="primary-button ai-main-button"
-                    type="button"
-                    onclick="askAI()"
-                >
-                    Ask AI
-                    <span>→</span>
-                </button>
-
-            </div>
-
-
-            <div class="quick-questions">
-
-                <span>
-                    Try asking:
-                </span>
-
-                <button
-                    type="button"
-                    onclick="setAIQuestion('Explain machine learning in simple words')"
-                >
-                    Machine Learning
-                </button>
-
-                <button
-                    type="button"
-                    onclick="setAIQuestion('Give me a study plan for today')"
-                >
-                    Study Plan
-                </button>
-
-                <button
-                    type="button"
-                    onclick="setAIQuestion('Give me some Python practice questions')"
-                >
-                    Python Practice
-                </button>
-
-            </div>
-
-
-            <div
-                id="aiResponse"
-                class="ai-response-box"
+            <section
+                id="studyPlanner"
+                class="feature-section"
             >
 
-                <div class="ai-empty">
+                <div class="feature-card">
 
-                    <div class="ai-empty-icon">
-                        ✦
+                    <div class="section-heading">
+
+                        <div class="section-icon purple-icon">
+                            📚
+                        </div>
+
+                        <div>
+
+                            <span class="section-label">
+                                PLANNING
+                            </span>
+
+                            <h2>
+                                Study Planner
+                            </h2>
+
+                            <p>
+                                Create a simple and organized
+                                study schedule.
+                            </p>
+
+                        </div>
+
                     </div>
 
-                    <p>
-                        Your AI response will appear here.
-                    </p>
+
+                    <div class="planner-grid">
+
+                        <input
+                            type="text"
+                            id="subjectInput"
+                            placeholder="Subject"
+                        >
+
+                        <input
+                            type="text"
+                            id="topicInput"
+                            placeholder="Topic"
+                        >
+
+                        <input
+                            type="text"
+                            id="timeInput"
+                            placeholder="Study time"
+                        >
+
+                        <button
+                            class="action-button"
+                            type="button"
+                            onclick="addStudyPlan()"
+                        >
+                            Add Study
+                            <span>+</span>
+                        </button>
+
+                    </div>
+
+
+                    <div
+                        id="studyPlanList"
+                        class="study-list"
+                    ></div>
 
                 </div>
 
-            </div>
+            </section>
 
-        </div>
+
+
+            <!-- =================================================
+                 NOTES
+            ================================================== -->
+
+            <section
+                id="notes"
+                class="feature-section"
+            >
+
+                <div class="feature-card">
+
+                    <div class="section-heading">
+
+                        <div class="section-icon orange-icon">
+                            📝
+                        </div>
+
+                        <div>
+
+                            <span class="section-label">
+                                KNOWLEDGE
+                            </span>
+
+                            <h2>
+                                Smart Notes
+                            </h2>
+
+                            <p>
+                                Save important information
+                                for later.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="notes-input">
+
+                        <textarea
+                            id="noteInput"
+                            placeholder="Write your study note here..."
+                        ></textarea>
+
+                        <button
+                            class="action-button"
+                            type="button"
+                            onclick="addNote()"
+                        >
+                            Save Note
+                            <span>+</span>
+                        </button>
+
+                    </div>
+
+
+                    <div
+                        id="notesList"
+                        class="notes-list"
+                    ></div>
+
+                </div>
+
+            </section>
+
+
+
+            <!-- =================================================
+                 QUIZ
+            ================================================== -->
+
+            <section
+                id="quiz"
+                class="feature-section"
+            >
+
+                <div class="feature-card">
+
+                    <div class="section-heading">
+
+                        <div class="section-icon green-icon">
+                            🧠
+                        </div>
+
+                        <div>
+
+                            <span class="section-label">
+                                PRACTICE
+                            </span>
+
+                            <h2>
+                                AI Quiz
+                            </h2>
+
+                            <p>
+                                Generate AI-powered questions
+                                to test your knowledge.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="input-row">
+
+                        <input
+                            type="text"
+                            id="quizTopic"
+                            placeholder="Enter a topic for your quiz..."
+                        >
+
+                        <button
+                            class="action-button"
+                            type="button"
+                            onclick="generateQuiz()"
+                        >
+                            Generate Quiz
+                            <span>✦</span>
+                        </button>
+
+                    </div>
+
+
+                    <div id="quizContainer"></div>
+
+                </div>
+
+            </section>
+
+
+
+            <!-- =================================================
+                 AI ASSISTANT
+            ================================================== -->
+
+            <section
+                id="ai"
+                class="feature-section ai-section"
+            >
+
+                <div class="feature-card ai-feature-card">
+
+                    <div class="section-heading">
+
+                        <div class="section-icon ai-icon">
+                            🤖
+                        </div>
+
+                        <div>
+
+                            <span class="section-label">
+                                ARTIFICIAL INTELLIGENCE
+                            </span>
+
+                            <h2>
+                                AI Study Assistant
+                            </h2>
+
+                            <p>
+                                Ask AI questions and get help
+                                with your studies.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="ai-box">
+
+                        <textarea
+                            id="aiInput"
+                            placeholder="Ask your study question..."
+                        ></textarea>
+
+
+                        <button
+                            class="ai-main-button"
+                            type="button"
+                            onclick="askAI()"
+                        >
+                            <span>✦</span>
+                            Ask AI
+                        </button>
+
+
+                        <div class="quick-questions">
+
+                            <span class="quick-label">
+                                QUICK QUESTIONS
+                            </span>
+
+                            <button
+                                type="button"
+                                onclick="setAIQuestion('Explain machine learning in simple words')"
+                            >
+                                Machine Learning
+                            </button>
+
+                            <button
+                                type="button"
+                                onclick="setAIQuestion('Give me a study plan for today')"
+                            >
+                                Study Plan
+                            </button>
+
+                            <button
+                                type="button"
+                                onclick="setAIQuestion('Give me some Python practice questions')"
+                            >
+                                Python Practice
+                            </button>
+
+                        </div>
+
+
+                        <div
+                            id="aiResponse"
+                            class="ai-response-box"
+                        >
+
+                            <div class="response-placeholder">
+
+                                <span>✦</span>
+
+                                <p>
+                                    Your AI response will appear here.
+                                </p>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+        </main>
 
     </div>
 
-</section>
 
 
-</main>
+    <!-- =====================================================
+         FOOTER
+    ====================================================== -->
 
-</div>
+    <footer class="footer">
 
+        <div class="footer-content">
 
-
-<!-- ================================================= -->
-<!-- FOOTER -->
-<!-- ================================================= -->
-
-<footer class="footer">
-
-    <div class="footer-inner">
-
-        <div class="footer-brand">
-
-            <div class="brand-icon">
-                🎓
+            <div class="footer-logo">
+                🎓 AI Student Companion
             </div>
 
-            <div>
+            <p>
+                Your personal AI-powered study companion.
+            </p>
 
-                <strong>
-                    AI Student Companion
-                </strong>
+            <div class="footer-line"></div>
 
-                <span>
-                    Your personal study assistant
-                </span>
-
-            </div>
+            <p class="creator">
+                Created by <strong>Mohammad Muneem</strong>
+            </p>
 
         </div>
 
-
-        <div class="footer-credit">
-
-            <span>
-                Created by
-            </span>
-
-            <strong>
-                Mohammad Muneem
-            </strong>
-
-        </div>
-
-    </div>
-
-</footer>
+    </footer>
 
 
 
-<script src="./script.js"></script>
+    <!-- JAVASCRIPT -->
+
+    <script src="./script.js"></script>
 
 </body>
 
