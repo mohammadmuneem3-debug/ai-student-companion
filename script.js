@@ -1,129 +1,215 @@
-const API_URL = "https://ai-student-companion-njmj.onrender.com";
+console.log("AI Student Companion script loaded");
+// =====================================================
+// AI STUDENT COMPANION
+// COMPLETE UPDATED SCRIPT.JS
+// =====================================================
 
-/* =========================
-   CURRENT USER
-========================= */
+
+// =====================================================
+// API URL
+// =====================================================
+
+const API_URL =
+    "https://ai-student-companion-njmj.onrender.com";
+
+
+// =====================================================
+// CURRENT USER
+// =====================================================
 
 let currentUser =
     JSON.parse(localStorage.getItem("currentUser"));
 
-/* =========================
-   CURRENT QUIZ
-========================= */
 
-let currentQuiz = [];
+// =====================================================
+// PAGE LOAD
+// =====================================================
 
-/* =========================
-   AI RESPONSE STYLE
-========================= */
+document.addEventListener(
+    "DOMContentLoaded",
+    function () {
 
-function addAIResponseStyles() {
+        checkLogin();
 
-    if (document.getElementById("aiResponseStyles")) {
+    }
+);
+
+
+// =====================================================
+// AUTH CARD CONTROL
+// =====================================================
+
+function showOnlyRegister() {
+
+    const registerCard =
+        document.getElementById("registerCard");
+
+    const loginCard =
+        document.getElementById("loginCard");
+
+    if (!registerCard || !loginCard) {
         return;
     }
 
-    const style = document.createElement("style");
 
-    style.id = "aiResponseStyles";
+    // SHOW REGISTER
 
-    style.innerHTML = `
+    registerCard.classList.remove(
+        "auth-hidden"
+    );
 
-        .ai-response-box {
-            background: #111827;
-            border: 1px solid #273248;
-            border-radius: 14px;
-            padding: 18px;
-            margin-top: 15px;
-            line-height: 1.7;
-            color: #e5e7eb;
-        }
+    registerCard.classList.add(
+        "auth-visible"
+    );
 
-        .ai-response-section {
-            margin-bottom: 18px;
-        }
+    registerCard.style.setProperty(
+        "display",
+        "block",
+        "important"
+    );
 
-        .ai-response-section:last-child {
-            margin-bottom: 0;
-        }
 
-        .ai-response-title {
-            font-size: 16px;
-            font-weight: 700;
-            color: #f8fafc;
-            margin-bottom: 8px;
-        }
+    // HIDE LOGIN
 
-        .ai-response-content {
-            color: #cbd5e1;
-            font-size: 14px;
-            white-space: pre-line;
-        }
+    loginCard.classList.remove(
+        "auth-visible"
+    );
 
-        .ai-response-content ul {
-            margin: 8px 0 0 20px;
-            padding: 0;
-        }
+    loginCard.classList.add(
+        "auth-hidden"
+    );
 
-        .ai-response-content li {
-            margin-bottom: 5px;
-        }
+    loginCard.style.setProperty(
+        "display",
+        "none",
+        "important"
+    );
 
-        .ai-loading {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            color: #cbd5e1;
-            padding: 15px 0;
-        }
-
-        .ai-loading-dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background: #94a3b8;
-            animation: aiPulse 1.2s infinite;
-        }
-
-        @keyframes aiPulse {
-
-            0%, 100% {
-                opacity: 0.3;
-                transform: scale(0.8);
-            }
-
-            50% {
-                opacity: 1;
-                transform: scale(1);
-            }
-
-        }
-
-        .ai-error {
-            color: #fca5a5;
-            background: #2a1515;
-            border: 1px solid #5f2929;
-            padding: 12px;
-            border-radius: 10px;
-        }
-
-    `;
-
-    document.head.appendChild(style);
 }
 
-addAIResponseStyles();
 
-/* =========================
-   LOGIN CHECK
-========================= */
+// =====================================================
+// SHOW LOGIN ONLY
+// =====================================================
+
+function showOnlyLogin() {
+
+    const registerCard =
+        document.getElementById("registerCard");
+
+    const loginCard =
+        document.getElementById("loginCard");
+
+    if (!registerCard || !loginCard) {
+        return;
+    }
+
+
+    // HIDE REGISTER
+
+    registerCard.classList.remove(
+        "auth-visible"
+    );
+
+    registerCard.classList.add(
+        "auth-hidden"
+    );
+
+    registerCard.style.setProperty(
+        "display",
+        "none",
+        "important"
+    );
+
+
+    // SHOW LOGIN
+
+    loginCard.classList.remove(
+        "auth-hidden"
+    );
+
+    loginCard.classList.add(
+        "auth-visible"
+    );
+
+    loginCard.style.setProperty(
+        "display",
+        "block",
+        "important"
+    );
+
+}
+
+
+// =====================================================
+// REGISTER BUTTON
+// =====================================================
+
+function showRegisterForm() {
+
+    console.log(
+        "Register button clicked"
+    );
+
+    showOnlyRegister();
+
+}
+
+
+// =====================================================
+// LOGIN BUTTON
+// =====================================================
+
+function showLoginForm() {
+
+    console.log(
+        "Login button clicked"
+    );
+
+    showOnlyLogin();
+
+}
+
+
+// =====================================================
+// EXTRA AUTH FUNCTIONS
+// =====================================================
+
+function showRegister() {
+
+    showOnlyRegister();
+
+}
+
+
+function showLogin() {
+
+    showOnlyLogin();
+
+}
+
+
+// =====================================================
+// CHECK LOGIN
+// =====================================================
 
 function checkLogin() {
 
     if (currentUser) {
 
-        document.getElementById("welcomeMessage").innerText =
-            `Welcome, ${currentUser.name}! 👋`;
+        const welcomeMessage =
+            document.getElementById(
+                "welcomeMessage"
+            );
+
+        if (welcomeMessage) {
+
+            welcomeMessage.innerText =
+                "Welcome, " +
+                currentUser.name +
+                "! 👋";
+
+        }
 
         showApp();
 
@@ -131,121 +217,260 @@ function checkLogin() {
         loadStudyPlans();
         loadNotes();
 
+        return;
+
+    }
+
+
+    // User is not logged in
+
+    hideApp();
+
+
+    const registrationCompleted =
+        localStorage.getItem(
+            "registrationCompleted"
+        );
+
+
+    if (
+        registrationCompleted === "true"
+    ) {
+
+        showOnlyLogin();
+
     } else {
 
-        hideApp();
+        showOnlyRegister();
 
     }
 
 }
 
-/* =========================
-   SHOW APP
-========================= */
+
+// =====================================================
+// SHOW APP
+// =====================================================
 
 function showApp() {
 
-    const dashboard =
-        document.querySelector(".dashboard");
+    const authSection =
+        document.getElementById(
+            "authSection"
+        );
 
-    const cards =
-        document.querySelector(".cards");
+    const appSection =
+        document.getElementById(
+            "appSection"
+        );
 
     const logoutButton =
-        document.getElementById("logoutButton");
+        document.getElementById(
+            "logoutButton"
+        );
 
-    if (dashboard) {
-        dashboard.style.display = "grid";
+
+    // HIDE AUTH
+
+    if (authSection) {
+
+        authSection.style.setProperty(
+            "display",
+            "none",
+            "important"
+        );
+
     }
 
-    if (cards) {
-        cards.style.display = "grid";
+
+    // SHOW APP
+
+    if (appSection) {
+
+        appSection.style.setProperty(
+            "display",
+            "block",
+            "important"
+        );
+
     }
+
+
+    // SHOW LOGOUT
 
     if (logoutButton) {
-        logoutButton.style.display = "block";
+
+        logoutButton.style.setProperty(
+            "display",
+            "block",
+            "important"
+        );
+
     }
 
 }
 
-/* =========================
-   HIDE APP
-========================= */
+
+// =====================================================
+// HIDE APP
+// =====================================================
 
 function hideApp() {
 
-    const dashboard =
-        document.querySelector(".dashboard");
+    const authSection =
+        document.getElementById(
+            "authSection"
+        );
 
-    const cards =
-        document.querySelector(".cards");
+    const appSection =
+        document.getElementById(
+            "appSection"
+        );
 
     const logoutButton =
-        document.getElementById("logoutButton");
+        document.getElementById(
+            "logoutButton"
+        );
 
-    if (dashboard) {
-        dashboard.style.display = "none";
+
+    // SHOW AUTH
+
+    if (authSection) {
+
+        authSection.style.setProperty(
+            "display",
+            "block",
+            "important"
+        );
+
     }
 
-    if (cards) {
-        cards.style.display = "none";
+
+    // HIDE APP
+
+    if (appSection) {
+
+        appSection.style.setProperty(
+            "display",
+            "none",
+            "important"
+        );
+
     }
+
+
+    // HIDE LOGOUT
 
     if (logoutButton) {
-        logoutButton.style.display = "none";
+
+        logoutButton.style.setProperty(
+            "display",
+            "none",
+            "important"
+        );
+
     }
 
 }
 
-/* =========================
-   ENTER APP
-========================= */
+
+// =====================================================
+// ENTER APP
+// =====================================================
 
 function enterApp() {
 
-    if (!currentUser) {
+    const authSection =
+        document.getElementById(
+            "authSection"
+        );
 
-        alert("Please login first.");
+    if (authSection) {
 
-        return;
+        authSection.scrollIntoView({
+            behavior: "smooth"
+        });
+
     }
-
-    showApp();
 
 }
 
-/* =========================
-   REGISTER
-========================= */
+
+// =====================================================
+// REGISTER USER
+// =====================================================
 
 async function registerUser() {
 
+    const nameElement =
+        document.getElementById(
+            "registerName"
+        );
+
+    const emailElement =
+        document.getElementById(
+            "registerEmail"
+        );
+
+    const passwordElement =
+        document.getElementById(
+            "registerPassword"
+        );
+
+    const authMessage =
+        document.getElementById(
+            "authMessage"
+        );
+
+
     const name =
-        document.getElementById("registerName").value.trim();
+        nameElement.value.trim();
 
     const email =
-        document.getElementById("registerEmail").value.trim();
+        emailElement.value.trim();
 
     const password =
-        document.getElementById("registerPassword").value;
+        passwordElement.value.trim();
 
-    if (!name || !email || !password) {
 
-        alert("Please fill all registration fields.");
+    if (
+        !name ||
+        !email ||
+        !password
+    ) {
+
+        if (authMessage) {
+
+            authMessage.innerText =
+                "Please fill all fields.";
+
+        }
 
         return;
+
     }
+
 
     try {
 
+        if (authMessage) {
+
+            authMessage.innerText =
+                "Creating your account...";
+
+        }
+
+
         const response =
             await fetch(
-                `${API_URL}/api/register`,
+                API_URL +
+                "/api/register",
                 {
                     method: "POST",
 
                     headers: {
-                        "Content-Type": "application/json"
+                        "Content-Type":
+                            "application/json"
                     },
 
                     body: JSON.stringify({
@@ -256,66 +481,168 @@ async function registerUser() {
                 }
             );
 
+
         const data =
             await response.json();
 
+
         if (!response.ok) {
 
-            alert(data.message);
+            if (authMessage) {
+
+                authMessage.innerText =
+                    data.message ||
+                    "Registration failed.";
+
+            }
 
             return;
+
         }
 
-        alert(
-            "Registration successful! 🎉 Please login."
+
+        // Registration successful
+
+        localStorage.setItem(
+            "registrationCompleted",
+            "true"
         );
 
-        document.getElementById("registerName").value = "";
-        document.getElementById("registerEmail").value = "";
-        document.getElementById("registerPassword").value = "";
+
+        if (authMessage) {
+
+            authMessage.innerText =
+                "Registration successful! Please login. ✅";
+
+        }
+
+
+        // Clear register fields
+
+        nameElement.value = "";
+        emailElement.value = "";
+        passwordElement.value = "";
+
+
+        // SHOW LOGIN
+
+        showOnlyLogin();
+
+
+        // Put registered email
+        // into login box
+
+        const loginEmail =
+            document.getElementById(
+                "loginEmail"
+            );
+
+        const loginPassword =
+            document.getElementById(
+                "loginPassword"
+            );
+
+
+        if (loginEmail) {
+
+            loginEmail.value =
+                email;
+
+        }
+
+
+        if (loginPassword) {
+
+            loginPassword.focus();
+
+        }
 
     } catch (error) {
 
-        console.log("REGISTER ERROR:");
-        console.log(error);
-
-        alert(
-            "Unable to connect to the backend."
+        console.error(
+            "Registration error:",
+            error
         );
+
+
+        if (authMessage) {
+
+            authMessage.innerText =
+                "Cannot connect to the server. Please try again.";
+
+        }
 
     }
 
 }
 
-/* =========================
-   LOGIN
-========================= */
+
+// =====================================================
+// LOGIN USER
+// =====================================================
 
 async function loginUser() {
 
+    const emailElement =
+        document.getElementById(
+            "loginEmail"
+        );
+
+    const passwordElement =
+        document.getElementById(
+            "loginPassword"
+        );
+
+    const authMessage =
+        document.getElementById(
+            "authMessage"
+        );
+
+
     const email =
-        document.getElementById("loginEmail").value.trim();
+        emailElement.value.trim();
 
     const password =
-        document.getElementById("loginPassword").value;
+        passwordElement.value.trim();
 
-    if (!email || !password) {
 
-        alert("Please enter email and password.");
+    if (
+        !email ||
+        !password
+    ) {
+
+        if (authMessage) {
+
+            authMessage.innerText =
+                "Please enter email and password.";
+
+        }
 
         return;
+
     }
+
 
     try {
 
+        if (authMessage) {
+
+            authMessage.innerText =
+                "Logging in...";
+
+        }
+
+
         const response =
             await fetch(
-                `${API_URL}/api/login`,
+                API_URL +
+                "/api/login",
                 {
                     method: "POST",
 
                     headers: {
-                        "Content-Type": "application/json"
+                        "Content-Type":
+                            "application/json"
                     },
 
                     body: JSON.stringify({
@@ -325,134 +652,355 @@ async function loginUser() {
                 }
             );
 
+
         const data =
             await response.json();
 
+
         if (!response.ok) {
 
-            alert(data.message);
+            if (authMessage) {
+
+                authMessage.innerText =
+                    data.message ||
+                    "Login failed.";
+
+            }
 
             return;
+
         }
+
+
+        // SAVE USER
 
         currentUser =
             data.user;
 
+
         localStorage.setItem(
             "currentUser",
-            JSON.stringify(currentUser)
+            JSON.stringify(
+                currentUser
+            )
         );
 
-        document.getElementById("loginEmail").value = "";
-        document.getElementById("loginPassword").value = "";
 
-        document.getElementById("welcomeMessage").innerText =
-            `Welcome, ${currentUser.name}! 👋`;
+        localStorage.setItem(
+            "registrationCompleted",
+            "true"
+        );
+
+
+        // Clear login fields
+
+        emailElement.value = "";
+        passwordElement.value = "";
+
+
+        if (authMessage) {
+
+            authMessage.innerText = "";
+
+        }
+
+
+        // SHOW APP
 
         showApp();
+
+
+        const welcomeMessage =
+            document.getElementById(
+                "welcomeMessage"
+            );
+
+
+        if (welcomeMessage) {
+
+            welcomeMessage.innerText =
+                "Welcome, " +
+                currentUser.name +
+                "! 👋";
+
+        }
+
+
+        // Load data
 
         loadTasks();
         loadStudyPlans();
         loadNotes();
 
-        alert(
-            `Welcome ${currentUser.name}! 🎉`
-        );
-
     } catch (error) {
 
-        console.log("LOGIN ERROR:");
-        console.log(error);
-
-        alert(
-            "Unable to connect to the backend."
+        console.error(
+            "Login error:",
+            error
         );
+
+
+        if (authMessage) {
+
+            authMessage.innerText =
+                "Cannot connect to the server. Please try again.";
+
+        }
 
     }
 
 }
 
-/* =========================
-   LOGOUT
-========================= */
+
+// =====================================================
+// LOGOUT
+// =====================================================
 
 function logoutUser() {
 
     currentUser = null;
 
-    localStorage.removeItem("currentUser");
 
-    document.getElementById("welcomeMessage").innerText =
-        "Welcome to AI Student Companion!";
+    localStorage.removeItem(
+        "currentUser"
+    );
 
-    document.getElementById("taskList").innerHTML = "";
-    document.getElementById("studyList").innerHTML = "";
-    document.getElementById("noteList").innerHTML = "";
 
-    updateDashboard([], [], []);
+    // Clear tasks
+
+    const taskList =
+        document.getElementById(
+            "taskList"
+        );
+
+    if (taskList) {
+
+        taskList.innerHTML = "";
+
+    }
+
+
+    // Clear study plans
+
+    const studyPlanList =
+        document.getElementById(
+            "studyPlanList"
+        );
+
+    if (studyPlanList) {
+
+        studyPlanList.innerHTML = "";
+
+    }
+
+
+    // Clear notes
+
+    const notesList =
+        document.getElementById(
+            "notesList"
+        );
+
+    if (notesList) {
+
+        notesList.innerHTML = "";
+
+    }
+
+
+    // Reset statistics
+
+    const totalTasks =
+        document.getElementById(
+            "totalTasks"
+        );
+
+    const completedTasks =
+        document.getElementById(
+            "completedTasks"
+        );
+
+    const totalStudyPlans =
+        document.getElementById(
+            "totalStudyPlans"
+        );
+
+    const totalNotes =
+        document.getElementById(
+            "totalNotes"
+        );
+
+
+    if (totalTasks) {
+
+        totalTasks.innerText =
+            "0";
+
+    }
+
+
+    if (completedTasks) {
+
+        completedTasks.innerText =
+            "0";
+
+    }
+
+
+    if (totalStudyPlans) {
+
+        totalStudyPlans.innerText =
+            "0";
+
+    }
+
+
+    if (totalNotes) {
+
+        totalNotes.innerText =
+            "0";
+
+    }
+
+
+    // Hide app
 
     hideApp();
 
-    alert(
-        "You have been logged out successfully. 👋"
-    );
+
+    // SHOW LOGIN
+
+    showOnlyLogin();
+
+
+    const authMessage =
+        document.getElementById(
+            "authMessage"
+        );
+
+
+    if (authMessage) {
+
+        authMessage.innerText = "";
+
+    }
 
 }
 
-/* =========================
-   ADD TASK
-========================= */
+
+// =====================================================
+// PASSWORD SHOW / HIDE
+// =====================================================
+
+function togglePassword(
+    inputId,
+    button
+) {
+
+    const input =
+        document.getElementById(
+            inputId
+        );
+
+
+    if (!input) {
+
+        return;
+
+    }
+
+
+    if (
+        input.type ===
+        "password"
+    ) {
+
+        input.type = "text";
+
+        button.innerText =
+            "🙈";
+
+    } else {
+
+        input.type = "password";
+
+        button.innerText =
+            "👁️";
+
+    }
+
+}
+
+
+// =====================================================
+// ADD TASK
+// =====================================================
 
 async function addTask() {
 
     if (!currentUser) {
 
-        alert("Please login first.");
-
         return;
+
     }
 
+
     const taskInput =
-        document.getElementById("taskInput");
+        document.getElementById(
+            "taskInput"
+        );
+
 
     const task =
         taskInput.value.trim();
 
+
     if (!task) {
 
-        alert("Please enter a task.");
-
         return;
+
     }
+
 
     try {
 
         const response =
             await fetch(
-                `${API_URL}/api/tasks`,
+                API_URL +
+                "/api/tasks",
                 {
                     method: "POST",
 
                     headers: {
-                        "Content-Type": "application/json"
+                        "Content-Type":
+                            "application/json"
                     },
 
                     body: JSON.stringify({
-                        userId: currentUser.id,
+                        userId:
+                            currentUser.id,
+
                         task: task
                     })
                 }
             );
 
+
         const data =
             await response.json();
 
+
         if (!response.ok) {
 
-            alert(data.message);
+            alert(
+                data.message ||
+                "Could not add task."
+            );
 
             return;
+
         }
+
 
         taskInput.value = "";
 
@@ -460,178 +1008,163 @@ async function addTask() {
 
     } catch (error) {
 
-        console.log("ADD TASK ERROR:");
-        console.log(error);
+        console.error(error);
 
         alert(
-            "Unable to add task."
+            "Could not connect to the server."
         );
 
     }
 
 }
 
-/* =========================
-   LOAD TASKS
-========================= */
+
+// =====================================================
+// LOAD TASKS
+// =====================================================
 
 async function loadTasks() {
 
-    if (!currentUser) return;
+    if (!currentUser) {
+
+        return;
+
+    }
+
 
     try {
 
         const response =
             await fetch(
-                `${API_URL}/api/tasks/${currentUser.id}`
+                API_URL +
+                "/api/tasks/" +
+                currentUser.id
             );
 
-        const data =
+
+        const tasks =
             await response.json();
 
+
         const taskList =
-            document.getElementById("taskList");
+            document.getElementById(
+                "taskList"
+            );
+
+
+        if (!taskList) {
+
+            return;
+
+        }
+
 
         taskList.innerHTML = "";
 
+
         if (
-            !data.tasks ||
-            data.tasks.length === 0
+            !tasks ||
+            tasks.length === 0
         ) {
 
             taskList.innerHTML =
-                "<li>No tasks yet. Add your first task! 📋</li>";
+                "<li>No tasks yet. Add your first task! 🚀</li>";
 
-            updateDashboard(
-                [],
-                null,
-                null
-            );
+            updateTaskStats([]);
 
             return;
+
         }
 
-        data.tasks.forEach(
-            createTaskElement
+
+        tasks.forEach(
+            function (task) {
+
+                createTaskElement(
+                    task
+                );
+
+            }
         );
 
-        updateDashboard(
-            data.tasks,
-            null,
-            null
+
+        updateTaskStats(
+            tasks
         );
 
     } catch (error) {
 
-        console.log(
-            "LOAD TASKS ERROR:"
+        console.error(
+            "Load tasks error:",
+            error
         );
-
-        console.log(error);
 
     }
 
 }
 
-/* =========================
-   CREATE TASK ELEMENT
-========================= */
+
+// =====================================================
+// CREATE TASK ELEMENT
+// =====================================================
 
 function createTaskElement(task) {
 
     const taskList =
-        document.getElementById("taskList");
-
-    const li =
-        document.createElement("li");
-
-    const taskText =
-        document.createElement("span");
-
-    taskText.innerText =
-        task.task;
-
-    if (task.completed) {
-
-        taskText.classList.add(
-            "task-completed"
+        document.getElementById(
+            "taskList"
         );
+
+
+    if (!taskList) {
+
+        return;
 
     }
 
-    const buttonContainer =
-        document.createElement("div");
 
-    const completeButton =
-        document.createElement("button");
+    const li =
+        document.createElement(
+            "li"
+        );
 
-    completeButton.innerText =
+
+    li.className =
         task.completed
-            ? "↩️"
-            : "✅";
+            ? "completed"
+            : "";
 
-    completeButton.title =
-        task.completed
-            ? "Mark as incomplete"
-            : "Complete task";
 
-    completeButton.style.marginRight =
-        "6px";
+    li.innerHTML = `
 
-    completeButton.onclick =
-        function () {
+        <span
+            onclick="updateTask(
+                ${task.id},
+                ${!task.completed}
+            )"
+            style="cursor:pointer;"
+        >
+            ${task.completed ? "✅" : "⬜"}
+            ${task.task}
+        </span>
 
-            updateTask(
-                task.id,
-                !task.completed
-            );
+        <button
+            onclick="deleteTask(${task.id})"
+        >
+            🗑️
+        </button>
 
-        };
+    `;
 
-    const deleteButton =
-        document.createElement("button");
 
-    deleteButton.innerText =
-        "🗑️";
-
-    deleteButton.title =
-        "Delete task";
-
-    deleteButton.style.background =
-        "#ef4444";
-
-    deleteButton.onclick =
-        function () {
-
-            deleteTask(task.id);
-
-        };
-
-    buttonContainer.appendChild(
-        completeButton
-    );
-
-    buttonContainer.appendChild(
-        deleteButton
-    );
-
-    li.appendChild(
-        taskText
-    );
-
-    li.appendChild(
-        buttonContainer
-    );
-
-    taskList.appendChild(
-        li
-    );
+    taskList.appendChild(li);
 
 }
 
-/* =========================
-   UPDATE TASK
-========================= */
+
+// =====================================================
+// UPDATE TASK
+// =====================================================
 
 async function updateTask(
     taskId,
@@ -642,46 +1175,50 @@ async function updateTask(
 
         const response =
             await fetch(
-                `${API_URL}/api/tasks/${taskId}`,
+                API_URL +
+                "/api/tasks/" +
+                taskId,
                 {
                     method: "PUT",
 
                     headers: {
-                        "Content-Type": "application/json"
+                        "Content-Type":
+                            "application/json"
                     },
 
                     body: JSON.stringify({
-                        completed: completed
+                        completed:
+                            completed
                     })
                 }
             );
 
+
         if (!response.ok) {
 
             alert(
-                "Unable to update task."
+                "Could not update task."
             );
 
             return;
+
         }
+
 
         loadTasks();
 
     } catch (error) {
 
-        console.log(
-            "UPDATE TASK ERROR:"
-        );
-
-        console.log(error);
+        console.error(error);
 
     }
 
 }
 
-/* =========================
-   DELETE TASK
-========================= */
+
+// =====================================================
+// DELETE TASK
+// =====================================================
 
 async function deleteTask(taskId) {
 
@@ -689,560 +1226,98 @@ async function deleteTask(taskId) {
 
         const response =
             await fetch(
-                `${API_URL}/api/tasks/${taskId}`,
+                API_URL +
+                "/api/tasks/" +
+                taskId,
                 {
                     method: "DELETE"
                 }
             );
 
+
         if (!response.ok) {
 
             alert(
-                "Unable to delete task."
+                "Could not delete task."
             );
 
             return;
+
         }
+
 
         loadTasks();
 
     } catch (error) {
 
-        console.log(
-            "DELETE TASK ERROR:"
-        );
-
-        console.log(error);
+        console.error(error);
 
     }
 
 }
 
-/* =========================
-   ADD STUDY PLAN
-========================= */
 
-async function addStudyPlan() {
+// =====================================================
+// UPDATE TASK STATS
+// =====================================================
 
-    if (!currentUser) {
+function updateTaskStats(tasks) {
 
-        alert("Please login first.");
-
-        return;
-    }
-
-    const subject =
-        document
-            .getElementById("subjectInput")
-            .value
-            .trim();
-
-    const topic =
-        document
-            .getElementById("topicInput")
-            .value
-            .trim();
-
-    const studyTime =
-        document
-            .getElementById("timeInput")
-            .value
-            .trim();
-
-    if (
-        !subject ||
-        !topic ||
-        !studyTime
-    ) {
-
-        alert(
-            "Please fill all study plan fields."
-        );
-
-        return;
-    }
-
-    try {
-
-        const response =
-            await fetch(
-                `${API_URL}/api/study-plans`,
-                {
-                    method: "POST",
-
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-
-                    body: JSON.stringify({
-                        userId: currentUser.id,
-                        subject: subject,
-                        topic: topic,
-                        studyTime: studyTime
-                    })
-                }
-            );
-
-        const data =
-            await response.json();
-
-        if (!response.ok) {
-
-            alert(data.message);
-
-            return;
-        }
-
-        document.getElementById(
-            "subjectInput"
-        ).value = "";
-
-        document.getElementById(
-            "topicInput"
-        ).value = "";
-
-        document.getElementById(
-            "timeInput"
-        ).value = "";
-
-        loadStudyPlans();
-
-    } catch (error) {
-
-        console.log(
-            "ADD STUDY PLAN ERROR:"
-        );
-
-        console.log(error);
-
-        alert(
-            "Unable to add study plan."
-        );
-
-    }
-
-}
-
-/* =========================
-   LOAD STUDY PLANS
-========================= */
-
-async function loadStudyPlans() {
-
-    if (!currentUser) return;
-
-    try {
-
-        const response =
-            await fetch(
-                `${API_URL}/api/study-plans/${currentUser.id}`
-            );
-
-        const data =
-            await response.json();
-
-        const studyList =
-            document.getElementById(
-                "studyList"
-            );
-
-        studyList.innerHTML = "";
-
-        if (
-            !data.studyPlans ||
-            data.studyPlans.length === 0
-        ) {
-
-            studyList.innerHTML =
-                "<li>No study plans yet. 📚</li>";
-
-            updateDashboard(
-                null,
-                [],
-                null
-            );
-
-            return;
-        }
-
-        data.studyPlans.forEach(
-            createStudyPlanElement
-        );
-
-        updateDashboard(
-            null,
-            data.studyPlans,
-            null
-        );
-
-    } catch (error) {
-
-        console.log(
-            "LOAD STUDY PLANS ERROR:"
-        );
-
-        console.log(error);
-
-    }
-
-}
-
-/* =========================
-   CREATE STUDY PLAN
-========================= */
-
-function createStudyPlanElement(
-    studyPlan
-) {
-
-    const studyList =
-        document.getElementById(
-            "studyList"
-        );
-
-    const li =
-        document.createElement("li");
-
-    const text =
-        document.createElement("span");
-
-    text.innerText =
-        `${studyPlan.subject} — ${studyPlan.topic} (${studyPlan.study_time})`;
-
-    const deleteButton =
-        document.createElement("button");
-
-    deleteButton.innerText =
-        "🗑️";
-
-    deleteButton.style.background =
-        "#ef4444";
-
-    deleteButton.onclick =
-        function () {
-
-            deleteStudyPlan(
-                studyPlan.id
-            );
-
-        };
-
-    li.appendChild(text);
-
-    li.appendChild(
-        deleteButton
-    );
-
-    studyList.appendChild(li);
-
-}
-
-/* =========================
-   DELETE STUDY PLAN
-========================= */
-
-async function deleteStudyPlan(
-    studyPlanId
-) {
-
-    try {
-
-        const response =
-            await fetch(
-                `${API_URL}/api/study-plans/${studyPlanId}`,
-                {
-                    method: "DELETE"
-                }
-            );
-
-        if (!response.ok) {
-
-            alert(
-                "Unable to delete study plan."
-            );
-
-            return;
-        }
-
-        loadStudyPlans();
-
-    } catch (error) {
-
-        console.log(
-            "DELETE STUDY PLAN ERROR:"
-        );
-
-        console.log(error);
-
-    }
-
-}
-
-/* =========================
-   ADD NOTE
-========================= */
-
-async function addNote() {
-
-    if (!currentUser) {
-
-        alert("Please login first.");
-
-        return;
-    }
-
-    const noteInput =
-        document.getElementById(
-            "noteInput"
-        );
-
-    const note =
-        noteInput.value.trim();
-
-    if (!note) {
-
-        alert(
-            "Please write a note."
-        );
-
-        return;
-    }
-
-    try {
-
-        const response =
-            await fetch(
-                `${API_URL}/api/notes`,
-                {
-                    method: "POST",
-
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-
-                    body: JSON.stringify({
-                        userId: currentUser.id,
-                        note: note
-                    })
-                }
-            );
-
-        const data =
-            await response.json();
-
-        if (!response.ok) {
-
-            alert(data.message);
-
-            return;
-        }
-
-        noteInput.value = "";
-
-        loadNotes();
-
-    } catch (error) {
-
-        console.log(
-            "ADD NOTE ERROR:"
-        );
-
-        console.log(error);
-
-        alert(
-            "Unable to add note."
-        );
-
-    }
-
-}
-
-/* =========================
-   LOAD NOTES
-========================= */
-
-async function loadNotes() {
-
-    if (!currentUser) return;
-
-    try {
-
-        const response =
-            await fetch(
-                `${API_URL}/api/notes/${currentUser.id}`
-            );
-
-        const data =
-            await response.json();
-
-        const noteList =
-            document.getElementById(
-                "noteList"
-            );
-
-        noteList.innerHTML = "";
-
-        if (
-            !data.notes ||
-            data.notes.length === 0
-        ) {
-
-            noteList.innerHTML =
-                "<li>No notes yet. 📝</li>";
-
-            updateDashboard(
-                null,
-                null,
-                []
-            );
-
-            return;
-        }
-
-        data.notes.forEach(
-            createNoteElement
-        );
-
-        updateDashboard(
-            null,
-            null,
-            data.notes
-        );
-
-    } catch (error) {
-
-        console.log(
-            "LOAD NOTES ERROR:"
-        );
-
-        console.log(error);
-
-    }
-
-}
-
-/* =========================
-   CREATE NOTE
-========================= */
-
-function createNoteElement(
-    note
-) {
-
-    const noteList =
-        document.getElementById(
-            "noteList"
-        );
-
-    const li =
-        document.createElement("li");
-
-    const text =
-        document.createElement("span");
-
-    text.innerText =
-        note.note;
-
-    const deleteButton =
-        document.createElement("button");
-
-    deleteButton.innerText =
-        "🗑️";
-
-    deleteButton.style.background =
-        "#ef4444";
-
-    deleteButton.onclick =
-        function () {
-
-            deleteNote(
-                note.id
-            );
-
-        };
-
-    li.appendChild(text);
-
-    li.appendChild(
-        deleteButton
-    );
-
-    noteList.appendChild(li);
-
-}
-
-/* =========================
-   DELETE NOTE
-========================= */
-
-async function deleteNote(
-    noteId
-) {
-
-    try {
-
-        const response =
-            await fetch(
-                `${API_URL}/api/notes/${noteId}`,
-                {
-                    method: "DELETE"
-                }
-            );
-
-        if (!response.ok) {
-
-            alert(
-                "Unable to delete note."
-            );
-
-            return;
-        }
-
-        loadNotes();
-
-    } catch (error) {
-
-        console.log(
-            "DELETE NOTE ERROR:"
-        );
-
-        console.log(error);
-
-    }
-
-}
-
-/* =========================
-   DASHBOARD
-========================= */
-
-function updateDashboard(
-    tasks = null,
-    studyPlans = null,
-    notes = null
-) {
-
-    const totalTasksElement =
+    const totalTasks =
         document.getElementById(
             "totalTasks"
         );
 
-    const completedTasksElement =
+    const completedTasks =
         document.getElementById(
             "completedTasks"
         );
 
-    const totalStudiesElement =
-        document.getElementById(
-            "totalStudies"
-        );
 
-    const totalNotesElement =
-        document.getElementById(
-            "totalNotes"
-        );
+    const total =
+        tasks.length;
 
-    const progressElement =
+
+    const completed =
+        tasks.filter(
+            task => task.completed
+        ).length;
+
+
+    if (totalTasks) {
+
+        totalTasks.innerText =
+            total;
+
+    }
+
+
+    if (completedTasks) {
+
+        completedTasks.innerText =
+            completed;
+
+    }
+
+
+    updateProgress(
+        total,
+        completed
+    );
+
+}
+
+
+// =====================================================
+// UPDATE PROGRESS
+// =====================================================
+
+function updateProgress(
+    total,
+    completed
+) {
+
+    const progress =
         document.getElementById(
             "progress"
         );
@@ -1257,206 +1332,150 @@ function updateDashboard(
             "progressStatus"
         );
 
-    const productivityStatus =
+
+    let percentage = 0;
+
+
+    if (total > 0) {
+
+        percentage =
+            Math.round(
+                (completed / total) *
+                100
+            );
+
+    }
+
+
+    if (progress) {
+
+        progress.innerText =
+            percentage + "%";
+
+    }
+
+
+    if (progressBar) {
+
+        progressBar.style.width =
+            percentage + "%";
+
+    }
+
+
+    if (progressStatus) {
+
+        if (percentage === 0) {
+
+            progressStatus.innerText =
+                "Let's get started! 🚀";
+
+        } else if (
+            percentage < 50
+        ) {
+
+            progressStatus.innerText =
+                "Good start! Keep going! 💪";
+
+        } else if (
+            percentage < 100
+        ) {
+
+            progressStatus.innerText =
+                "You're doing great! 🔥";
+
+        } else {
+
+            progressStatus.innerText =
+                "Amazing! All tasks completed! 🎉";
+
+        }
+
+    }
+
+
+    updateProductivity(
+        percentage
+    );
+
+}
+
+
+// =====================================================
+// PRODUCTIVITY STATUS
+// =====================================================
+
+function updateProductivity(
+    percentage
+) {
+
+    const status =
         document.getElementById(
             "productivityStatus"
         );
 
-    const productivityMessage =
+    const message =
         document.getElementById(
             "productivityMessage"
         );
 
-    /* =========================
-       TASK PROGRESS
-    ========================= */
 
-    if (tasks !== null) {
+    if (!status) {
 
-        const totalTasks =
-            tasks.length;
+        return;
 
-        const completedTasks =
-            tasks.filter(
-                task =>
-                    task.completed === 1 ||
-                    task.completed === true
-            ).length;
+    }
 
-        let percentage = 0;
 
-        if (totalTasks > 0) {
+    if (percentage === 0) {
 
-            percentage =
-                Math.round(
-                    (completedTasks / totalTasks) * 100
-                );
+        status.innerText =
+            "Ready to start 🚀";
 
-        }
+        if (message) {
 
-        if (totalTasksElement) {
-
-            totalTasksElement.innerText =
-                totalTasks;
-
-        }
-
-        if (completedTasksElement) {
-
-            completedTasksElement.innerText =
-                completedTasks;
-
-        }
-
-        if (progressElement) {
-
-            progressElement.innerText =
-                `${percentage}%`;
-
-        }
-
-        if (progressBar) {
-
-            progressBar.style.width =
-                `${percentage}%`;
-
-        }
-
-        let status =
-            "Ready to start";
-
-        let message =
-            "Complete your first task to build momentum.";
-
-        let progressText =
-            "Let's get started! 🚀";
-
-        if (percentage === 0) {
-
-            status =
-                "Ready to start";
-
-            message =
+            message.innerText =
                 "Complete your first task to build momentum.";
 
-            progressText =
-                "Let's get started! 🚀";
+        }
+
+    } else if (
+        percentage < 50
+    ) {
+
+        status.innerText =
+            "Getting started 💪";
+
+        if (message) {
+
+            message.innerText =
+                "Keep completing tasks and build your momentum.";
 
         }
 
-        else if (percentage < 40) {
+    } else if (
+        percentage < 100
+    ) {
 
-            status =
-                "Getting started";
+        status.innerText =
+            "Doing great 🔥";
 
-            message =
-                "You're building momentum. Keep going! 💪";
+        if (message) {
 
-            progressText =
-                "Great start! Keep moving.";
-
-        }
-
-        else if (percentage < 60) {
-
-            status =
-                "Making progress";
-
-            message =
-                "You're making good progress. Stay focused! 📈";
-
-            progressText =
-                "You're halfway there!";
+            message.innerText =
+                "You're making excellent progress.";
 
         }
 
-        else if (percentage < 80) {
+    } else {
 
-            status =
-                "Doing great";
+        status.innerText =
+            "Excellent 🎉";
 
-            message =
-                "Excellent progress! Keep the momentum going. 🔥";
+        if (message) {
 
-            progressText =
-                "You're doing great!";
-
-        }
-
-        else if (percentage < 100) {
-
-            status =
-                "Almost there!";
-
-            message =
-                "You're very close to completing your tasks! 🚀";
-
-            progressText =
-                "Almost at 100%!";
-
-        }
-
-        else {
-
-            status =
-                "Excellent!";
-
-            message =
-                "Amazing! You've completed all your tasks! 🎉";
-
-            progressText =
-                "100% complete! 🎉";
-
-        }
-
-        if (productivityStatus) {
-
-            productivityStatus.innerText =
-                status;
-
-        }
-
-        if (productivityMessage) {
-
-            productivityMessage.innerText =
-                message;
-
-        }
-
-        if (progressStatus) {
-
-            progressStatus.innerText =
-                progressText;
-
-        }
-
-    }
-
-    /* =========================
-       STUDY PLANS
-    ========================= */
-
-    if (studyPlans !== null) {
-
-        if (totalStudiesElement) {
-
-            totalStudiesElement.innerText =
-                studyPlans.length;
-
-        }
-
-    }
-
-    /* =========================
-       NOTES
-    ========================= */
-
-    if (notes !== null) {
-
-        if (totalNotesElement) {
-
-            totalNotesElement.innerText =
-                notes.length;
+            message.innerText =
+                "You've completed everything. Great work!";
 
         }
 
@@ -1464,687 +1483,618 @@ function updateDashboard(
 
 }
 
-/* =========================
-   AI QUICK BUTTONS
-========================= */
 
-function quickAI(prompt) {
+// =====================================================
+// ADD STUDY PLAN
+// =====================================================
+
+async function addStudyPlan() {
+
+    if (!currentUser) {
+
+        return;
+
+    }
+
+
+    const subjectInput =
+        document.getElementById(
+            "subjectInput"
+        );
+
+    const topicInput =
+        document.getElementById(
+            "topicInput"
+        );
+
+    const timeInput =
+        document.getElementById(
+            "timeInput"
+        );
+
+
+    const subject =
+        subjectInput.value.trim();
+
+    const topic =
+        topicInput.value.trim();
+
+    const studyTime =
+        timeInput.value.trim();
+
+
+    if (
+        !subject ||
+        !topic ||
+        !studyTime
+    ) {
+
+        alert(
+            "Please fill all study plan fields."
+        );
+
+        return;
+
+    }
+
+
+    try {
+
+        const response =
+            await fetch(
+                API_URL +
+                "/api/study-plans",
+                {
+                    method: "POST",
+
+                    headers: {
+                        "Content-Type":
+                            "application/json"
+                    },
+
+                    body: JSON.stringify({
+                        userId:
+                            currentUser.id,
+
+                        subject:
+                            subject,
+
+                        topic:
+                            topic,
+
+                        studyTime:
+                            studyTime
+                    })
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if (!response.ok) {
+
+            alert(
+                data.message ||
+                "Could not add study plan."
+            );
+
+            return;
+
+        }
+
+
+        subjectInput.value = "";
+        topicInput.value = "";
+        timeInput.value = "";
+
+
+        loadStudyPlans();
+
+    } catch (error) {
+
+        console.error(error);
+
+        alert(
+            "Could not connect to the server."
+        );
+
+    }
+
+}
+
+
+// =====================================================
+// LOAD STUDY PLANS
+// =====================================================
+
+async function loadStudyPlans() {
+
+    if (!currentUser) {
+
+        return;
+
+    }
+
+
+    try {
+
+        const response =
+            await fetch(
+                API_URL +
+                "/api/study-plans/" +
+                currentUser.id
+            );
+
+
+        const plans =
+            await response.json();
+
+
+        const studyPlanList =
+            document.getElementById(
+                "studyPlanList"
+            );
+
+
+        if (!studyPlanList) {
+
+            return;
+
+        }
+
+
+        studyPlanList.innerHTML = "";
+
+
+        if (
+            !plans ||
+            plans.length === 0
+        ) {
+
+            studyPlanList.innerHTML =
+                "<p>No study plans yet. 📚</p>";
+
+            updateStudyStats([]);
+
+            return;
+
+        }
+
+
+        plans.forEach(
+            function (plan) {
+
+                const div =
+                    document.createElement(
+                        "div"
+                    );
+
+
+                div.className =
+                    "study-plan-item";
+
+
+                div.innerHTML = `
+
+                    <strong>
+                        ${plan.subject}
+                    </strong>
+
+                    -
+
+                    ${plan.topic}
+
+                    <br>
+
+                    ⏱️ ${plan.study_time}
+
+                    <button
+                        onclick="deleteStudyPlan(${plan.id})"
+                    >
+                        🗑️
+                    </button>
+
+                `;
+
+
+                studyPlanList.appendChild(
+                    div
+                );
+
+            }
+        );
+
+
+        updateStudyStats(
+            plans
+        );
+
+    } catch (error) {
+
+        console.error(
+            "Load study plans error:",
+            error
+        );
+
+    }
+
+}
+
+
+// =====================================================
+// UPDATE STUDY STATS
+// =====================================================
+
+function updateStudyStats(plans) {
+
+    const totalStudyPlans =
+        document.getElementById(
+            "totalStudyPlans"
+        );
+
+
+    if (totalStudyPlans) {
+
+        totalStudyPlans.innerText =
+            plans.length;
+
+    }
+
+}
+
+
+// =====================================================
+// DELETE STUDY PLAN
+// =====================================================
+
+async function deleteStudyPlan(
+    planId
+) {
+
+    try {
+
+        const response =
+            await fetch(
+                API_URL +
+                "/api/study-plans/" +
+                planId,
+                {
+                    method: "DELETE"
+                }
+            );
+
+
+        if (!response.ok) {
+
+            alert(
+                "Could not delete study plan."
+            );
+
+            return;
+
+        }
+
+
+        loadStudyPlans();
+
+    } catch (error) {
+
+        console.error(error);
+
+    }
+
+}
+
+
+// =====================================================
+// ADD NOTE
+// =====================================================
+
+async function addNote() {
+
+    if (!currentUser) {
+
+        return;
+
+    }
+
+
+    const noteInput =
+        document.getElementById(
+            "noteInput"
+        );
+
+
+    const note =
+        noteInput.value.trim();
+
+
+    if (!note) {
+
+        alert(
+            "Please write a note."
+        );
+
+        return;
+
+    }
+
+
+    try {
+
+        const response =
+            await fetch(
+                API_URL +
+                "/api/notes",
+                {
+                    method: "POST",
+
+                    headers: {
+                        "Content-Type":
+                            "application/json"
+                    },
+
+                    body: JSON.stringify({
+                        userId:
+                            currentUser.id,
+
+                        note:
+                            note
+                    })
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if (!response.ok) {
+
+            alert(
+                data.message ||
+                "Could not add note."
+            );
+
+            return;
+
+        }
+
+
+        noteInput.value = "";
+
+        loadNotes();
+
+    } catch (error) {
+
+        console.error(error);
+
+        alert(
+            "Could not connect to the server."
+        );
+
+    }
+
+}
+
+
+// =====================================================
+// LOAD NOTES
+// =====================================================
+
+async function loadNotes() {
+
+    if (!currentUser) {
+
+        return;
+
+    }
+
+
+    try {
+
+        const response =
+            await fetch(
+                API_URL +
+                "/api/notes/" +
+                currentUser.id
+            );
+
+
+        const notes =
+            await response.json();
+
+
+        const notesList =
+            document.getElementById(
+                "notesList"
+            );
+
+
+        if (!notesList) {
+
+            return;
+
+        }
+
+
+        notesList.innerHTML = "";
+
+
+        if (
+            !notes ||
+            notes.length === 0
+        ) {
+
+            notesList.innerHTML =
+                "<p>No notes yet. 📝</p>";
+
+            updateNoteStats([]);
+
+            return;
+
+        }
+
+
+        notes.forEach(
+            function (note) {
+
+                const div =
+                    document.createElement(
+                        "div"
+                    );
+
+
+                div.className =
+                    "note-item";
+
+
+                div.innerHTML = `
+
+                    <span>
+                        ${note.note}
+                    </span>
+
+                    <button
+                        onclick="deleteNote(${note.id})"
+                    >
+                        🗑️
+                    </button>
+
+                `;
+
+
+                notesList.appendChild(
+                    div
+                );
+
+            }
+        );
+
+
+        updateNoteStats(
+            notes
+        );
+
+    } catch (error) {
+
+        console.error(
+            "Load notes error:",
+            error
+        );
+
+    }
+
+}
+
+
+// =====================================================
+// UPDATE NOTE STATS
+// =====================================================
+
+function updateNoteStats(notes) {
+
+    const totalNotes =
+        document.getElementById(
+            "totalNotes"
+        );
+
+
+    if (totalNotes) {
+
+        totalNotes.innerText =
+            notes.length;
+
+    }
+
+}
+
+
+// =====================================================
+// DELETE NOTE
+// =====================================================
+
+async function deleteNote(
+    noteId
+) {
+
+    try {
+
+        const response =
+            await fetch(
+                API_URL +
+                "/api/notes/" +
+                noteId,
+                {
+                    method: "DELETE"
+                }
+            );
+
+
+        if (!response.ok) {
+
+            alert(
+                "Could not delete note."
+            );
+
+            return;
+
+        }
+
+
+        loadNotes();
+
+    } catch (error) {
+
+        console.error(error);
+
+    }
+
+}
+
+
+// =====================================================
+// QUICK AI
+// =====================================================
+
+function quickAI(question) {
 
     const aiInput =
         document.getElementById(
             "aiInput"
         );
 
-    aiInput.value =
-        prompt;
 
-    aiInput.focus();
+    if (aiInput) {
 
-}
+        aiInput.value =
+            question;
 
-/* =========================
-   AI QUIZ
-========================= */
-
-async function generateQuiz() {
-
-    const topicInput =
-        document.getElementById(
-            "quizTopic"
-        );
-
-    const topic =
-        topicInput.value.trim();
-
-    const quizContainer =
-        document.getElementById(
-            "quizContainer"
-        );
-
-    if (!topic) {
-
-        alert(
-            "Please enter a quiz topic."
-        );
-
-        return;
-    }
-
-    quizContainer.innerHTML = `
-        <div class="quiz-loading">
-            <h3>🤖 AI is creating your quiz...</h3>
-            <p>Please wait a moment.</p>
-        </div>
-    `;
-
-    try {
-
-        const response =
-            await fetch(
-                `${API_URL}/api/quiz`,
-                {
-                    method: "POST",
-
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-
-                    body: JSON.stringify({
-                        topic: topic
-                    })
-                }
-            );
-
-        const data =
-            await response.json();
-
-        if (!response.ok) {
-
-            quizContainer.innerHTML =
-                `<p>${data.message}</p>`;
-
-            return;
-        }
-
-        if (
-            !data.quiz ||
-            !data.quiz.questions ||
-            data.quiz.questions.length === 0
-        ) {
-
-            quizContainer.innerHTML =
-                "<p>Unable to create quiz questions.</p>";
-
-            return;
-        }
-
-        currentQuiz =
-            data.quiz.questions;
-
-        displayQuiz();
-
-    } catch (error) {
-
-        console.log(
-            "QUIZ ERROR:"
-        );
-
-        console.log(error);
-
-        quizContainer.innerHTML = `
-            <div class="quiz-error">
-                <p>❌ Unable to generate quiz.</p>
-                <p>Please make sure your backend is running.</p>
-            </div>
-        `;
+        aiInput.focus();
 
     }
 
 }
 
-/* =========================
-   DISPLAY QUIZ
-========================= */
 
-function displayQuiz() {
+// =====================================================
+// AI QUICK BUTTON SUPPORT
+// =====================================================
 
-    const quizContainer =
-        document.getElementById(
-            "quizContainer"
-        );
+function setAIQuestion(question) {
 
-    quizContainer.innerHTML = "";
-
-    const header =
-        document.createElement("div");
-
-    header.className =
-        "quiz-header";
-
-    const heading =
-        document.createElement("h3");
-
-    heading.innerText =
-        "🧠 Your AI Quiz";
-
-    const description =
-        document.createElement("p");
-
-    description.innerText =
-        `${currentQuiz.length} questions • Choose one answer for each question.`;
-
-    header.appendChild(
-        heading
-    );
-
-    header.appendChild(
-        description
-    );
-
-    quizContainer.appendChild(
-        header
-    );
-
-    currentQuiz.forEach(
-        (question, index) => {
-
-            const questionCard =
-                document.createElement("div");
-
-            questionCard.className =
-                "quiz-question-card";
-
-            const questionTitle =
-                document.createElement("h3");
-
-            questionTitle.innerText =
-                `${index + 1}. ${question.question}`;
-
-            questionCard.appendChild(
-                questionTitle
-            );
-
-            const optionsContainer =
-                document.createElement("div");
-
-            optionsContainer.className =
-                "quiz-options";
-
-            question.options.forEach(
-                option => {
-
-                    const optionLabel =
-                        document.createElement("label");
-
-                    optionLabel.className =
-                        "quiz-option";
-
-                    const radio =
-                        document.createElement("input");
-
-                    radio.type =
-                        "radio";
-
-                    radio.name =
-                        `question-${index}`;
-
-                    radio.value =
-                        option;
-
-                    const optionText =
-                        document.createElement("span");
-
-                    optionText.innerText =
-                        option;
-
-                    optionLabel.appendChild(
-                        radio
-                    );
-
-                    optionLabel.appendChild(
-                        optionText
-                    );
-
-                    radio.addEventListener(
-                        "change",
-                        function () {
-
-                            const allOptions =
-                                optionsContainer.querySelectorAll(
-                                    ".quiz-option"
-                                );
-
-                            allOptions.forEach(
-                                item => {
-
-                                    item.classList.remove(
-                                        "selected"
-                                    );
-
-                                }
-                            );
-
-                            optionLabel.classList.add(
-                                "selected"
-                            );
-
-                        }
-                    );
-
-                    optionsContainer.appendChild(
-                        optionLabel
-                    );
-
-                }
-            );
-
-            questionCard.appendChild(
-                optionsContainer
-            );
-
-            quizContainer.appendChild(
-                questionCard
-            );
-
-        }
-    );
-
-    const submitButton =
-        document.createElement("button");
-
-    submitButton.className =
-        "quiz-submit-button";
-
-    submitButton.innerText =
-        "🏆 Submit Quiz";
-
-    submitButton.onclick =
-        checkQuiz;
-
-    quizContainer.appendChild(
-        submitButton
-    );
+    quickAI(question);
 
 }
 
-/* =========================
-   CHECK QUIZ
-========================= */
 
-function checkQuiz() {
-
-    if (
-        !currentQuiz ||
-        currentQuiz.length === 0
-    ) {
-
-        return;
-    }
-
-    let score = 0;
-
-    let unanswered = 0;
-
-    currentQuiz.forEach(
-        (question, index) => {
-
-            const selected =
-                document.querySelector(
-                    `input[name="question-${index}"]:checked`
-                );
-
-            if (!selected) {
-
-                unanswered++;
-
-                return;
-            }
-
-            if (
-                selected.value ===
-                question.answer
-            ) {
-
-                score++;
-
-            }
-
-        }
-    );
-
-    if (unanswered > 0) {
-
-        alert(
-            `Please answer all questions. ${unanswered} question(s) remaining.`
-        );
-
-        return;
-    }
-
-    showQuizResult(score);
-
-}
-
-/* =========================
-   QUIZ RESULT
-========================= */
-
-function showQuizResult(score) {
-
-    const quizContainer =
-        document.getElementById(
-            "quizContainer"
-        );
-
-    const total =
-        currentQuiz.length;
-
-    const percentage =
-        Math.round(
-            (score / total) * 100
-        );
-
-    let message = "";
-
-    if (percentage === 100) {
-
-        message =
-            "Perfect score! You're doing amazing! 🔥";
-
-    }
-
-    else if (percentage >= 80) {
-
-        message =
-            "Excellent work! Keep it up! 🚀";
-
-    }
-
-    else if (percentage >= 60) {
-
-        message =
-            "Good job! A little more practice will make you even better. 💪";
-
-    }
-
-    else {
-
-        message =
-            "Keep learning and try the quiz again! 📚";
-
-    }
-
-    quizContainer.innerHTML = `
-
-        <div class="quiz-result">
-
-            <div class="quiz-result-icon">
-                🏆
-            </div>
-
-            <h2>
-                Quiz Complete!
-            </h2>
-
-            <p class="quiz-score">
-                ${score} / ${total}
-            </p>
-
-            <p class="quiz-percentage">
-                ${percentage}%
-            </p>
-
-            <p class="quiz-message">
-                ${message}
-            </p>
-
-            <button
-                class="quiz-restart-button"
-                onclick="restartQuiz()"
-            >
-
-                🔄 Try Again
-
-            </button>
-
-        </div>
-
-    `;
-
-}
-
-/* =========================
-   RESTART QUIZ
-========================= */
-
-function restartQuiz() {
-
-    const quizTopic =
-        document.getElementById(
-            "quizTopic"
-        );
-
-    const topic =
-        quizTopic.value.trim();
-
-    if (!topic) {
-
-        alert(
-            "Please enter a quiz topic."
-        );
-
-        return;
-    }
-
-    generateQuiz();
-
-}
-
-/* =========================
-   OLD CHECK ANSWER
-========================= */
-
-function checkAnswer() {
-
-    if (
-        currentQuiz.length > 0
-    ) {
-
-        checkQuiz();
-
-    }
-
-    else {
-
-        alert(
-            "Please generate a quiz first."
-        );
-
-    }
-
-}
-
-/* =========================
-   FORMAT AI RESPONSE
-========================= */
-
-function formatAIResponse(answer) {
-
-    if (!answer) {
-
-        return `
-            <div class="ai-response-box">
-                <div class="ai-response-content">
-                    No answer received.
-                </div>
-            </div>
-        `;
-
-    }
-
-    const sections = [];
-
-    let currentSection = null;
-
-    const lines =
-        answer
-            .replace(/\r/g, "")
-            .split("\n");
-
-    lines.forEach(line => {
-
-        const trimmed =
-            line.trim();
-
-        if (!trimmed) {
-            return;
-        }
-
-        let title = null;
-
-        if (
-            trimmed.includes("📌") &&
-            trimmed.toLowerCase().includes("simple explanation")
-        ) {
-
-            title =
-                "📌 Simple Explanation";
-
-        }
-
-        else if (
-            trimmed.includes("💡") &&
-            trimmed.toLowerCase().includes("key points")
-        ) {
-
-            title =
-                "💡 Key Points";
-
-        }
-
-        else if (
-            trimmed.includes("🧠") &&
-            trimmed.toLowerCase().includes("example")
-        ) {
-
-            title =
-                "🧠 Example";
-
-        }
-
-        else if (
-            trimmed.includes("📝") &&
-            trimmed.toLowerCase().includes("quick recap")
-        ) {
-
-            title =
-                "📝 Quick Recap";
-
-        }
-
-        if (title) {
-
-            currentSection = {
-
-                title: title,
-
-                content: []
-
-            };
-
-            sections.push(
-                currentSection
-            );
-
-        } else if (currentSection) {
-
-            currentSection.content.push(
-                trimmed
-            );
-
-        } else {
-
-            if (!sections.length) {
-
-                sections.push({
-
-                    title:
-                        "🤖 AI Assistant",
-
-                    content: [
-                        trimmed
-                    ]
-
-                });
-
-                currentSection =
-                    sections[0];
-
-            }
-
-        }
-
-    });
-
-    if (sections.length === 0) {
-
-        sections.push({
-
-            title:
-                "🤖 AI Assistant",
-
-            content:
-                [answer]
-
-        });
-
-    }
-
-    let html =
-        `<div class="ai-response-box">`;
-
-    sections.forEach(section => {
-
-        html += `
-            <div class="ai-response-section">
-
-                <div class="ai-response-title">
-                    ${section.title}
-                </div>
-
-                <div class="ai-response-content">
-        `;
-
-        section.content.forEach(line => {
-
-            if (
-                line.startsWith("- ") ||
-                line.startsWith("• ")
-            ) {
-
-                html +=
-                    `<div>• ${line.substring(2)}</div>`;
-
-            }
-
-            else {
-
-                html +=
-                    `<div>${line}</div>`;
-
-            }
-
-        });
-
-        html += `
-                </div>
-
-            </div>
-        `;
-
-    });
-
-    html +=
-        `</div>`;
-
-    return html;
-
-}
-
-/* =========================
-   AI ASSISTANT
-========================= */
+// =====================================================
+// ASK AI
+// =====================================================
 
 async function askAI() {
-
-    if (!currentUser) {
-
-        alert(
-            "Please login first."
-        );
-
-        return;
-    }
 
     const aiInput =
         document.getElementById(
@@ -2156,117 +2106,225 @@ async function askAI() {
             "aiResult"
         );
 
+
+    const aiResponse =
+        document.getElementById(
+            "aiResponse"
+        );
+
+
+    const output =
+        aiResult ||
+        aiResponse;
+
+
+    if (!aiInput || !output) {
+
+        return;
+
+    }
+
+
     const question =
         aiInput.value.trim();
 
+
     if (!question) {
 
-        alert(
-            "Please enter a question."
-        );
+        output.innerText =
+            "Please ask a question.";
 
         return;
+
     }
 
-    /* =========================
-       LOADING UI
-    ========================= */
 
-    aiResult.innerHTML = `
+    output.innerText =
+        "🤖 AI is thinking...";
 
-        <div class="ai-response-box">
-
-            <div class="ai-loading">
-
-                <span class="ai-loading-dot"></span>
-
-                <span>
-                    AI is thinking...
-                </span>
-
-            </div>
-
-        </div>
-
-    `;
 
     try {
 
         const response =
             await fetch(
-                `${API_URL}/api/ask`,
+                API_URL +
+                "/api/ai",
                 {
                     method: "POST",
 
                     headers: {
-                        "Content-Type": "application/json"
+                        "Content-Type":
+                            "application/json"
                     },
 
                     body: JSON.stringify({
-                        question: question
+                        question:
+                            question
                     })
                 }
             );
 
+
         const data =
             await response.json();
 
+
         if (!response.ok) {
 
-            aiResult.innerHTML = `
-
-                <div class="ai-error">
-
-                    ❌ ${
-                        data.message ||
-                        "Unable to get AI response."
-                    }
-
-                </div>
-
-            `;
+            output.innerText =
+                data.message ||
+                "AI could not answer right now.";
 
             return;
+
         }
 
-        /* =========================
-           DISPLAY FORMATTED ANSWER
-        ========================= */
 
-        aiResult.innerHTML =
-            formatAIResponse(
-                data.answer
-            );
+        output.innerText =
+            data.answer ||
+            data.response ||
+            "No response received.";
 
     } catch (error) {
 
-        console.log(
-            "AI ERROR:"
+        console.error(
+            "AI error:",
+            error
         );
 
-        console.log(error);
 
-        aiResult.innerHTML = `
-
-            <div class="ai-error">
-
-                ❌ Unable to connect to the AI server.
-
-                <br><br>
-
-                Please make sure your backend is running.
-
-            </div>
-
-        `;
+        output.innerText =
+            "Sorry, I couldn't get an AI response right now.";
 
     }
 
 }
 
-/* =========================
-   START APP
-========================= */
 
-checkLogin();
+// =====================================================
+// GENERATE QUIZ
+// =====================================================
 
+async function generateQuiz() {
+
+    const quizTopic =
+        document.getElementById(
+            "quizTopic"
+        );
+
+    const quizContainer =
+        document.getElementById(
+            "quizContainer"
+        );
+
+
+    if (
+        !quizTopic ||
+        !quizContainer
+    ) {
+
+        alert(
+            "Quiz container not found in HTML."
+        );
+
+        return;
+
+    }
+
+
+    const topic =
+        quizTopic.value.trim();
+
+
+    if (!topic) {
+
+        alert(
+            "Please enter a quiz topic."
+        );
+
+        return;
+
+    }
+
+
+    quizContainer.innerHTML =
+        "<p>🤖 Generating quiz...</p>";
+
+
+    try {
+
+        const response =
+            await fetch(
+                API_URL +
+                "/api/quiz",
+                {
+                    method: "POST",
+
+                    headers: {
+                        "Content-Type":
+                            "application/json"
+                    },
+
+                    body: JSON.stringify({
+                        topic:
+                            topic
+                    })
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if (!response.ok) {
+
+            quizContainer.innerHTML =
+                `<p>${
+                    data.message ||
+                    "Could not generate quiz."
+                }</p>`;
+
+            return;
+
+        }
+
+
+        if (data.quiz) {
+
+            quizContainer.innerHTML =
+                data.quiz;
+
+        } else if (
+            data.answer
+        ) {
+
+            quizContainer.innerHTML =
+                `<p>${data.answer}</p>`;
+
+        } else {
+
+            quizContainer.innerHTML =
+                "<p>Quiz generated successfully.</p>";
+
+        }
+
+    } catch (error) {
+
+        console.error(
+            "Quiz error:",
+            error
+        );
+
+
+        quizContainer.innerHTML =
+            "<p>Sorry, quiz generation failed.</p>";
+
+    }
+
+}
+
+
+// =====================================================
+// END OF SCRIPT
+// =====================================================
