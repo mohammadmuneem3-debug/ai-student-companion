@@ -1,4 +1,3 @@
-console.log("AI Student Companion script loaded");
 // =====================================================
 // AI STUDENT COMPANION
 // COMPLETE UPDATED SCRIPT.JS
@@ -6,178 +5,164 @@ console.log("AI Student Companion script loaded");
 
 
 // =====================================================
+// SCRIPT TEST
+// =====================================================
+
+console.log("AI Student Companion script loaded");
+
+
+// =====================================================
 // API URL
 // =====================================================
 
-const API_URL =
-    "https://ai-student-companion-njmj.onrender.com";
+const API_URL = "https://ai-student-companion-njmj.onrender.com";
 
 
 // =====================================================
 // CURRENT USER
 // =====================================================
 
-let currentUser =
-    JSON.parse(localStorage.getItem("currentUser"));
+let currentUser = JSON.parse(
+    localStorage.getItem("currentUser")
+);
 
 
 // =====================================================
 // PAGE LOAD
 // =====================================================
 
-document.addEventListener(
-    "DOMContentLoaded",
-    function () {
+document.addEventListener("DOMContentLoaded", function () {
 
-        checkLogin();
+    console.log("DOM loaded");
+
+    // Login/Register switch buttons
+
+    const loginSwitchButton =
+        document.getElementById("loginSwitchButton");
+
+    const registerSwitchButton =
+        document.getElementById("registerSwitchButton");
+
+
+    if (loginSwitchButton) {
+
+        loginSwitchButton.addEventListener(
+            "click",
+            function () {
+
+                console.log("Login switch clicked");
+
+                showLoginForm();
+
+            }
+        );
 
     }
-);
+
+
+    if (registerSwitchButton) {
+
+        registerSwitchButton.addEventListener(
+            "click",
+            function () {
+
+                console.log("Register switch clicked");
+
+                showRegisterForm();
+
+            }
+        );
+
+    }
+
+
+    // Check login status
+
+    checkLogin();
+
+});
 
 
 // =====================================================
-// AUTH CARD CONTROL
+// AUTH CARD DISPLAY
 // =====================================================
 
 function showOnlyRegister() {
 
+    console.log("Showing register form");
+
     const registerCard =
         document.getElementById("registerCard");
 
     const loginCard =
         document.getElementById("loginCard");
 
+
     if (!registerCard || !loginCard) {
+
+        console.error(
+            "Register or Login card not found"
+        );
+
         return;
+
     }
 
 
-    // SHOW REGISTER
+    registerCard.style.display = "block";
 
-    registerCard.classList.remove(
-        "auth-hidden"
-    );
-
-    registerCard.classList.add(
-        "auth-visible"
-    );
-
-    registerCard.style.setProperty(
-        "display",
-        "block",
-        "important"
-    );
-
-
-    // HIDE LOGIN
-
-    loginCard.classList.remove(
-        "auth-visible"
-    );
-
-    loginCard.classList.add(
-        "auth-hidden"
-    );
-
-    loginCard.style.setProperty(
-        "display",
-        "none",
-        "important"
-    );
+    loginCard.style.display = "none";
 
 }
 
 
 // =====================================================
-// SHOW LOGIN ONLY
+// SHOW LOGIN
 // =====================================================
 
 function showOnlyLogin() {
 
+    console.log("Showing login form");
+
     const registerCard =
         document.getElementById("registerCard");
 
     const loginCard =
         document.getElementById("loginCard");
 
+
     if (!registerCard || !loginCard) {
+
+        console.error(
+            "Register or Login card not found"
+        );
+
         return;
+
     }
 
 
-    // HIDE REGISTER
+    registerCard.style.display = "none";
 
-    registerCard.classList.remove(
-        "auth-visible"
-    );
-
-    registerCard.classList.add(
-        "auth-hidden"
-    );
-
-    registerCard.style.setProperty(
-        "display",
-        "none",
-        "important"
-    );
-
-
-    // SHOW LOGIN
-
-    loginCard.classList.remove(
-        "auth-hidden"
-    );
-
-    loginCard.classList.add(
-        "auth-visible"
-    );
-
-    loginCard.style.setProperty(
-        "display",
-        "block",
-        "important"
-    );
+    loginCard.style.display = "block";
 
 }
 
 
 // =====================================================
-// REGISTER BUTTON
+// SWITCH FUNCTIONS
 // =====================================================
 
 function showRegisterForm() {
 
-    console.log(
-        "Register button clicked"
-    );
-
     showOnlyRegister();
 
 }
 
-
-// =====================================================
-// LOGIN BUTTON
-// =====================================================
 
 function showLoginForm() {
 
-    console.log(
-        "Login button clicked"
-    );
-
     showOnlyLogin();
-
-}
-
-
-// =====================================================
-// EXTRA AUTH FUNCTIONS
-// =====================================================
-
-function showRegister() {
-
-    showOnlyRegister();
 
 }
 
@@ -189,40 +174,47 @@ function showLogin() {
 }
 
 
+function showRegister() {
+
+    showOnlyRegister();
+
+}
+
+
 // =====================================================
 // CHECK LOGIN
 // =====================================================
 
 function checkLogin() {
 
+    console.log("Checking login status...");
+
+
+    currentUser = JSON.parse(
+        localStorage.getItem("currentUser")
+    );
+
+
     if (currentUser) {
 
-        const welcomeMessage =
-            document.getElementById(
-                "welcomeMessage"
-            );
+        console.log(
+            "User already logged in:",
+            currentUser
+        );
 
-        if (welcomeMessage) {
-
-            welcomeMessage.innerText =
-                "Welcome, " +
-                currentUser.name +
-                "! 👋";
-
-        }
 
         showApp();
 
         loadTasks();
+
         loadStudyPlans();
+
         loadNotes();
 
         return;
 
     }
 
-
-    // User is not logged in
 
     hideApp();
 
@@ -233,9 +225,7 @@ function checkLogin() {
         );
 
 
-    if (
-        registrationCompleted === "true"
-    ) {
+    if (registrationCompleted === "true") {
 
         showOnlyLogin();
 
@@ -249,62 +239,50 @@ function checkLogin() {
 
 
 // =====================================================
-// SHOW APP
+// SHOW APPLICATION
 // =====================================================
 
 function showApp() {
 
     const authSection =
-        document.getElementById(
-            "authSection"
-        );
+        document.getElementById("authSection");
 
     const appSection =
-        document.getElementById(
-            "appSection"
-        );
+        document.getElementById("appSection");
 
     const logoutButton =
-        document.getElementById(
-            "logoutButton"
-        );
+        document.getElementById("logoutButton");
 
-
-    // HIDE AUTH
 
     if (authSection) {
 
-        authSection.style.setProperty(
-            "display",
-            "none",
-            "important"
-        );
+        authSection.style.display = "none";
 
     }
 
-
-    // SHOW APP
 
     if (appSection) {
 
-        appSection.style.setProperty(
-            "display",
-            "block",
-            "important"
-        );
+        appSection.style.display = "block";
 
     }
 
 
-    // SHOW LOGOUT
-
     if (logoutButton) {
 
-        logoutButton.style.setProperty(
-            "display",
-            "block",
-            "important"
-        );
+        logoutButton.style.display = "block";
+
+    }
+
+
+    const welcomeMessage =
+        document.getElementById("welcomeMessage");
+
+
+    if (welcomeMessage && currentUser) {
+
+        welcomeMessage.textContent =
+            `Welcome, ${currentUser.name || "Student"}!`;
 
     }
 
@@ -312,84 +290,38 @@ function showApp() {
 
 
 // =====================================================
-// HIDE APP
+// HIDE APPLICATION
 // =====================================================
 
 function hideApp() {
 
     const authSection =
-        document.getElementById(
-            "authSection"
-        );
+        document.getElementById("authSection");
 
     const appSection =
-        document.getElementById(
-            "appSection"
-        );
+        document.getElementById("appSection");
 
     const logoutButton =
-        document.getElementById(
-            "logoutButton"
-        );
+        document.getElementById("logoutButton");
 
-
-    // SHOW AUTH
 
     if (authSection) {
 
-        authSection.style.setProperty(
-            "display",
-            "block",
-            "important"
-        );
+        authSection.style.display = "block";
 
     }
 
-
-    // HIDE APP
 
     if (appSection) {
 
-        appSection.style.setProperty(
-            "display",
-            "none",
-            "important"
-        );
+        appSection.style.display = "none";
 
     }
 
-
-    // HIDE LOGOUT
 
     if (logoutButton) {
 
-        logoutButton.style.setProperty(
-            "display",
-            "none",
-            "important"
-        );
-
-    }
-
-}
-
-
-// =====================================================
-// ENTER APP
-// =====================================================
-
-function enterApp() {
-
-    const authSection =
-        document.getElementById(
-            "authSection"
-        );
-
-    if (authSection) {
-
-        authSection.scrollIntoView({
-            behavior: "smooth"
-        });
+        logoutButton.style.display = "none";
 
     }
 
@@ -402,49 +334,19 @@ function enterApp() {
 
 async function registerUser() {
 
-    const nameElement =
-        document.getElementById(
-            "registerName"
-        );
-
-    const emailElement =
-        document.getElementById(
-            "registerEmail"
-        );
-
-    const passwordElement =
-        document.getElementById(
-            "registerPassword"
-        );
-
-    const authMessage =
-        document.getElementById(
-            "authMessage"
-        );
-
-
     const name =
-        nameElement.value.trim();
+        document.getElementById("registerName").value.trim();
 
     const email =
-        emailElement.value.trim();
+        document.getElementById("registerEmail").value.trim();
 
     const password =
-        passwordElement.value.trim();
+        document.getElementById("registerPassword").value.trim();
 
 
-    if (
-        !name ||
-        !email ||
-        !password
-    ) {
+    if (!name || !email || !password) {
 
-        if (authMessage) {
-
-            authMessage.innerText =
-                "Please fill all fields.";
-
-        }
+        alert("Please fill all fields.");
 
         return;
 
@@ -453,31 +355,23 @@ async function registerUser() {
 
     try {
 
-        if (authMessage) {
-
-            authMessage.innerText =
-                "Creating your account...";
-
-        }
-
-
         const response =
             await fetch(
-                API_URL +
-                "/api/register",
+                `${API_URL}/api/register`,
                 {
+
                     method: "POST",
 
                     headers: {
-                        "Content-Type":
-                            "application/json"
+                        "Content-Type": "application/json"
                     },
 
                     body: JSON.stringify({
-                        name: name,
-                        email: email,
-                        password: password
+                        name,
+                        email,
+                        password
                     })
+
                 }
             );
 
@@ -488,20 +382,20 @@ async function registerUser() {
 
         if (!response.ok) {
 
-            if (authMessage) {
-
-                authMessage.innerText =
-                    data.message ||
-                    "Registration failed.";
-
-            }
+            alert(
+                data.message ||
+                "Registration failed."
+            );
 
             return;
 
         }
 
 
-        // Registration successful
+        alert(
+            "Registration successful! Please login."
+        );
+
 
         localStorage.setItem(
             "registrationCompleted",
@@ -509,68 +403,37 @@ async function registerUser() {
         );
 
 
-        if (authMessage) {
+        // Clear fields
 
-            authMessage.innerText =
-                "Registration successful! Please login. ✅";
+        document.getElementById(
+            "registerName"
+        ).value = "";
 
-        }
+        document.getElementById(
+            "registerEmail"
+        ).value = "";
+
+        document.getElementById(
+            "registerPassword"
+        ).value = "";
 
 
-        // Clear register fields
-
-        nameElement.value = "";
-        emailElement.value = "";
-        passwordElement.value = "";
-
-
-        // SHOW LOGIN
+        // Show login
 
         showOnlyLogin();
 
+    }
 
-        // Put registered email
-        // into login box
-
-        const loginEmail =
-            document.getElementById(
-                "loginEmail"
-            );
-
-        const loginPassword =
-            document.getElementById(
-                "loginPassword"
-            );
-
-
-        if (loginEmail) {
-
-            loginEmail.value =
-                email;
-
-        }
-
-
-        if (loginPassword) {
-
-            loginPassword.focus();
-
-        }
-
-    } catch (error) {
+    catch (error) {
 
         console.error(
             "Registration error:",
             error
         );
 
-
-        if (authMessage) {
-
-            authMessage.innerText =
-                "Cannot connect to the server. Please try again.";
-
-        }
+        alert(
+            "Could not connect to the server."
+        );
 
     }
 
@@ -583,40 +446,18 @@ async function registerUser() {
 
 async function loginUser() {
 
-    const emailElement =
-        document.getElementById(
-            "loginEmail"
-        );
-
-    const passwordElement =
-        document.getElementById(
-            "loginPassword"
-        );
-
-    const authMessage =
-        document.getElementById(
-            "authMessage"
-        );
-
-
     const email =
-        emailElement.value.trim();
+        document.getElementById("loginEmail").value.trim();
 
     const password =
-        passwordElement.value.trim();
+        document.getElementById("loginPassword").value.trim();
 
 
-    if (
-        !email ||
-        !password
-    ) {
+    if (!email || !password) {
 
-        if (authMessage) {
-
-            authMessage.innerText =
-                "Please enter email and password.";
-
-        }
+        alert(
+            "Please enter email and password."
+        );
 
         return;
 
@@ -625,30 +466,22 @@ async function loginUser() {
 
     try {
 
-        if (authMessage) {
-
-            authMessage.innerText =
-                "Logging in...";
-
-        }
-
-
         const response =
             await fetch(
-                API_URL +
-                "/api/login",
+                `${API_URL}/api/login`,
                 {
+
                     method: "POST",
 
                     headers: {
-                        "Content-Type":
-                            "application/json"
+                        "Content-Type": "application/json"
                     },
 
                     body: JSON.stringify({
-                        email: email,
-                        password: password
+                        email,
+                        password
                     })
+
                 }
             );
 
@@ -659,93 +492,56 @@ async function loginUser() {
 
         if (!response.ok) {
 
-            if (authMessage) {
-
-                authMessage.innerText =
-                    data.message ||
-                    "Login failed.";
-
-            }
+            alert(
+                data.message ||
+                "Login failed."
+            );
 
             return;
 
         }
 
 
-        // SAVE USER
-
         currentUser =
-            data.user;
+            data.user || data;
 
 
         localStorage.setItem(
             "currentUser",
-            JSON.stringify(
-                currentUser
-            )
+            JSON.stringify(currentUser)
         );
 
-
-        localStorage.setItem(
-            "registrationCompleted",
-            "true"
-        );
-
-
-        // Clear login fields
-
-        emailElement.value = "";
-        passwordElement.value = "";
-
-
-        if (authMessage) {
-
-            authMessage.innerText = "";
-
-        }
-
-
-        // SHOW APP
 
         showApp();
 
 
-        const welcomeMessage =
-            document.getElementById(
-                "welcomeMessage"
-            );
-
-
-        if (welcomeMessage) {
-
-            welcomeMessage.innerText =
-                "Welcome, " +
-                currentUser.name +
-                "! 👋";
-
-        }
-
-
-        // Load data
-
         loadTasks();
+
         loadStudyPlans();
+
         loadNotes();
 
-    } catch (error) {
+
+        document.getElementById(
+            "loginEmail"
+        ).value = "";
+
+        document.getElementById(
+            "loginPassword"
+        ).value = "";
+
+    }
+
+    catch (error) {
 
         console.error(
             "Login error:",
             error
         );
 
-
-        if (authMessage) {
-
-            authMessage.innerText =
-                "Cannot connect to the server. Please try again.";
-
-        }
+        alert(
+            "Could not connect to the server."
+        );
 
     }
 
@@ -766,196 +562,39 @@ function logoutUser() {
     );
 
 
-    // Clear tasks
-
-    const taskList =
-        document.getElementById(
-            "taskList"
-        );
-
-    if (taskList) {
-
-        taskList.innerHTML = "";
-
-    }
-
-
-    // Clear study plans
-
-    const studyPlanList =
-        document.getElementById(
-            "studyPlanList"
-        );
-
-    if (studyPlanList) {
-
-        studyPlanList.innerHTML = "";
-
-    }
-
-
-    // Clear notes
-
-    const notesList =
-        document.getElementById(
-            "notesList"
-        );
-
-    if (notesList) {
-
-        notesList.innerHTML = "";
-
-    }
-
-
-    // Reset statistics
-
-    const totalTasks =
-        document.getElementById(
-            "totalTasks"
-        );
-
-    const completedTasks =
-        document.getElementById(
-            "completedTasks"
-        );
-
-    const totalStudyPlans =
-        document.getElementById(
-            "totalStudyPlans"
-        );
-
-    const totalNotes =
-        document.getElementById(
-            "totalNotes"
-        );
-
-
-    if (totalTasks) {
-
-        totalTasks.innerText =
-            "0";
-
-    }
-
-
-    if (completedTasks) {
-
-        completedTasks.innerText =
-            "0";
-
-    }
-
-
-    if (totalStudyPlans) {
-
-        totalStudyPlans.innerText =
-            "0";
-
-    }
-
-
-    if (totalNotes) {
-
-        totalNotes.innerText =
-            "0";
-
-    }
-
-
-    // Hide app
-
     hideApp();
 
 
-    // SHOW LOGIN
-
     showOnlyLogin();
 
-
-    const authMessage =
-        document.getElementById(
-            "authMessage"
-        );
-
-
-    if (authMessage) {
-
-        authMessage.innerText = "";
-
-    }
-
 }
 
 
 // =====================================================
-// PASSWORD SHOW / HIDE
-// =====================================================
-
-function togglePassword(
-    inputId,
-    button
-) {
-
-    const input =
-        document.getElementById(
-            inputId
-        );
-
-
-    if (!input) {
-
-        return;
-
-    }
-
-
-    if (
-        input.type ===
-        "password"
-    ) {
-
-        input.type = "text";
-
-        button.innerText =
-            "🙈";
-
-    } else {
-
-        input.type = "password";
-
-        button.innerText =
-            "👁️";
-
-    }
-
-}
-
-
-// =====================================================
-// ADD TASK
+// TASKS
 // =====================================================
 
 async function addTask() {
 
-    if (!currentUser) {
+    const input =
+        document.getElementById("taskInput");
+
+    const title =
+        input.value.trim();
+
+
+    if (!title) {
+
+        alert("Please enter a task.");
 
         return;
 
     }
 
 
-    const taskInput =
-        document.getElementById(
-            "taskInput"
-        );
+    if (!currentUser) {
 
-
-    const task =
-        taskInput.value.trim();
-
-
-    if (!task) {
+        alert("Please login first.");
 
         return;
 
@@ -966,22 +605,25 @@ async function addTask() {
 
         const response =
             await fetch(
-                API_URL +
-                "/api/tasks",
+                `${API_URL}/api/tasks`,
                 {
+
                     method: "POST",
 
                     headers: {
-                        "Content-Type":
-                            "application/json"
+                        "Content-Type": "application/json"
                     },
 
                     body: JSON.stringify({
-                        userId:
-                            currentUser.id,
 
-                        task: task
+                        userId:
+                            currentUser.id ||
+                            currentUser._id,
+
+                        title
+
                     })
+
                 }
             );
 
@@ -1002,16 +644,18 @@ async function addTask() {
         }
 
 
-        taskInput.value = "";
+        input.value = "";
+
 
         loadTasks();
 
-    } catch (error) {
+    }
 
-        console.error(error);
+    catch (error) {
 
-        alert(
-            "Could not connect to the server."
+        console.error(
+            "Add task error:",
+            error
         );
 
     }
@@ -1025,21 +669,23 @@ async function addTask() {
 
 async function loadTasks() {
 
-    if (!currentUser) {
-
-        return;
-
-    }
+    if (!currentUser) return;
 
 
     try {
 
+        const userId =
+            currentUser.id ||
+            currentUser._id;
+
+
         const response =
             await fetch(
-                API_URL +
-                "/api/tasks/" +
-                currentUser.id
+                `${API_URL}/api/tasks/${userId}`
             );
+
+
+        if (!response.ok) return;
 
 
         const tasks =
@@ -1052,47 +698,101 @@ async function loadTasks() {
             );
 
 
-        if (!taskList) {
-
-            return;
-
-        }
+        if (!taskList) return;
 
 
         taskList.innerHTML = "";
 
 
-        if (
-            !tasks ||
-            tasks.length === 0
-        ) {
+        let completed = 0;
 
-            taskList.innerHTML =
-                "<li>No tasks yet. Add your first task! 🚀</li>";
 
-            updateTaskStats([]);
+        tasks.forEach(function (task) {
 
-            return;
+            if (task.completed) {
+
+                completed++;
+
+            }
+
+
+            const taskItem =
+                document.createElement("div");
+
+
+            taskItem.className =
+                "task-item";
+
+
+            taskItem.innerHTML = `
+
+                <div class="task-content">
+
+                    <input
+                        type="checkbox"
+                        ${task.completed ? "checked" : ""}
+                        onchange="toggleTask('${task._id || task.id}', ${!task.completed})"
+                    >
+
+                    <span>
+                        ${escapeHTML(task.title)}
+                    </span>
+
+                </div>
+
+                <button
+                    type="button"
+                    onclick="deleteTask('${task._id || task.id}')">
+
+                    Delete
+
+                </button>
+
+            `;
+
+
+            taskList.appendChild(
+                taskItem
+            );
+
+        });
+
+
+        const totalTasks =
+            document.getElementById(
+                "totalTasks"
+            );
+
+        const completedTasks =
+            document.getElementById(
+                "completedTasks"
+            );
+
+
+        if (totalTasks) {
+
+            totalTasks.textContent =
+                tasks.length;
 
         }
 
 
-        tasks.forEach(
-            function (task) {
+        if (completedTasks) {
 
-                createTaskElement(
-                    task
-                );
+            completedTasks.textContent =
+                completed;
 
-            }
+        }
+
+
+        updateProgress(
+            tasks.length,
+            completed
         );
 
+    }
 
-        updateTaskStats(
-            tasks
-        );
-
-    } catch (error) {
+    catch (error) {
 
         console.error(
             "Load tasks error:",
@@ -1105,111 +805,44 @@ async function loadTasks() {
 
 
 // =====================================================
-// CREATE TASK ELEMENT
+// TOGGLE TASK
 // =====================================================
 
-function createTaskElement(task) {
-
-    const taskList =
-        document.getElementById(
-            "taskList"
-        );
-
-
-    if (!taskList) {
-
-        return;
-
-    }
-
-
-    const li =
-        document.createElement(
-            "li"
-        );
-
-
-    li.className =
-        task.completed
-            ? "completed"
-            : "";
-
-
-    li.innerHTML = `
-
-        <span
-            onclick="updateTask(
-                ${task.id},
-                ${!task.completed}
-            )"
-            style="cursor:pointer;"
-        >
-            ${task.completed ? "✅" : "⬜"}
-            ${task.task}
-        </span>
-
-        <button
-            onclick="deleteTask(${task.id})"
-        >
-            🗑️
-        </button>
-
-    `;
-
-
-    taskList.appendChild(li);
-
-}
-
-
-// =====================================================
-// UPDATE TASK
-// =====================================================
-
-async function updateTask(
+async function toggleTask(
     taskId,
     completed
 ) {
 
     try {
 
-        const response =
-            await fetch(
-                API_URL +
-                "/api/tasks/" +
-                taskId,
-                {
-                    method: "PUT",
+        await fetch(
+            `${API_URL}/api/tasks/${taskId}`,
+            {
 
-                    headers: {
-                        "Content-Type":
-                            "application/json"
-                    },
+                method: "PUT",
 
-                    body: JSON.stringify({
-                        completed:
-                            completed
-                    })
-                }
-            );
+                headers: {
+                    "Content-Type": "application/json"
+                },
 
+                body: JSON.stringify({
+                    completed
+                })
 
-        if (!response.ok) {
-
-            alert(
-                "Could not update task."
-            );
-
-            return;
-
-        }
+            }
+        );
 
 
         loadTasks();
 
-    } catch (error) {
+    }
 
-        console.error(error);
+    catch (error) {
+
+        console.error(
+            "Toggle task error:",
+            error
+        );
 
     }
 
@@ -1224,33 +857,26 @@ async function deleteTask(taskId) {
 
     try {
 
-        const response =
-            await fetch(
-                API_URL +
-                "/api/tasks/" +
-                taskId,
-                {
-                    method: "DELETE"
-                }
-            );
+        await fetch(
+            `${API_URL}/api/tasks/${taskId}`,
+            {
 
+                method: "DELETE"
 
-        if (!response.ok) {
-
-            alert(
-                "Could not delete task."
-            );
-
-            return;
-
-        }
+            }
+        );
 
 
         loadTasks();
 
-    } catch (error) {
+    }
 
-        console.error(error);
+    catch (error) {
+
+        console.error(
+            "Delete task error:",
+            error
+        );
 
     }
 
@@ -1258,58 +884,7 @@ async function deleteTask(taskId) {
 
 
 // =====================================================
-// UPDATE TASK STATS
-// =====================================================
-
-function updateTaskStats(tasks) {
-
-    const totalTasks =
-        document.getElementById(
-            "totalTasks"
-        );
-
-    const completedTasks =
-        document.getElementById(
-            "completedTasks"
-        );
-
-
-    const total =
-        tasks.length;
-
-
-    const completed =
-        tasks.filter(
-            task => task.completed
-        ).length;
-
-
-    if (totalTasks) {
-
-        totalTasks.innerText =
-            total;
-
-    }
-
-
-    if (completedTasks) {
-
-        completedTasks.innerText =
-            completed;
-
-    }
-
-
-    updateProgress(
-        total,
-        completed
-    );
-
-}
-
-
-// =====================================================
-// UPDATE PROGRESS
+// PROGRESS
 // =====================================================
 
 function updateProgress(
@@ -1317,19 +892,19 @@ function updateProgress(
     completed
 ) {
 
-    const progress =
+    const progressFill =
         document.getElementById(
-            "progress"
+            "progressFill"
         );
 
-    const progressBar =
+    const progressText =
         document.getElementById(
-            "progressBar"
+            "progressText"
         );
 
-    const progressStatus =
+    const productivityStatus =
         document.getElementById(
-            "progressStatus"
+            "productivityStatus"
         );
 
 
@@ -1340,142 +915,55 @@ function updateProgress(
 
         percentage =
             Math.round(
-                (completed / total) *
-                100
+                (completed / total) * 100
             );
 
     }
 
 
-    if (progress) {
+    if (progressFill) {
 
-        progress.innerText =
-            percentage + "%";
-
-    }
-
-
-    if (progressBar) {
-
-        progressBar.style.width =
-            percentage + "%";
+        progressFill.style.width =
+            `${percentage}%`;
 
     }
 
 
-    if (progressStatus) {
+    if (progressText) {
 
-        if (percentage === 0) {
-
-            progressStatus.innerText =
-                "Let's get started! 🚀";
-
-        } else if (
-            percentage < 50
-        ) {
-
-            progressStatus.innerText =
-                "Good start! Keep going! 💪";
-
-        } else if (
-            percentage < 100
-        ) {
-
-            progressStatus.innerText =
-                "You're doing great! 🔥";
-
-        } else {
-
-            progressStatus.innerText =
-                "Amazing! All tasks completed! 🎉";
-
-        }
+        progressText.textContent =
+            `${percentage}%`;
 
     }
 
 
-    updateProductivity(
-        percentage
-    );
+    if (productivityStatus) {
 
-}
+        if (percentage === 100 && total > 0) {
 
-
-// =====================================================
-// PRODUCTIVITY STATUS
-// =====================================================
-
-function updateProductivity(
-    percentage
-) {
-
-    const status =
-        document.getElementById(
-            "productivityStatus"
-        );
-
-    const message =
-        document.getElementById(
-            "productivityMessage"
-        );
-
-
-    if (!status) {
-
-        return;
-
-    }
-
-
-    if (percentage === 0) {
-
-        status.innerText =
-            "Ready to start 🚀";
-
-        if (message) {
-
-            message.innerText =
-                "Complete your first task to build momentum.";
+            productivityStatus.textContent =
+                "🔥 Excellent! You completed all your tasks.";
 
         }
 
-    } else if (
-        percentage < 50
-    ) {
+        else if (percentage >= 50) {
 
-        status.innerText =
-            "Getting started 💪";
-
-        if (message) {
-
-            message.innerText =
-                "Keep completing tasks and build your momentum.";
+            productivityStatus.textContent =
+                "💪 Great progress! Keep going.";
 
         }
 
-    } else if (
-        percentage < 100
-    ) {
+        else if (total > 0) {
 
-        status.innerText =
-            "Doing great 🔥";
-
-        if (message) {
-
-            message.innerText =
-                "You're making excellent progress.";
+            productivityStatus.textContent =
+                "📚 Keep working on your tasks.";
 
         }
 
-    } else {
+        else {
 
-        status.innerText =
-            "Excellent 🎉";
-
-        if (message) {
-
-            message.innerText =
-                "You've completed everything. Great work!";
+            productivityStatus.textContent =
+                "Start completing your tasks to see your productivity.";
 
         }
 
@@ -1485,49 +973,28 @@ function updateProductivity(
 
 
 // =====================================================
-// ADD STUDY PLAN
+// STUDY PLANS
 // =====================================================
 
 async function addStudyPlan() {
 
-    if (!currentUser) {
-
-        return;
-
-    }
-
-
-    const subjectInput =
+    const subject =
         document.getElementById(
             "subjectInput"
-        );
-
-    const topicInput =
-        document.getElementById(
-            "topicInput"
-        );
-
-    const timeInput =
-        document.getElementById(
-            "timeInput"
-        );
-
-
-    const subject =
-        subjectInput.value.trim();
+        ).value.trim();
 
     const topic =
-        topicInput.value.trim();
+        document.getElementById(
+            "topicInput"
+        ).value.trim();
 
     const studyTime =
-        timeInput.value.trim();
+        document.getElementById(
+            "timeInput"
+        ).value.trim();
 
 
-    if (
-        !subject ||
-        !topic ||
-        !studyTime
-    ) {
+    if (!subject || !topic || !studyTime) {
 
         alert(
             "Please fill all study plan fields."
@@ -1538,33 +1005,42 @@ async function addStudyPlan() {
     }
 
 
+    if (!currentUser) {
+
+        alert("Please login first.");
+
+        return;
+
+    }
+
+
     try {
 
         const response =
             await fetch(
-                API_URL +
-                "/api/study-plans",
+                `${API_URL}/api/study-plans`,
                 {
+
                     method: "POST",
 
                     headers: {
-                        "Content-Type":
-                            "application/json"
+                        "Content-Type": "application/json"
                     },
 
                     body: JSON.stringify({
+
                         userId:
-                            currentUser.id,
+                            currentUser.id ||
+                            currentUser._id,
 
-                        subject:
-                            subject,
+                        subject,
 
-                        topic:
-                            topic,
+                        topic,
 
-                        studyTime:
-                            studyTime
+                        study_time: studyTime
+
                     })
+
                 }
             );
 
@@ -1585,19 +1061,28 @@ async function addStudyPlan() {
         }
 
 
-        subjectInput.value = "";
-        topicInput.value = "";
-        timeInput.value = "";
+        document.getElementById(
+            "subjectInput"
+        ).value = "";
+
+        document.getElementById(
+            "topicInput"
+        ).value = "";
+
+        document.getElementById(
+            "timeInput"
+        ).value = "";
 
 
         loadStudyPlans();
 
-    } catch (error) {
+    }
 
-        console.error(error);
+    catch (error) {
 
-        alert(
-            "Could not connect to the server."
+        console.error(
+            "Study plan error:",
+            error
         );
 
     }
@@ -1611,107 +1096,91 @@ async function addStudyPlan() {
 
 async function loadStudyPlans() {
 
-    if (!currentUser) {
-
-        return;
-
-    }
+    if (!currentUser) return;
 
 
     try {
 
+        const userId =
+            currentUser.id ||
+            currentUser._id;
+
+
         const response =
             await fetch(
-                API_URL +
-                "/api/study-plans/" +
-                currentUser.id
+                `${API_URL}/api/study-plans/${userId}`
             );
+
+
+        if (!response.ok) return;
 
 
         const plans =
             await response.json();
 
 
-        const studyPlanList =
+        const list =
             document.getElementById(
                 "studyPlanList"
             );
 
 
-        if (!studyPlanList) {
+        if (!list) return;
 
-            return;
+
+        list.innerHTML = "";
+
+
+        plans.forEach(function (plan) {
+
+            const item =
+                document.createElement("div");
+
+
+            item.className =
+                "study-plan-item";
+
+
+            item.innerHTML = `
+
+                <h3>
+                    ${escapeHTML(plan.subject)}
+                </h3>
+
+                <p>
+                    ${escapeHTML(plan.topic)}
+                </p>
+
+                <span>
+                    ⏱ ${escapeHTML(
+                        plan.study_time || ""
+                    )}
+                </span>
+
+            `;
+
+
+            list.appendChild(item);
+
+        });
+
+
+        const totalStudyPlans =
+            document.getElementById(
+                "totalStudyPlans"
+            );
+
+
+        if (totalStudyPlans) {
+
+            totalStudyPlans.textContent =
+                plans.length;
 
         }
 
+    }
 
-        studyPlanList.innerHTML = "";
-
-
-        if (
-            !plans ||
-            plans.length === 0
-        ) {
-
-            studyPlanList.innerHTML =
-                "<p>No study plans yet. 📚</p>";
-
-            updateStudyStats([]);
-
-            return;
-
-        }
-
-
-        plans.forEach(
-            function (plan) {
-
-                const div =
-                    document.createElement(
-                        "div"
-                    );
-
-
-                div.className =
-                    "study-plan-item";
-
-
-                div.innerHTML = `
-
-                    <strong>
-                        ${plan.subject}
-                    </strong>
-
-                    -
-
-                    ${plan.topic}
-
-                    <br>
-
-                    ⏱️ ${plan.study_time}
-
-                    <button
-                        onclick="deleteStudyPlan(${plan.id})"
-                    >
-                        🗑️
-                    </button>
-
-                `;
-
-
-                studyPlanList.appendChild(
-                    div
-                );
-
-            }
-        );
-
-
-        updateStudyStats(
-            plans
-        );
-
-    } catch (error) {
+    catch (error) {
 
         console.error(
             "Load study plans error:",
@@ -1724,98 +1193,33 @@ async function loadStudyPlans() {
 
 
 // =====================================================
-// UPDATE STUDY STATS
-// =====================================================
-
-function updateStudyStats(plans) {
-
-    const totalStudyPlans =
-        document.getElementById(
-            "totalStudyPlans"
-        );
-
-
-    if (totalStudyPlans) {
-
-        totalStudyPlans.innerText =
-            plans.length;
-
-    }
-
-}
-
-
-// =====================================================
-// DELETE STUDY PLAN
-// =====================================================
-
-async function deleteStudyPlan(
-    planId
-) {
-
-    try {
-
-        const response =
-            await fetch(
-                API_URL +
-                "/api/study-plans/" +
-                planId,
-                {
-                    method: "DELETE"
-                }
-            );
-
-
-        if (!response.ok) {
-
-            alert(
-                "Could not delete study plan."
-            );
-
-            return;
-
-        }
-
-
-        loadStudyPlans();
-
-    } catch (error) {
-
-        console.error(error);
-
-    }
-
-}
-
-
-// =====================================================
-// ADD NOTE
+// NOTES
 // =====================================================
 
 async function addNote() {
 
-    if (!currentUser) {
-
-        return;
-
-    }
-
-
-    const noteInput =
+    const input =
         document.getElementById(
             "noteInput"
         );
 
 
-    const note =
-        noteInput.value.trim();
+    const content =
+        input.value.trim();
 
 
-    if (!note) {
+    if (!content) {
 
-        alert(
-            "Please write a note."
-        );
+        alert("Please write a note.");
+
+        return;
+
+    }
+
+
+    if (!currentUser) {
+
+        alert("Please login first.");
 
         return;
 
@@ -1826,23 +1230,25 @@ async function addNote() {
 
         const response =
             await fetch(
-                API_URL +
-                "/api/notes",
+                `${API_URL}/api/notes`,
                 {
+
                     method: "POST",
 
                     headers: {
-                        "Content-Type":
-                            "application/json"
+                        "Content-Type": "application/json"
                     },
 
                     body: JSON.stringify({
-                        userId:
-                            currentUser.id,
 
-                        note:
-                            note
+                        userId:
+                            currentUser.id ||
+                            currentUser._id,
+
+                        content
+
                     })
+
                 }
             );
 
@@ -1855,7 +1261,7 @@ async function addNote() {
 
             alert(
                 data.message ||
-                "Could not add note."
+                "Could not save note."
             );
 
             return;
@@ -1863,16 +1269,18 @@ async function addNote() {
         }
 
 
-        noteInput.value = "";
+        input.value = "";
+
 
         loadNotes();
 
-    } catch (error) {
+    }
 
-        console.error(error);
+    catch (error) {
 
-        alert(
-            "Could not connect to the server."
+        console.error(
+            "Add note error:",
+            error
         );
 
     }
@@ -1886,99 +1294,83 @@ async function addNote() {
 
 async function loadNotes() {
 
-    if (!currentUser) {
-
-        return;
-
-    }
+    if (!currentUser) return;
 
 
     try {
 
+        const userId =
+            currentUser.id ||
+            currentUser._id;
+
+
         const response =
             await fetch(
-                API_URL +
-                "/api/notes/" +
-                currentUser.id
+                `${API_URL}/api/notes/${userId}`
             );
+
+
+        if (!response.ok) return;
 
 
         const notes =
             await response.json();
 
 
-        const notesList =
+        const list =
             document.getElementById(
                 "notesList"
             );
 
 
-        if (!notesList) {
+        if (!list) return;
 
-            return;
+
+        list.innerHTML = "";
+
+
+        notes.forEach(function (note) {
+
+            const item =
+                document.createElement("div");
+
+
+            item.className =
+                "note-item";
+
+
+            item.innerHTML = `
+
+                <p>
+                    ${escapeHTML(
+                        note.content
+                    )}
+                </p>
+
+            `;
+
+
+            list.appendChild(item);
+
+        });
+
+
+        const totalNotes =
+            document.getElementById(
+                "totalNotes"
+            );
+
+
+        if (totalNotes) {
+
+            totalNotes.textContent =
+                notes.length;
 
         }
 
+    }
 
-        notesList.innerHTML = "";
-
-
-        if (
-            !notes ||
-            notes.length === 0
-        ) {
-
-            notesList.innerHTML =
-                "<p>No notes yet. 📝</p>";
-
-            updateNoteStats([]);
-
-            return;
-
-        }
-
-
-        notes.forEach(
-            function (note) {
-
-                const div =
-                    document.createElement(
-                        "div"
-                    );
-
-
-                div.className =
-                    "note-item";
-
-
-                div.innerHTML = `
-
-                    <span>
-                        ${note.note}
-                    </span>
-
-                    <button
-                        onclick="deleteNote(${note.id})"
-                    >
-                        🗑️
-                    </button>
-
-                `;
-
-
-                notesList.appendChild(
-                    div
-                );
-
-            }
-        );
-
-
-        updateNoteStats(
-            notes
-        );
-
-    } catch (error) {
+    catch (error) {
 
         console.error(
             "Load notes error:",
@@ -1991,101 +1383,25 @@ async function loadNotes() {
 
 
 // =====================================================
-// UPDATE NOTE STATS
+// AI QUESTION
 // =====================================================
 
-function updateNoteStats(notes) {
+function setAIQuestion(question) {
 
-    const totalNotes =
-        document.getElementById(
-            "totalNotes"
-        );
-
-
-    if (totalNotes) {
-
-        totalNotes.innerText =
-            notes.length;
-
-    }
-
-}
-
-
-// =====================================================
-// DELETE NOTE
-// =====================================================
-
-async function deleteNote(
-    noteId
-) {
-
-    try {
-
-        const response =
-            await fetch(
-                API_URL +
-                "/api/notes/" +
-                noteId,
-                {
-                    method: "DELETE"
-                }
-            );
-
-
-        if (!response.ok) {
-
-            alert(
-                "Could not delete note."
-            );
-
-            return;
-
-        }
-
-
-        loadNotes();
-
-    } catch (error) {
-
-        console.error(error);
-
-    }
-
-}
-
-
-// =====================================================
-// QUICK AI
-// =====================================================
-
-function quickAI(question) {
-
-    const aiInput =
+    const input =
         document.getElementById(
             "aiInput"
         );
 
 
-    if (aiInput) {
+    if (input) {
 
-        aiInput.value =
+        input.value =
             question;
 
-        aiInput.focus();
+        input.focus();
 
     }
-
-}
-
-
-// =====================================================
-// AI QUICK BUTTON SUPPORT
-// =====================================================
-
-function setAIQuestion(question) {
-
-    quickAI(question);
 
 }
 
@@ -2096,29 +1412,19 @@ function setAIQuestion(question) {
 
 async function askAI() {
 
-    const aiInput =
+    const input =
         document.getElementById(
             "aiInput"
         );
 
-    const aiResult =
-        document.getElementById(
-            "aiResult"
-        );
 
-
-    const aiResponse =
+    const responseBox =
         document.getElementById(
             "aiResponse"
         );
 
 
-    const output =
-        aiResult ||
-        aiResponse;
-
-
-    if (!aiInput || !output) {
+    if (!input || !responseBox) {
 
         return;
 
@@ -2126,41 +1432,48 @@ async function askAI() {
 
 
     const question =
-        aiInput.value.trim();
+        input.value.trim();
 
 
     if (!question) {
 
-        output.innerText =
-            "Please ask a question.";
+        alert(
+            "Please enter a question."
+        );
 
         return;
 
     }
 
 
-    output.innerText =
-        "🤖 AI is thinking...";
+    responseBox.innerHTML = `
+
+        <div class="ai-loading">
+
+            Thinking...
+
+        </div>
+
+    `;
 
 
     try {
 
         const response =
             await fetch(
-                API_URL +
-                "/api/ai",
+                `${API_URL}/api/ai`,
                 {
+
                     method: "POST",
 
                     headers: {
-                        "Content-Type":
-                            "application/json"
+                        "Content-Type": "application/json"
                     },
 
                     body: JSON.stringify({
-                        question:
-                            question
+                        question
                     })
+
                 }
             );
 
@@ -2171,21 +1484,39 @@ async function askAI() {
 
         if (!response.ok) {
 
-            output.innerText =
-                data.message ||
-                "AI could not answer right now.";
+            responseBox.innerHTML = `
+
+                <p>
+                    Sorry, I couldn't get an AI response right now.
+                </p>
+
+            `;
 
             return;
 
         }
 
 
-        output.innerText =
+        const answer =
             data.answer ||
             data.response ||
+            data.message ||
             "No response received.";
 
-    } catch (error) {
+
+        responseBox.innerHTML = `
+
+            <div class="ai-answer">
+
+                ${formatAIResponse(answer)}
+
+            </div>
+
+        `;
+
+    }
+
+    catch (error) {
 
         console.error(
             "AI error:",
@@ -2193,8 +1524,13 @@ async function askAI() {
         );
 
 
-        output.innerText =
-            "Sorry, I couldn't get an AI response right now.";
+        responseBox.innerHTML = `
+
+            <p>
+                Sorry, I couldn't get an AI response right now.
+            </p>
+
+        `;
 
     }
 
@@ -2202,30 +1538,23 @@ async function askAI() {
 
 
 // =====================================================
-// GENERATE QUIZ
+// QUIZ
 // =====================================================
 
 async function generateQuiz() {
 
-    const quizTopic =
+    const topicInput =
         document.getElementById(
             "quizTopic"
         );
 
-    const quizContainer =
+    const container =
         document.getElementById(
             "quizContainer"
         );
 
 
-    if (
-        !quizTopic ||
-        !quizContainer
-    ) {
-
-        alert(
-            "Quiz container not found in HTML."
-        );
+    if (!topicInput || !container) {
 
         return;
 
@@ -2233,7 +1562,7 @@ async function generateQuiz() {
 
 
     const topic =
-        quizTopic.value.trim();
+        topicInput.value.trim();
 
 
     if (!topic) {
@@ -2247,28 +1576,32 @@ async function generateQuiz() {
     }
 
 
-    quizContainer.innerHTML =
-        "<p>🤖 Generating quiz...</p>";
+    container.innerHTML = `
+
+        <div class="ai-loading">
+            Generating quiz...
+        </div>
+
+    `;
 
 
     try {
 
         const response =
             await fetch(
-                API_URL +
-                "/api/quiz",
+                `${API_URL}/api/quiz`,
                 {
+
                     method: "POST",
 
                     headers: {
-                        "Content-Type":
-                            "application/json"
+                        "Content-Type": "application/json"
                     },
 
                     body: JSON.stringify({
-                        topic:
-                            topic
+                        topic
                     })
+
                 }
             );
 
@@ -2279,37 +1612,50 @@ async function generateQuiz() {
 
         if (!response.ok) {
 
-            quizContainer.innerHTML =
-                `<p>${
-                    data.message ||
-                    "Could not generate quiz."
-                }</p>`;
+            container.innerHTML = `
+
+                <p>
+                    Unable to generate quiz.
+                </p>
+
+            `;
 
             return;
 
         }
 
 
-        if (data.quiz) {
+        const quiz =
+            data.quiz ||
+            data.response ||
+            data.answer;
 
-            quizContainer.innerHTML =
-                data.quiz;
 
-        } else if (
-            data.answer
-        ) {
+        if (typeof quiz === "string") {
 
-            quizContainer.innerHTML =
-                `<p>${data.answer}</p>`;
-
-        } else {
-
-            quizContainer.innerHTML =
-                "<p>Quiz generated successfully.</p>";
+            container.innerHTML =
+                `<div class="quiz-result">
+                    ${formatAIResponse(quiz)}
+                </div>`;
 
         }
 
-    } catch (error) {
+        else {
+
+            container.innerHTML =
+                `<pre>${escapeHTML(
+                    JSON.stringify(
+                        quiz,
+                        null,
+                        2
+                    )
+                )}</pre>`;
+
+        }
+
+    }
+
+    catch (error) {
 
         console.error(
             "Quiz error:",
@@ -2317,8 +1663,13 @@ async function generateQuiz() {
         );
 
 
-        quizContainer.innerHTML =
-            "<p>Sorry, quiz generation failed.</p>";
+        container.innerHTML = `
+
+            <p>
+                Unable to generate quiz right now.
+            </p>
+
+        `;
 
     }
 
@@ -2326,5 +1677,46 @@ async function generateQuiz() {
 
 
 // =====================================================
-// END OF SCRIPT
+// FORMAT AI RESPONSE
 // =====================================================
+
+function formatAIResponse(text) {
+
+    if (!text) return "";
+
+
+    return escapeHTML(
+        String(text)
+    )
+        .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>")
+        .replace(/\n/g, "<br>");
+
+}
+
+
+// =====================================================
+// SECURITY HELPER
+// =====================================================
+
+function escapeHTML(value) {
+
+    if (value === null || value === undefined) {
+
+        return "";
+
+    }
+
+
+    return String(value)
+
+        .replace(/&/g, "&amp;")
+
+        .replace(/</g, "&lt;")
+
+        .replace(/>/g, "&gt;")
+
+        .replace(/"/g, "&quot;")
+
+        .replace(/'/g, "&#039;");
+
+}
