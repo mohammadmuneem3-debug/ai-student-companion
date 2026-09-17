@@ -1,11 +1,6 @@
 // =====================================================
 // AI STUDENT COMPANION
-// COMPLETE UPDATED SCRIPT.JS
-// =====================================================
-
-
-// =====================================================
-// SCRIPT TEST
+// COMPLETE CORRECTED SCRIPT.JS
 // =====================================================
 
 console.log("AI Student Companion script loaded");
@@ -28,91 +23,149 @@ let currentUser = JSON.parse(
 
 
 // =====================================================
+// GET USER ID
+// =====================================================
+
+function getUserId() {
+
+    if (!currentUser) {
+        return null;
+    }
+
+    return (
+        currentUser.id ||
+        currentUser._id ||
+        currentUser.userId ||
+        currentUser.userID ||
+        null
+    );
+}
+
+
+// =====================================================
 // PAGE LOAD
 // =====================================================
 
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener(
+    "DOMContentLoaded",
+    function () {
 
-    console.log("DOM loaded");
-
-    // Login/Register switch buttons
-
-    const loginSwitchButton =
-        document.getElementById("loginSwitchButton");
-
-    const registerSwitchButton =
-        document.getElementById("registerSwitchButton");
+        console.log("DOM loaded");
 
 
-    if (loginSwitchButton) {
+        // =============================================
+        // LOGIN SWITCH BUTTON
+        // =============================================
 
-        loginSwitchButton.addEventListener(
-            "click",
-            function () {
+        const loginSwitchButton =
+            document.getElementById(
+                "loginSwitchButton"
+            );
 
-                console.log("Login switch clicked");
 
-                showLoginForm();
+        if (loginSwitchButton) {
 
-            }
-        );
+            loginSwitchButton.addEventListener(
+                "click",
+                function (event) {
+
+                    event.preventDefault();
+                    event.stopPropagation();
+
+                    console.log(
+                        "LOGIN BUTTON CLICKED"
+                    );
+
+                    showLoginForm();
+                }
+            );
+        }
+
+
+        // =============================================
+        // REGISTER SWITCH BUTTON
+        // =============================================
+
+        const registerSwitchButton =
+            document.getElementById(
+                "registerSwitchButton"
+            );
+
+
+        if (registerSwitchButton) {
+
+            registerSwitchButton.addEventListener(
+                "click",
+                function (event) {
+
+                    event.preventDefault();
+                    event.stopPropagation();
+
+                    console.log(
+                        "REGISTER BUTTON CLICKED"
+                    );
+
+                    showRegisterForm();
+                }
+            );
+        }
+
+
+        // =============================================
+        // CHECK LOGIN
+        // =============================================
+
+        checkLogin();
 
     }
-
-
-    if (registerSwitchButton) {
-
-        registerSwitchButton.addEventListener(
-            "click",
-            function () {
-
-                console.log("Register switch clicked");
-
-                showRegisterForm();
-
-            }
-        );
-
-    }
-
-
-    // Check login status
-
-    checkLogin();
-
-});
+);
 
 
 // =====================================================
-// AUTH CARD DISPLAY
+// SHOW REGISTER
 // =====================================================
 
 function showOnlyRegister() {
 
-    console.log("Showing register form");
+    console.log(
+        "Showing REGISTER form"
+    );
+
 
     const registerCard =
-        document.getElementById("registerCard");
+        document.getElementById(
+            "registerCard"
+        );
+
 
     const loginCard =
-        document.getElementById("loginCard");
+        document.getElementById(
+            "loginCard"
+        );
 
 
     if (!registerCard || !loginCard) {
 
         console.error(
-            "Register or Login card not found"
+            "Register/Login cards not found"
         );
 
         return;
-
     }
 
 
-    registerCard.style.display = "block";
+    registerCard.style.setProperty(
+        "display",
+        "block",
+        "important"
+    );
 
-    loginCard.style.display = "none";
 
+    loginCard.style.setProperty(
+        "display",
+        "none",
+        "important"
+    );
 }
 
 
@@ -122,30 +175,45 @@ function showOnlyRegister() {
 
 function showOnlyLogin() {
 
-    console.log("Showing login form");
+    console.log(
+        "Showing LOGIN form"
+    );
+
 
     const registerCard =
-        document.getElementById("registerCard");
+        document.getElementById(
+            "registerCard"
+        );
+
 
     const loginCard =
-        document.getElementById("loginCard");
+        document.getElementById(
+            "loginCard"
+        );
 
 
     if (!registerCard || !loginCard) {
 
         console.error(
-            "Register or Login card not found"
+            "Register/Login cards not found"
         );
 
         return;
-
     }
 
 
-    registerCard.style.display = "none";
+    registerCard.style.setProperty(
+        "display",
+        "none",
+        "important"
+    );
 
-    loginCard.style.display = "block";
 
+    loginCard.style.setProperty(
+        "display",
+        "block",
+        "important"
+    );
 }
 
 
@@ -153,31 +221,35 @@ function showOnlyLogin() {
 // SWITCH FUNCTIONS
 // =====================================================
 
-function showRegisterForm() {
+function showLoginForm() {
 
-    showOnlyRegister();
+    console.log(
+        "showLoginForm() called"
+    );
 
+    showOnlyLogin();
 }
 
 
-function showLoginForm() {
+function showRegisterForm() {
 
-    showOnlyLogin();
+    console.log(
+        "showRegisterForm() called"
+    );
 
+    showOnlyRegister();
 }
 
 
 function showLogin() {
 
     showOnlyLogin();
-
 }
 
 
 function showRegister() {
 
     showOnlyRegister();
-
 }
 
 
@@ -187,32 +259,40 @@ function showRegister() {
 
 function checkLogin() {
 
-    console.log("Checking login status...");
+    console.log(
+        "Checking login status..."
+    );
 
 
-    currentUser = JSON.parse(
-        localStorage.getItem("currentUser")
+    currentUser =
+        JSON.parse(
+            localStorage.getItem(
+                "currentUser"
+            )
+        );
+
+
+    console.log(
+        "Current user:",
+        currentUser
     );
 
 
     if (currentUser) {
 
         console.log(
-            "User already logged in:",
-            currentUser
+            "User ID:",
+            getUserId()
         );
 
 
         showApp();
 
         loadTasks();
-
         loadStudyPlans();
-
         loadNotes();
 
         return;
-
     }
 
 
@@ -225,106 +305,146 @@ function checkLogin() {
         );
 
 
-    if (registrationCompleted === "true") {
+    if (
+        registrationCompleted ===
+        "true"
+    ) {
 
         showOnlyLogin();
 
     } else {
 
         showOnlyRegister();
-
     }
-
 }
 
 
 // =====================================================
-// SHOW APPLICATION
+// SHOW APP
 // =====================================================
 
 function showApp() {
 
     const authSection =
-        document.getElementById("authSection");
+        document.getElementById(
+            "authSection"
+        );
+
 
     const appSection =
-        document.getElementById("appSection");
+        document.getElementById(
+            "appSection"
+        );
+
 
     const logoutButton =
-        document.getElementById("logoutButton");
+        document.getElementById(
+            "logoutButton"
+        );
 
 
     if (authSection) {
 
-        authSection.style.display = "none";
-
+        authSection.style.setProperty(
+            "display",
+            "none",
+            "important"
+        );
     }
 
 
     if (appSection) {
 
-        appSection.style.display = "block";
-
+        appSection.style.setProperty(
+            "display",
+            "block",
+            "important"
+        );
     }
 
 
     if (logoutButton) {
 
-        logoutButton.style.display = "block";
-
+        logoutButton.style.setProperty(
+            "display",
+            "block",
+            "important"
+        );
     }
 
 
     const welcomeMessage =
-        document.getElementById("welcomeMessage");
+        document.getElementById(
+            "welcomeMessage"
+        );
 
 
-    if (welcomeMessage && currentUser) {
+    if (
+        welcomeMessage &&
+        currentUser
+    ) {
 
         welcomeMessage.textContent =
-            `Welcome, ${currentUser.name || "Student"}!`;
-
+            `Welcome, ${
+                currentUser.name ||
+                "Student"
+            }!`;
     }
-
 }
 
 
 // =====================================================
-// HIDE APPLICATION
+// HIDE APP
 // =====================================================
 
 function hideApp() {
 
     const authSection =
-        document.getElementById("authSection");
+        document.getElementById(
+            "authSection"
+        );
+
 
     const appSection =
-        document.getElementById("appSection");
+        document.getElementById(
+            "appSection"
+        );
+
 
     const logoutButton =
-        document.getElementById("logoutButton");
+        document.getElementById(
+            "logoutButton"
+        );
 
 
     if (authSection) {
 
-        authSection.style.display = "block";
-
+        authSection.style.setProperty(
+            "display",
+            "block",
+            "important"
+        );
     }
 
 
     if (appSection) {
 
-        appSection.style.display = "none";
-
+        appSection.style.setProperty(
+            "display",
+            "none",
+            "important"
+        );
     }
 
 
     if (logoutButton) {
 
-        logoutButton.style.display = "none";
-
+        logoutButton.style.setProperty(
+            "display",
+            "none",
+            "important"
+        );
     }
-
 }
 
 
@@ -335,21 +455,34 @@ function hideApp() {
 async function registerUser() {
 
     const name =
-        document.getElementById("registerName").value.trim();
+        document.getElementById(
+            "registerName"
+        ).value.trim();
+
 
     const email =
-        document.getElementById("registerEmail").value.trim();
+        document.getElementById(
+            "registerEmail"
+        ).value.trim();
+
 
     const password =
-        document.getElementById("registerPassword").value.trim();
+        document.getElementById(
+            "registerPassword"
+        ).value.trim();
 
 
-    if (!name || !email || !password) {
+    if (
+        !name ||
+        !email ||
+        !password
+    ) {
 
-        alert("Please fill all fields.");
+        alert(
+            "Please fill all fields."
+        );
 
         return;
-
     }
 
 
@@ -363,15 +496,16 @@ async function registerUser() {
                     method: "POST",
 
                     headers: {
-                        "Content-Type": "application/json"
+                        "Content-Type":
+                            "application/json"
                     },
 
-                    body: JSON.stringify({
-                        name,
-                        email,
-                        password
-                    })
-
+                    body:
+                        JSON.stringify({
+                            name,
+                            email,
+                            password
+                        })
                 }
             );
 
@@ -388,7 +522,6 @@ async function registerUser() {
             );
 
             return;
-
         }
 
 
@@ -403,27 +536,24 @@ async function registerUser() {
         );
 
 
-        // Clear fields
-
         document.getElementById(
             "registerName"
         ).value = "";
 
+
         document.getElementById(
             "registerEmail"
         ).value = "";
+
 
         document.getElementById(
             "registerPassword"
         ).value = "";
 
 
-        // Show login
-
         showOnlyLogin();
 
     }
-
     catch (error) {
 
         console.error(
@@ -431,12 +561,11 @@ async function registerUser() {
             error
         );
 
+
         alert(
             "Could not connect to the server."
         );
-
     }
-
 }
 
 
@@ -447,20 +576,27 @@ async function registerUser() {
 async function loginUser() {
 
     const email =
-        document.getElementById("loginEmail").value.trim();
+        document.getElementById(
+            "loginEmail"
+        ).value.trim();
+
 
     const password =
-        document.getElementById("loginPassword").value.trim();
+        document.getElementById(
+            "loginPassword"
+        ).value.trim();
 
 
-    if (!email || !password) {
+    if (
+        !email ||
+        !password
+    ) {
 
         alert(
             "Please enter email and password."
         );
 
         return;
-
     }
 
 
@@ -474,14 +610,15 @@ async function loginUser() {
                     method: "POST",
 
                     headers: {
-                        "Content-Type": "application/json"
+                        "Content-Type":
+                            "application/json"
                     },
 
-                    body: JSON.stringify({
-                        email,
-                        password
-                    })
-
+                    body:
+                        JSON.stringify({
+                            email,
+                            password
+                        })
                 }
             );
 
@@ -498,17 +635,56 @@ async function loginUser() {
             );
 
             return;
-
         }
 
 
+        // =============================================
+        // SAVE USER
+        // =============================================
+
         currentUser =
-            data.user || data;
+            data.user ||
+            data;
+
+
+        console.log(
+            "Login successful"
+        );
+
+
+        console.log(
+            "Current user:",
+            currentUser
+        );
+
+
+        console.log(
+            "User ID:",
+            getUserId()
+        );
+
+
+        if (!getUserId()) {
+
+            console.error(
+                "User ID missing from login response."
+            );
+
+
+            alert(
+                "Login successful, but user ID was not received."
+            );
+
+
+            return;
+        }
 
 
         localStorage.setItem(
             "currentUser",
-            JSON.stringify(currentUser)
+            JSON.stringify(
+                currentUser
+            )
         );
 
 
@@ -516,9 +692,7 @@ async function loginUser() {
 
 
         loadTasks();
-
         loadStudyPlans();
-
         loadNotes();
 
 
@@ -526,12 +700,12 @@ async function loginUser() {
             "loginEmail"
         ).value = "";
 
+
         document.getElementById(
             "loginPassword"
         ).value = "";
 
     }
-
     catch (error) {
 
         console.error(
@@ -539,12 +713,11 @@ async function loginUser() {
             error
         );
 
+
         alert(
             "Could not connect to the server."
         );
-
     }
-
 }
 
 
@@ -566,18 +739,30 @@ function logoutUser() {
 
 
     showOnlyLogin();
-
 }
 
 
 // =====================================================
-// TASKS
+// ADD TASK
 // =====================================================
 
 async function addTask() {
 
     const input =
-        document.getElementById("taskInput");
+        document.getElementById(
+            "taskInput"
+        );
+
+
+    if (!input) {
+
+        console.error(
+            "Task input not found."
+        );
+
+        return;
+    }
+
 
     const title =
         input.value.trim();
@@ -585,19 +770,35 @@ async function addTask() {
 
     if (!title) {
 
-        alert("Please enter a task.");
+        alert(
+            "Please enter a task."
+        );
 
         return;
-
     }
 
 
     if (!currentUser) {
 
-        alert("Please login first.");
+        alert(
+            "Please login first."
+        );
 
         return;
+    }
 
+
+    const userId =
+        getUserId();
+
+
+    if (!userId) {
+
+        alert(
+            "User ID not found. Please logout and login again."
+        );
+
+        return;
     }
 
 
@@ -611,19 +812,18 @@ async function addTask() {
                     method: "POST",
 
                     headers: {
-                        "Content-Type": "application/json"
+                        "Content-Type":
+                            "application/json"
                     },
 
-                    body: JSON.stringify({
+                    // IMPORTANT:
+                    // Backend expects "task", NOT "title"
 
-                        userId:
-                            currentUser.id ||
-                            currentUser._id,
-
-                        title
-
-                    })
-
+                    body:
+                        JSON.stringify({
+                            userId,
+                            task: title
+                        })
                 }
             );
 
@@ -640,7 +840,6 @@ async function addTask() {
             );
 
             return;
-
         }
 
 
@@ -650,7 +849,6 @@ async function addTask() {
         loadTasks();
 
     }
-
     catch (error) {
 
         console.error(
@@ -658,8 +856,11 @@ async function addTask() {
             error
         );
 
-    }
 
+        alert(
+            "Could not connect to the server."
+        );
+    }
 }
 
 
@@ -669,15 +870,26 @@ async function addTask() {
 
 async function loadTasks() {
 
-    if (!currentUser) return;
+    if (!currentUser) {
+        return;
+    }
+
+
+    const userId =
+        getUserId();
+
+
+    if (!userId) {
+
+        console.error(
+            "Cannot load tasks. User ID missing."
+        );
+
+        return;
+    }
 
 
     try {
-
-        const userId =
-            currentUser.id ||
-            currentUser._id;
-
 
         const response =
             await fetch(
@@ -685,11 +897,27 @@ async function loadTasks() {
             );
 
 
-        if (!response.ok) return;
+        if (!response.ok) {
 
+            console.error(
+                "Could not load tasks."
+            );
+
+            return;
+        }
+
+
+        const data =
+            await response.json();
+
+
+        // Backend returns:
+        // { tasks: [...] }
 
         const tasks =
-            await response.json();
+            Array.isArray(data)
+                ? data
+                : data.tasks || [];
 
 
         const taskList =
@@ -698,7 +926,9 @@ async function loadTasks() {
             );
 
 
-        if (!taskList) return;
+        if (!taskList) {
+            return;
+        }
 
 
         taskList.innerHTML = "";
@@ -707,61 +937,95 @@ async function loadTasks() {
         let completed = 0;
 
 
-        tasks.forEach(function (task) {
+        tasks.forEach(
+            function (task) {
 
-            if (task.completed) {
+                if (
+                    task.completed
+                ) {
 
-                completed++;
-
-            }
-
-
-            const taskItem =
-                document.createElement("div");
+                    completed++;
+                }
 
 
-            taskItem.className =
-                "task-item";
+                const taskItem =
+                    document.createElement(
+                        "div"
+                    );
 
 
-            taskItem.innerHTML = `
+                taskItem.className =
+                    "task-item";
 
-                <div class="task-content">
 
-                    <input
-                        type="checkbox"
-                        ${task.completed ? "checked" : ""}
-                        onchange="toggleTask('${task._id || task.id}', ${!task.completed})"
+                const taskId =
+                    task.id ||
+                    task._id;
+
+
+                const taskTitle =
+                    task.task ||
+                    task.title ||
+                    "";
+
+
+                taskItem.innerHTML = `
+
+                    <div class="task-content">
+
+                        <input
+                            type="checkbox"
+
+                            ${
+                                task.completed
+                                    ? "checked"
+                                    : ""
+                            }
+
+                            onchange="
+                                toggleTask(
+                                    '${taskId}',
+                                    ${!task.completed}
+                                )
+                            "
+                        >
+
+                        <span>
+                            ${escapeHTML(
+                                taskTitle
+                            )}
+                        </span>
+
+                    </div>
+
+
+                    <button
+                        type="button"
+
+                        onclick="
+                            deleteTask(
+                                '${taskId}'
+                            )
+                        "
                     >
+                        Delete
+                    </button>
 
-                    <span>
-                        ${escapeHTML(task.title)}
-                    </span>
-
-                </div>
-
-                <button
-                    type="button"
-                    onclick="deleteTask('${task._id || task.id}')">
-
-                    Delete
-
-                </button>
-
-            `;
+                `;
 
 
-            taskList.appendChild(
-                taskItem
-            );
-
-        });
+                taskList.appendChild(
+                    taskItem
+                );
+            }
+        );
 
 
         const totalTasks =
             document.getElementById(
                 "totalTasks"
             );
+
 
         const completedTasks =
             document.getElementById(
@@ -773,7 +1037,6 @@ async function loadTasks() {
 
             totalTasks.textContent =
                 tasks.length;
-
         }
 
 
@@ -781,7 +1044,6 @@ async function loadTasks() {
 
             completedTasks.textContent =
                 completed;
-
         }
 
 
@@ -791,16 +1053,13 @@ async function loadTasks() {
         );
 
     }
-
     catch (error) {
 
         console.error(
             "Load tasks error:",
             error
         );
-
     }
-
 }
 
 
@@ -815,37 +1074,46 @@ async function toggleTask(
 
     try {
 
-        await fetch(
-            `${API_URL}/api/tasks/${taskId}`,
-            {
+        const response =
+            await fetch(
+                `${API_URL}/api/tasks/${taskId}`,
+                {
 
-                method: "PUT",
+                    method: "PUT",
 
-                headers: {
-                    "Content-Type": "application/json"
-                },
+                    headers: {
+                        "Content-Type":
+                            "application/json"
+                    },
 
-                body: JSON.stringify({
-                    completed
-                })
+                    body:
+                        JSON.stringify({
+                            completed
+                        })
+                }
+            );
 
-            }
-        );
+
+        if (!response.ok) {
+
+            console.error(
+                "Could not update task."
+            );
+
+            return;
+        }
 
 
         loadTasks();
 
     }
-
     catch (error) {
 
         console.error(
             "Toggle task error:",
             error
         );
-
     }
-
 }
 
 
@@ -853,38 +1121,46 @@ async function toggleTask(
 // DELETE TASK
 // =====================================================
 
-async function deleteTask(taskId) {
+async function deleteTask(
+    taskId
+) {
 
     try {
 
-        await fetch(
-            `${API_URL}/api/tasks/${taskId}`,
-            {
+        const response =
+            await fetch(
+                `${API_URL}/api/tasks/${taskId}`,
+                {
+                    method: "DELETE"
+                }
+            );
 
-                method: "DELETE"
 
-            }
-        );
+        if (!response.ok) {
+
+            console.error(
+                "Could not delete task."
+            );
+
+            return;
+        }
 
 
         loadTasks();
 
     }
-
     catch (error) {
 
         console.error(
             "Delete task error:",
             error
         );
-
     }
-
 }
 
 
 // =====================================================
-// PROGRESS
+// UPDATE PROGRESS
 // =====================================================
 
 function updateProgress(
@@ -897,10 +1173,12 @@ function updateProgress(
             "progressFill"
         );
 
+
     const progressText =
         document.getElementById(
             "progressText"
         );
+
 
     const productivityStatus =
         document.getElementById(
@@ -915,9 +1193,9 @@ function updateProgress(
 
         percentage =
             Math.round(
-                (completed / total) * 100
+                (completed / total) *
+                100
             );
-
     }
 
 
@@ -925,7 +1203,6 @@ function updateProgress(
 
         progressFill.style.width =
             `${percentage}%`;
-
     }
 
 
@@ -933,47 +1210,47 @@ function updateProgress(
 
         progressText.textContent =
             `${percentage}%`;
-
     }
 
 
     if (productivityStatus) {
 
-        if (percentage === 100 && total > 0) {
+        if (
+            percentage === 100 &&
+            total > 0
+        ) {
 
             productivityStatus.textContent =
                 "🔥 Excellent! You completed all your tasks.";
 
         }
-
-        else if (percentage >= 50) {
+        else if (
+            percentage >= 50
+        ) {
 
             productivityStatus.textContent =
                 "💪 Great progress! Keep going.";
 
         }
-
-        else if (total > 0) {
+        else if (
+            total > 0
+        ) {
 
             productivityStatus.textContent =
                 "📚 Keep working on your tasks.";
 
         }
-
         else {
 
             productivityStatus.textContent =
                 "Start completing your tasks to see your productivity.";
-
         }
-
     }
-
 }
 
 
 // =====================================================
-// STUDY PLANS
+// ADD STUDY PLAN
 // =====================================================
 
 async function addStudyPlan() {
@@ -983,10 +1260,12 @@ async function addStudyPlan() {
             "subjectInput"
         ).value.trim();
 
+
     const topic =
         document.getElementById(
             "topicInput"
         ).value.trim();
+
 
     const studyTime =
         document.getElementById(
@@ -994,23 +1273,41 @@ async function addStudyPlan() {
         ).value.trim();
 
 
-    if (!subject || !topic || !studyTime) {
+    if (
+        !subject ||
+        !topic ||
+        !studyTime
+    ) {
 
         alert(
             "Please fill all study plan fields."
         );
 
         return;
-
     }
 
 
     if (!currentUser) {
 
-        alert("Please login first.");
+        alert(
+            "Please login first."
+        );
 
         return;
+    }
 
+
+    const userId =
+        getUserId();
+
+
+    if (!userId) {
+
+        alert(
+            "User ID not found. Please logout and login again."
+        );
+
+        return;
     }
 
 
@@ -1024,23 +1321,20 @@ async function addStudyPlan() {
                     method: "POST",
 
                     headers: {
-                        "Content-Type": "application/json"
+                        "Content-Type":
+                            "application/json"
                     },
 
-                    body: JSON.stringify({
+                    // IMPORTANT:
+                    // Backend expects "studyTime"
 
-                        userId:
-                            currentUser.id ||
-                            currentUser._id,
-
-                        subject,
-
-                        topic,
-
-                        study_time: studyTime
-
-                    })
-
+                    body:
+                        JSON.stringify({
+                            userId,
+                            subject,
+                            topic,
+                            studyTime
+                        })
                 }
             );
 
@@ -1057,7 +1351,6 @@ async function addStudyPlan() {
             );
 
             return;
-
         }
 
 
@@ -1065,9 +1358,11 @@ async function addStudyPlan() {
             "subjectInput"
         ).value = "";
 
+
         document.getElementById(
             "topicInput"
         ).value = "";
+
 
         document.getElementById(
             "timeInput"
@@ -1077,7 +1372,6 @@ async function addStudyPlan() {
         loadStudyPlans();
 
     }
-
     catch (error) {
 
         console.error(
@@ -1085,8 +1379,11 @@ async function addStudyPlan() {
             error
         );
 
-    }
 
+        alert(
+            "Could not connect to the server."
+        );
+    }
 }
 
 
@@ -1096,15 +1393,21 @@ async function addStudyPlan() {
 
 async function loadStudyPlans() {
 
-    if (!currentUser) return;
+    if (!currentUser) {
+        return;
+    }
+
+
+    const userId =
+        getUserId();
+
+
+    if (!userId) {
+        return;
+    }
 
 
     try {
-
-        const userId =
-            currentUser.id ||
-            currentUser._id;
-
 
         const response =
             await fetch(
@@ -1112,11 +1415,27 @@ async function loadStudyPlans() {
             );
 
 
-        if (!response.ok) return;
+        if (!response.ok) {
 
+            console.error(
+                "Could not load study plans."
+            );
+
+            return;
+        }
+
+
+        const data =
+            await response.json();
+
+
+        // Backend returns:
+        // { studyPlans: [...] }
 
         const plans =
-            await response.json();
+            Array.isArray(data)
+                ? data
+                : data.studyPlans || [];
 
 
         const list =
@@ -1125,44 +1444,58 @@ async function loadStudyPlans() {
             );
 
 
-        if (!list) return;
+        if (!list) {
+            return;
+        }
 
 
         list.innerHTML = "";
 
 
-        plans.forEach(function (plan) {
+        plans.forEach(
+            function (plan) {
 
-            const item =
-                document.createElement("div");
-
-
-            item.className =
-                "study-plan-item";
-
-
-            item.innerHTML = `
-
-                <h3>
-                    ${escapeHTML(plan.subject)}
-                </h3>
-
-                <p>
-                    ${escapeHTML(plan.topic)}
-                </p>
-
-                <span>
-                    ⏱ ${escapeHTML(
-                        plan.study_time || ""
-                    )}
-                </span>
-
-            `;
+                const item =
+                    document.createElement(
+                        "div"
+                    );
 
 
-            list.appendChild(item);
+                item.className =
+                    "study-plan-item";
 
-        });
+
+                item.innerHTML = `
+
+                    <h3>
+                        ${escapeHTML(
+                            plan.subject
+                        )}
+                    </h3>
+
+                    <p>
+                        ${escapeHTML(
+                            plan.topic
+                        )}
+                    </p>
+
+                    <span>
+                        ⏱
+                        ${escapeHTML(
+                            plan.study_time ||
+                            plan.studyTime ||
+                            ""
+                        )}
+                    </span>
+
+                `;
+
+
+                list.appendChild(
+                    item
+                );
+            }
+        );
 
 
         const totalStudyPlans =
@@ -1175,25 +1508,21 @@ async function loadStudyPlans() {
 
             totalStudyPlans.textContent =
                 plans.length;
-
         }
 
     }
-
     catch (error) {
 
         console.error(
             "Load study plans error:",
             error
         );
-
     }
-
 }
 
 
 // =====================================================
-// NOTES
+// ADD NOTE
 // =====================================================
 
 async function addNote() {
@@ -1204,25 +1533,51 @@ async function addNote() {
         );
 
 
+    if (!input) {
+
+        console.error(
+            "Note input not found."
+        );
+
+        return;
+    }
+
+
     const content =
         input.value.trim();
 
 
     if (!content) {
 
-        alert("Please write a note.");
+        alert(
+            "Please write a note."
+        );
 
         return;
-
     }
 
 
     if (!currentUser) {
 
-        alert("Please login first.");
+        alert(
+            "Please login first."
+        );
 
         return;
+    }
 
+
+    const userId =
+        getUserId();
+
+
+    if (!userId) {
+
+        alert(
+            "User ID not found. Please logout and login again."
+        );
+
+        return;
     }
 
 
@@ -1236,19 +1591,18 @@ async function addNote() {
                     method: "POST",
 
                     headers: {
-                        "Content-Type": "application/json"
+                        "Content-Type":
+                            "application/json"
                     },
 
-                    body: JSON.stringify({
+                    // IMPORTANT:
+                    // Backend expects "note"
 
-                        userId:
-                            currentUser.id ||
-                            currentUser._id,
-
-                        content
-
-                    })
-
+                    body:
+                        JSON.stringify({
+                            userId,
+                            note: content
+                        })
                 }
             );
 
@@ -1265,7 +1619,6 @@ async function addNote() {
             );
 
             return;
-
         }
 
 
@@ -1275,7 +1628,6 @@ async function addNote() {
         loadNotes();
 
     }
-
     catch (error) {
 
         console.error(
@@ -1283,8 +1635,11 @@ async function addNote() {
             error
         );
 
-    }
 
+        alert(
+            "Could not connect to the server."
+        );
+    }
 }
 
 
@@ -1294,15 +1649,21 @@ async function addNote() {
 
 async function loadNotes() {
 
-    if (!currentUser) return;
+    if (!currentUser) {
+        return;
+    }
+
+
+    const userId =
+        getUserId();
+
+
+    if (!userId) {
+        return;
+    }
 
 
     try {
-
-        const userId =
-            currentUser.id ||
-            currentUser._id;
-
 
         const response =
             await fetch(
@@ -1310,11 +1671,27 @@ async function loadNotes() {
             );
 
 
-        if (!response.ok) return;
+        if (!response.ok) {
 
+            console.error(
+                "Could not load notes."
+            );
+
+            return;
+        }
+
+
+        const data =
+            await response.json();
+
+
+        // Backend returns:
+        // { notes: [...] }
 
         const notes =
-            await response.json();
+            Array.isArray(data)
+                ? data
+                : data.notes || [];
 
 
         const list =
@@ -1323,36 +1700,45 @@ async function loadNotes() {
             );
 
 
-        if (!list) return;
+        if (!list) {
+            return;
+        }
 
 
         list.innerHTML = "";
 
 
-        notes.forEach(function (note) {
+        notes.forEach(
+            function (note) {
 
-            const item =
-                document.createElement("div");
-
-
-            item.className =
-                "note-item";
-
-
-            item.innerHTML = `
-
-                <p>
-                    ${escapeHTML(
-                        note.content
-                    )}
-                </p>
-
-            `;
+                const item =
+                    document.createElement(
+                        "div"
+                    );
 
 
-            list.appendChild(item);
+                item.className =
+                    "note-item";
 
-        });
+
+                item.innerHTML = `
+
+                    <p>
+                        ${escapeHTML(
+                            note.note ||
+                            note.content ||
+                            ""
+                        )}
+                    </p>
+
+                `;
+
+
+                list.appendChild(
+                    item
+                );
+            }
+        );
 
 
         const totalNotes =
@@ -1365,28 +1751,26 @@ async function loadNotes() {
 
             totalNotes.textContent =
                 notes.length;
-
         }
 
     }
-
     catch (error) {
 
         console.error(
             "Load notes error:",
             error
         );
-
     }
-
 }
 
 
 // =====================================================
-// AI QUESTION
+// AI QUICK QUESTION
 // =====================================================
 
-function setAIQuestion(question) {
+function setAIQuestion(
+    question
+) {
 
     const input =
         document.getElementById(
@@ -1400,9 +1784,7 @@ function setAIQuestion(question) {
             question;
 
         input.focus();
-
     }
-
 }
 
 
@@ -1425,9 +1807,7 @@ async function askAI() {
 
 
     if (!input || !responseBox) {
-
         return;
-
     }
 
 
@@ -1442,16 +1822,23 @@ async function askAI() {
         );
 
         return;
+    }
 
+
+    if (!currentUser) {
+
+        alert(
+            "Please login first."
+        );
+
+        return;
     }
 
 
     responseBox.innerHTML = `
 
         <div class="ai-loading">
-
             Thinking...
-
         </div>
 
     `;
@@ -1459,21 +1846,26 @@ async function askAI() {
 
     try {
 
+        // IMPORTANT:
+        // Backend route is /api/ask
+        // NOT /api/ai
+
         const response =
             await fetch(
-                `${API_URL}/api/ai`,
+                `${API_URL}/api/ask`,
                 {
 
                     method: "POST",
 
                     headers: {
-                        "Content-Type": "application/json"
+                        "Content-Type":
+                            "application/json"
                     },
 
-                    body: JSON.stringify({
-                        question
-                    })
-
+                    body:
+                        JSON.stringify({
+                            question
+                        })
                 }
             );
 
@@ -1484,16 +1876,24 @@ async function askAI() {
 
         if (!response.ok) {
 
+            console.error(
+                "AI backend error:",
+                data
+            );
+
+
             responseBox.innerHTML = `
 
                 <p>
-                    Sorry, I couldn't get an AI response right now.
+                    ${
+                        data.message ||
+                        "Sorry, I couldn't get an AI response right now."
+                    }
                 </p>
 
             `;
 
             return;
-
         }
 
 
@@ -1508,14 +1908,15 @@ async function askAI() {
 
             <div class="ai-answer">
 
-                ${formatAIResponse(answer)}
+                ${formatAIResponse(
+                    answer
+                )}
 
             </div>
 
         `;
 
     }
-
     catch (error) {
 
         console.error(
@@ -1531,14 +1932,12 @@ async function askAI() {
             </p>
 
         `;
-
     }
-
 }
 
 
 // =====================================================
-// QUIZ
+// GENERATE QUIZ
 // =====================================================
 
 async function generateQuiz() {
@@ -1548,16 +1947,19 @@ async function generateQuiz() {
             "quizTopic"
         );
 
+
     const container =
         document.getElementById(
             "quizContainer"
         );
 
 
-    if (!topicInput || !container) {
+    if (
+        !topicInput ||
+        !container
+    ) {
 
         return;
-
     }
 
 
@@ -1572,7 +1974,16 @@ async function generateQuiz() {
         );
 
         return;
+    }
 
+
+    if (!currentUser) {
+
+        alert(
+            "Please login first."
+        );
+
+        return;
     }
 
 
@@ -1595,13 +2006,16 @@ async function generateQuiz() {
                     method: "POST",
 
                     headers: {
-                        "Content-Type": "application/json"
+                        "Content-Type":
+                            "application/json"
                     },
 
-                    body: JSON.stringify({
-                        topic
-                    })
+                    // Backend only requires topic
 
+                    body:
+                        JSON.stringify({
+                            topic
+                        })
                 }
             );
 
@@ -1612,16 +2026,24 @@ async function generateQuiz() {
 
         if (!response.ok) {
 
+            console.error(
+                "Quiz backend error:",
+                data
+            );
+
+
             container.innerHTML = `
 
                 <p>
-                    Unable to generate quiz.
+                    ${
+                        data.message ||
+                        "Unable to generate quiz."
+                    }
                 </p>
 
             `;
 
             return;
-
         }
 
 
@@ -1631,30 +2053,33 @@ async function generateQuiz() {
             data.answer;
 
 
-        if (typeof quiz === "string") {
+        if (
+            typeof quiz ===
+            "string"
+        ) {
 
-            container.innerHTML =
-                `<div class="quiz-result">
-                    ${formatAIResponse(quiz)}
-                </div>`;
+            container.innerHTML = `
+
+                <div class="quiz-result">
+
+                    ${formatAIResponse(
+                        quiz
+                    )}
+
+                </div>
+
+            `;
 
         }
-
         else {
 
-            container.innerHTML =
-                `<pre>${escapeHTML(
-                    JSON.stringify(
-                        quiz,
-                        null,
-                        2
-                    )
-                )}</pre>`;
-
+            displayQuiz(
+                quiz,
+                container
+            );
         }
 
     }
-
     catch (error) {
 
         console.error(
@@ -1670,9 +2095,103 @@ async function generateQuiz() {
             </p>
 
         `;
+    }
+}
 
+
+// =====================================================
+// DISPLAY QUIZ
+// =====================================================
+
+function displayQuiz(
+    quiz,
+    container
+) {
+
+    if (
+        !quiz ||
+        !Array.isArray(
+            quiz.questions
+        )
+    ) {
+
+        container.innerHTML = `
+
+            <pre>
+                ${escapeHTML(
+                    JSON.stringify(
+                        quiz,
+                        null,
+                        2
+                    )
+                )}
+            </pre>
+
+        `;
+
+        return;
     }
 
+
+    let html = "";
+
+
+    quiz.questions.forEach(
+        function (question, index) {
+
+            html += `
+
+                <div class="quiz-question">
+
+                    <h3>
+                        ${index + 1}.
+                        ${escapeHTML(
+                            question.question
+                        )}
+                    </h3>
+
+                    <div class="quiz-options">
+
+            `;
+
+
+            if (
+                Array.isArray(
+                    question.options
+                )
+            ) {
+
+                question.options.forEach(
+                    function (option) {
+
+                        html += `
+
+                            <div class="quiz-option">
+
+                                ${escapeHTML(
+                                    option
+                                )}
+
+                            </div>
+
+                        `;
+                    }
+                );
+            }
+
+
+            html += `
+
+                    </div>
+
+                </div>
+
+            `;
+        }
+    );
+
+
+    container.innerHTML = html;
 }
 
 
@@ -1680,43 +2199,72 @@ async function generateQuiz() {
 // FORMAT AI RESPONSE
 // =====================================================
 
-function formatAIResponse(text) {
+function formatAIResponse(
+    text
+) {
 
-    if (!text) return "";
+    if (!text) {
+        return "";
+    }
 
 
     return escapeHTML(
         String(text)
     )
-        .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>")
-        .replace(/\n/g, "<br>");
 
+        .replace(
+            /\*\*(.*?)\*\*/g,
+            "<strong>$1</strong>"
+        )
+
+        .replace(
+            /\n/g,
+            "<br>"
+        );
 }
 
 
 // =====================================================
-// SECURITY HELPER
+// ESCAPE HTML
 // =====================================================
 
-function escapeHTML(value) {
+function escapeHTML(
+    value
+) {
 
-    if (value === null || value === undefined) {
+    if (
+        value === null ||
+        value === undefined
+    ) {
 
         return "";
-
     }
 
 
     return String(value)
 
-        .replace(/&/g, "&amp;")
+        .replace(
+            /&/g,
+            "&amp;"
+        )
 
-        .replace(/</g, "&lt;")
+        .replace(
+            /</g,
+            "&lt;"
+        )
 
-        .replace(/>/g, "&gt;")
+        .replace(
+            />/g,
+            "&gt;"
+        )
 
-        .replace(/"/g, "&quot;")
+        .replace(
+            /"/g,
+            "&quot;"
+        )
 
-        .replace(/'/g, "&#039;");
-
+        .replace(
+            /'/g,
+            "&#039;"
+        );
 }
