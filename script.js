@@ -2098,42 +2098,39 @@ async function generateQuiz() {
     }
 }
 
-
 // =====================================================
 // DISPLAY QUIZ
 // =====================================================
 
-function displayQuiz(
-    quiz,
-    container
-) {
+function displayQuiz(quiz, container) {
 
     if (
         !quiz ||
-        !Array.isArray(
-            quiz.questions
-        )
+        !Array.isArray(quiz.questions)
     ) {
 
         container.innerHTML = `
-
-            <pre>
-                ${escapeHTML(
-                    JSON.stringify(
-                        quiz,
-                        null,
-                        2
-                    )
-                )}
-            </pre>
-
+            <p>Unable to display quiz.</p>
         `;
 
         return;
     }
 
+    let html = `
 
-    let html = "";
+        <div class="quiz-header">
+
+            <h2>🧠 AI Quiz</h2>
+
+            <p>
+                Choose one answer for each question.
+            </p>
+
+        </div>
+
+        <form id="quizForm">
+
+    `;
 
 
     quiz.questions.forEach(
@@ -2162,21 +2159,45 @@ function displayQuiz(
             ) {
 
                 question.options.forEach(
-                    function (option) {
+                    function (option, optionIndex) {
+
+                        const optionId =
+                            `question-${index}-option-${optionIndex}`;
 
                         html += `
 
-                            <div class="quiz-option">
+                            <label
+                                class="quiz-option"
+                                for="${optionId}"
+                            >
 
-                                ${escapeHTML(
-                                    option
-                                )}
+                                <input
+                                    type="radio"
 
-                            </div>
+                                    id="${optionId}"
+
+                                    name="question-${index}"
+
+                                    value="${escapeHTML(
+                                        option
+                                    )}"
+                                >
+
+                                <span class="quiz-radio"></span>
+
+                                <span class="quiz-option-text">
+                                    ${escapeHTML(
+                                        option
+                                    )}
+                                </span>
+
+                            </label>
 
                         `;
+
                     }
                 );
+
             }
 
 
@@ -2187,14 +2208,112 @@ function displayQuiz(
                 </div>
 
             `;
+
         }
     );
+
+
+    html += `
+
+            <button
+                type="button"
+                class="submit-quiz-btn"
+                onclick="submitQuiz()"
+            >
+                ✓ Submit Quiz
+            </button>
+
+        </form>
+
+        <div
+            id="quizResult"
+            class="quiz-result"
+        ></div>
+
+    `;
 
 
     container.innerHTML = html;
 }
 
+// =====================================================
+// SUBMIT QUIZ
+// =====================================================
 
+function submitQuiz() {
+
+    const form =
+        document.getElementById("quizForm");
+
+    const result =
+        document.getElementById("quizResult");
+
+    if (!form || !result) {
+        return;
+    }
+
+
+    const questions =
+        form.querySelectorAll(
+            ".quiz-question"
+        );
+
+
+    let answered = 0;
+
+
+    questions.forEach(
+        function (question) {
+
+            const selected =
+                question.querySelector(
+                    'input[type="radio"]:checked'
+                );
+
+            if (selected) {
+                answered++;
+            }
+
+        }
+    );
+
+
+    if (
+        answered !== questions.length
+    ) {
+
+        result.innerHTML = `
+
+            <div class="quiz-warning">
+
+                ⚠️ Please answer all
+                ${questions.length}
+                questions before submitting.
+
+            </div>
+
+        `;
+
+        return;
+    }
+
+
+    result.innerHTML = `
+
+        <div class="quiz-success">
+
+            ✅ Quiz submitted successfully!
+
+            <br><br>
+
+            You answered all
+            ${questions.length}
+            questions.
+
+        </div>
+
+    `;
+}
 // =====================================================
 // FORMAT AI RESPONSE
 // =====================================================
