@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="description"
+        content="QR Maker - Create professional QR codes for websites, Wi-Fi, WhatsApp, contacts, UPI and text."
+    >
+
+    <meta
+        name="theme-color"
+        content="#F6F4EF"
+    >
+
+    <meta
+        name="robots"
+        content="index, follow"
+    >
+
+    <title>QR Maker - Create QR Codes Instantly</title>
+
+    <link
+        rel="icon"
+        type="image/svg+xml"
+        href="./favicon.svg"
+    >
+
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+
+    <header class="navbar">
+
+        <div class="navbar-container">
+
+            <a
+                href="#home"
+                class="logo"
+                aria-label="QR Maker Home"
+            >
+
+                <span class="logo-icon">
+                    ▦
+                </span>
+
+                <span class="logo-text">
+                    QR Maker
+                </span>
+
+            </a>
+
+
+            <nav class="nav-links">
+
+                <a href="#home">
+                    Home
+                </a>
+
+                <a href="#generators">
+                    Generators
+                </a>
+
+                <a href="#how-it-works">
+                    How It Works
+                </a>
+
+                <a href="#about">
+                    About
+                </a>
+
+            </nav>
+
+        </div>
+
+    </header>
+
+
+    <!-- HERO -->
+
+    <main>
+
+        <section
+            class="hero"
+            id="home"
+        >
+
+            <div class="hero-content">
+
+                <span class="hero-badge">
+                    SIMPLE • FAST • PROFESSIONAL
+                </span>
+
+
+                <h1>
+                    Create QR Codes
+                    <span>In Seconds.</span>
+                </h1>
+
+
+                <p>
+                    Generate clean and reliable QR codes for
+                    websites, Wi-Fi, WhatsApp, contacts, UPI
+                    and text.
+                </p>
+
+
+                <a
+                    href="#generators"
+                    class="hero-button"
+                >
+
+                    Create QR Code
+
+                    <span>
+                        →
+                    </span>
+
+                </a>
+
+            </div>
+
+        </section>
+
+
+        <!-- GENERATORS -->
+
+        <section
+            class="generators-section"
+            id="generators"
+        >
+
+            <div class="section-heading">
+
+                <span class="section-label">
+                    QR GENERATORS
+                </span>
+
+
+                <h2>
+                    Choose what you want to create
+                </h2>
+
+
+                <p>
+                    Select a generator below and create your
+                    QR code instantly.
+                </p>
+
+            </div>
+
+
+            <div class="generator-grid">
+
+                <button
+                    type="button"
+                    class="generator-card"
+                    data-generator="website"
+                >
+
+                    <span class="generator-icon">
+                        🌐
+                    </span>
+
+                    <span class="generator-card-content">
+
+                        <strong>
+                            Website
+                        </strong>
+
+                        <span>
+                            Create a QR code for any website.
+                        </span>
+
+                    </span>
+
+                    <span class="card-arrow">
+                        →
+                    </span>
+
+                </button>
+
+
+                <button
+                    type="button"
+                    class="generator-card"
+                    data-generator="wifi"
+                >
+
+                    <span class="generator-icon">
+                        📶
+                    </span>
+
+                    <span class="generator-card-content">
+
+                        <strong>
+                            Wi-Fi
+                        </strong>
+
+                        <span>
+                            Share Wi-Fi details easily.
+                        </span>
+
+                    </span>
+
+                    <span class="card-arrow">
+                        →
+                    </span>
+
+                </button>
+
+
+                <button
+                    type="button"
+                    class="generator-card"
+                    data-generator="whatsapp"
+                >
+
+                    <span class="generator-icon">
+                        💬
+                    </span>
+
+                    <span class="generator-card-content">
+
+                        <strong>
+                            WhatsApp
+                        </strong>
+
+                        <span>
+                            Create a QR for WhatsApp chat.
+                        </span>
+
+                    </span>
+
+                    <span class="card-arrow">
+                        →
+                    </span>
+
+                </button>
+
+
+                <button
+                    type="button"
+                    class="generator-card"
+                    data-generator="contact"
+                >
+
+                    <span class="generator-icon">
+                        👤
+                    </span>
+
+                    <span class="generator-card-content">
+
+                        <strong>
+                            Contact
+                        </strong>
+
+                        <span>
+                            Share your contact information.
+                        </span>
+
+                    </span>
+
+                    <span class="card-arrow">
+                        →
+                    </span>
+
+                </button>
+
+
+                <button
+                    type="button"
+                    class="generator-card"
+                    data-generator="upi"
+                >
+
+                    <span class="generator-icon">
+                        ₹
+                    </span>
+
+                    <span class="generator-card-content">
+
+                        <strong>
+                            UPI
+                        </strong>
+
+                        <span>
+                            Create a UPI payment QR code.
+                        </span>
+
+                    </span>
+
+                    <span class="card-arrow">
+                        →
+                    </span>
+
+                </button>
+
+
+                <button
+                    type="button"
+                    class="generator-card"
+                    data-generator="text"
+                >
+
+                    <span class="generator-icon">
+                        T
+                    </span>
+
+                    <span class="generator-card-content">
+
+                        <strong>
+                            Text
+                        </strong>
+
+                        <span>
+                            Convert any text into a QR code.
+                        </span>
+
+                    </span>
+
+                    <span class="card-arrow">
+                        →
+                    </span>
+
+                </button>
+
+            </div>
+
+
+            <!-- GENERATOR PANEL -->
+
+            <section
+                class="generator-panel"
+                id="generatorPanel"
+            >
+
+                <div class="generator-header">
+
+                    <div>
+
+                        <span class="panel-label">
+                            CREATE QR CODE
+                        </span>
+
+                        <h2 id="generatorTitle">
+                            QR Generator
+                        </h2>
+
+                    </div>
+
+
+                    <button
+                        id="closeGenerator"
+                        type="button"
+                        aria-label="Close generator"
+                    >
+                        ×
+                    </button>
+
+                </div>
+
+
+                <div id="formContainer"></div>
+
+
+                <div class="form-actions">
+
+                    <button
+                        id="generateButton"
+                        type="button"
+                    >
+                        Generate QR Code
+                    </button>
+
+
+                    <button
+                        id="clearButton"
+                        type="button"
+                    >
+                        Clear
+                    </button>
+
+                </div>
+
+
+                <!-- QR PREVIEW -->
+
+                <div
+                    class="qr-preview"
+                    id="qrPreview"
+                >
+
+                    <div class="qr-placeholder">
+
+                        <div class="placeholder-icon">
+                            ▦
+                        </div>
+
+
+                        <strong>
+                            Your QR code will appear here
+                        </strong>
+
+
+                        <span>
+                            Enter your information and click
+                            Generate QR Code.
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+        </section>
+
+
+        <!-- HOW IT WORKS -->
+
+        <section
+            class="how-section"
+            id="how-it-works"
+        >
+
+            <div class="section-heading">
+
+                <span class="section-label">
+                    HOW IT WORKS
+                </span>
+
+
+                <h2>
+                    Create your QR code in 3 steps
+                </h2>
+
+
+                <p>
+                    No complicated setup. Just enter your
+                    information and generate.
+                </p>
+
+            </div>
+
+
+            <div class="how-grid">
+
+                <div class="how-card">
+
+                    <div class="how-number">
+                        01
+                    </div>
+
+                    <div class="how-icon">
+                        ✦
+                    </div>
+
+                    <h3>
+                        Choose a Generator
+                    </h3>
+
+                    <p>
+                        Select Website, Wi-Fi, WhatsApp,
+                        Contact, UPI or Text.
+                    </p>
+
+                </div>
+
+
+                <div class="how-card">
+
+                    <div class="how-number">
+                        02
+                    </div>
+
+                    <div class="how-icon">
+                        ✎
+                    </div>
+
+                    <h3>
+                        Enter Your Details
+                    </h3>
+
+                    <p>
+                        Enter the information you want to
+                        store inside your QR code.
+                    </p>
+
+                </div>
+
+
+                <div class="how-card">
+
+                    <div class="how-number">
+                        03
+                    </div>
+
+                    <div class="how-icon">
+                        ↓
+                    </div>
+
+                    <h3>
+                        Generate & Download
+                    </h3>
+
+                    <p>
+                        Generate your QR code and download
+                        or copy it instantly.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ABOUT -->
+
+        <section
+            class="about-section"
+            id="about"
+        >
+
+            <div class="about-content">
+
+                <div class="section-heading about-heading">
+
+                    <span class="section-label">
+                        ABOUT QR MAKER
+                    </span>
+
+
+                    <h2>
+                        QR codes made simple.
+                    </h2>
+
+
+                    <p>
+                        QR Maker is designed to make creating
+                        useful QR codes quick, simple and
+                        accessible for everyone.
+                    </p>
+
+                </div>
+
+
+                <div class="about-features">
+
+                    <div class="about-feature">
+
+                        <div class="about-feature-icon">
+                            ⚡
+                        </div>
+
+                        <div>
+
+                            <h3>
+                                Fast
+                            </h3>
+
+                            <p>
+                                Generate your QR code in seconds.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="about-feature">
+
+                        <div class="about-feature-icon">
+                            ✓
+                        </div>
+
+                        <div>
+
+                            <h3>
+                                Simple
+                            </h3>
+
+                            <p>
+                                Clean interface with easy-to-use
+                                generators.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="about-feature">
+
+                        <div class="about-feature-icon">
+                            ◈
+                        </div>
+
+                        <div>
+
+                            <h3>
+                                Professional
+                            </h3>
+
+                            <p>
+                                Create clean QR codes suitable
+                                for everyday use.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- FOOTER -->
+
+    <footer class="footer">
+
+        <div class="footer-container">
+
+            <div class="footer-logo">
+
+                <span class="logo-icon">
+                    ▦
+                </span>
+
+                <span>
+                    QR Maker
+                </span>
+
+            </div>
+
+
+            <p>
+                Create useful QR codes with ease.
+            </p>
+
+
+            <div class="footer-line"></div>
+
+
+            <p class="creator-credit">
+
+                Created by
+                <strong>
+                    Mohammad Muneem
+                </strong>
+
+            </p>
+
+        </div>
+
+    </footer>
+
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>
